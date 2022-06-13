@@ -8,7 +8,7 @@ public interface BaseDAO<T> {
 
     Optional<T> findById(Long id);
 
-    boolean save(T object);
+    void save(T object);
 
-    boolean removeById(Long id);
+    void removeById(Long id);
 }

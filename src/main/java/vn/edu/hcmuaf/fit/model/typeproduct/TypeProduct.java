@@ -12,8 +12,12 @@ public class TypeProduct implements Serializable {
 
     }
 
+    public TypeProduct(Long id) {
+        this.id = id;
+    }
+
     public TypeProduct(String sku, String name) {
-        this.id = 0l;
+        this.id = 0L;
         this.sku = sku;
         this.name = name;
         this.active = true;

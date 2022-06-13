@@ -202,6 +202,14 @@
                                                placeholder="Ex: IPHONE, IPAD,.."
                                                class="form-control">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="updateActive">Active</label>
+                                        <select id="updateActive" name="updateActive"
+                                                class="form-control custom-select">
+                                            <option id="option-true" value="1">True</option>
+                                            <option id="option-false" value="0">False</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -303,9 +311,18 @@
                 jQuery('#updateId').val(data.data.id);
                 jQuery('#updateSku').val(data.data.sku);
                 jQuery('#updateName').val(data.data.name);
+                if (data.data.active) {
+                    jQuery('#option-true').prop('selected', true);
+                    jQuery('#option-false').prop('selected', false);
+
+                } else {
+                    jQuery('#option-true').prop('selected', false);
+                    jQuery('#option-false').prop('selected', true);
+                }
             }
         });
     }
+
     function deleteData(id) {
         Swal.fire({
             title: 'Are you sure?',
@@ -379,6 +396,7 @@
         if (validate) {
             let data = new FormData(jQuery("#modal-update")[0]);
             let id = data.get("updateId");
+            console.log(data.get("updateActive"))
             jQuery.ajax({
                 url: "/api/type-product/" + id,
                 type: "PUT",

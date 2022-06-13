@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TypeProductMapper {
+
+    public TypeProductMapper() {
+    }
+
     public TypeProduct toTypeProduct(final TypeProductDto dto) {
         return new TypeProduct(dto.getId(), dto.getSku(), dto.getName(), dto.isActive());
     }

@@ -23,7 +23,6 @@ public class TypeProductAPI extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        super.init();
         typeProductService = new TypeProductServiceImpl();
     }
 
@@ -82,7 +81,8 @@ public class TypeProductAPI extends HttpServlet {
 
         String sku = request.getParameter("updateSku");
         String name = request.getParameter("updateName");
-        TypeProductUpdate update = new TypeProductUpdate(id, sku, name);
+        boolean active = Integer.parseInt(request.getParameter("updateActive")) == 1;
+        TypeProductUpdate update = new TypeProductUpdate(id, sku, name, active);
         BaseResponse result = typeProductService.updateTypeProduct(update);
         response.getWriter().println(GSON.toJson(result));
     }

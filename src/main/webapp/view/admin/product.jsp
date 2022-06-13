@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.io.File" %><%--
   Created by IntelliJ IDEA.
   User: huynh
   Date: 2/14/2022
@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -59,79 +60,48 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <button class="btn btn-success" type="button" data-toggle="modal"
+                                <button id="btn-add" class="btn btn-success float-left" type="button"
+                                        data-toggle="modal"
                                         data-target="#modal-add">Add
                                 </button>
                                 <table id="product" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th data-priority="1">ID</th>
-                                        <th>Image</th>
+                                        <th>Sku</th>
                                         <th data-priority="2">Name</th>
+                                        <th>Image</th>
                                         <th>Type</th>
                                         <th>Price</th>
                                         <th>Rate</th>
                                         <th>Discount</th>
                                         <th>Viewed</th>
-                                        <th>Import</th>
-                                        <th>Stock</th>
+                                        <th>Created</th>
+                                        <th>Updated</th>
                                         <th>Active</th>
-                                        <th>Date</th>
                                         <th data-priority="3"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <%--<c:forEach var="item" items="${listPro}">
                                     <tr>
-                                        <td>${item.id}</td>
-                                        <td>
-                                            <img src="../${imageDao.get(item.idImg).url}" width="30" height="30"
-                                                 alt="">
-                                        </td>
-                                        <td>${item.name}</td>
-                                        <td>${typeDao.get(item.idTypePro)}</td>
-                                        <td>$${item.price}</td>
-                                        <td>${item.rate}</td>
-                                        <td>${item.discount}</td>
-                                        <td>${item.viewed}</td>
-                                        <td>${item.quantityImport}</td>
-                                        <td>${item.quantityStock}</td>
-                                        <td>${item.active}</td>
-                                        <td>${item.dateImport}</td>
-                                        <td style="text-align:center">
-                                            <button style="width:30px;height:30px;padding:0"
-                                                    id="update-btn"
-                                                    pid="${item.id}"
-                                                    class="btn btn-warning " type="button">
-                                                <i style="font-size:0.8rem;" class="fa fa-edit"
-                                                              data-target="#modal-update"
-                                                              aria-hidden="true"></i>
-                                            </button>
-                                            <p></p>
-                                            <button style="width:30px;height:30px;padding:0"
-                                                    id="delete-btn"
-                                                    class="btn btn-danger " type="button"><i
-                                                    style="font-size:0.8rem;" class="fa fa-trash"
-                                                    aria-hidden="true"></i></button>
-                                        </td>
+
                                     </tr>
-                                </c:forEach>--%>
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <th>ID</th>
+                                        <th data-priority="1">ID</th>
+                                        <th>Sku</th>
+                                        <th data-priority="2">Name</th>
                                         <th>Image</th>
-                                        <th>Name</th>
                                         <th>Type</th>
                                         <th>Price</th>
                                         <th>Rate</th>
                                         <th>Discount</th>
                                         <th>Viewed</th>
-                                        <th>Import</th>
-                                        <th>Stock</th>
+                                        <th>Created</th>
+                                        <th>Updated</th>
                                         <th>Active</th>
-                                        <th>Date</th>
-                                        <th></th>
+                                        <th data-priority="3"></th>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -173,44 +143,31 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="inputImage">Image</label>
-                                        <input type="file" id="inputImage" name="image" class="form-control">
+                                        <label for="addImage">Image</label>
+                                        <input type="file" id="addImage" name="addImage" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputName">Name</label>
-                                        <input type="text" id="inputName" name="namePro" class="form-control">
+                                        <label for="addSku">Sku</label>
+                                        <input type="text" id="addSku" name="addSku" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputType">Type</label>
-                                        <select id="inputType" name="selectType" class="form-control custom-select">
-                                            <option selected disabled>Select one type product</option>
-                                            <c:forEach var="item" items="${listType}">
-                                                <option data-type="${item.id}">${item.id}</option>
-                                            </c:forEach>
+                                        <label for="addName">Name</label>
+                                        <input type="text" id="addName" name="addName" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addTypeId">Type</label>
+                                        <select id="addTypeId" name="addTypeId" class="form-control custom-select">
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputPrice">Price</label>
-                                        <input type="text" id="inputPrice" name="price" class="form-control">
+                                        <label for="addPrice">Price</label>
+                                        <input type="text" id="addPrice" name="addPrice" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputRate">Rate</label>
-                                        <input type="text" id="inputRate" name="rate" class="form-control">
+                                        <label for="addDiscount">Discount</label>
+                                        <input type="text" id="addDiscount" name="addDiscount" class="form-control">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="inputDiscount">Discount</label>
-                                        <input type="text" id="inputDiscount" name="discount" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputQuantityImport">Quantity Import</label>
-                                        <input type="text" id="inputQuantityImport" name="quantityImport"
-                                               class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputQuantityStock">Quantity Stock</label>
-                                        <input type="text" id="inputQuantityStock" name="quantityStock"
-                                               class="form-control">
-                                    </div>
+
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -219,7 +176,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" id="add-product" class="btn btn-primary" value="Add"/>
+                        <input type="submit" id="add-submit" class="btn btn-primary" value="Add"/>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -233,7 +190,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Product</h4>
+                        <h4 class="modal-title">Update Product</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -251,43 +208,51 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="inputImage">Image</label>
-                                        <input type="file" id="updateImage" name="image" class="form-control">
+                                        <label hidden for="updateId"></label>
+                                        <input hidden type="text" id="updateId"
+                                               name="updateId"
+                                               class="form-control"
+                                               placeholder="Ex: PH, PA,..">
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputName">Name</label>
-                                        <input type="text" id="updateName" name="namePro" class="form-control">
+                                        <label for="updateImage">Image</label>
+                                        <input type="file" id="updateImage" name="updateImage" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputType">Type</label>
-                                        <select id="updateType" name="selectType" class="form-control custom-select">
-                                            <option selected disabled>Select one type product</option>
-                                            <c:forEach var="item" items="${listType}">
-                                                <option data-type="${item.id}">${item.id}</option>
-                                            </c:forEach>
+                                        <label for="updateSku">Sku</label>
+                                        <input type="text" id="updateSku" name="updateSku" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="updateName">Name</label>
+                                        <input type="text" id="updateName" name="updateName" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="updateTypeId">Type</label>
+                                        <select id="updateTypeId" name="updateTypeId"
+                                                class="form-control custom-select">
+
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputPrice">Price</label>
-                                        <input type="text" id="updatePrice" name="price" class="form-control">
+                                        <label for="updatePrice">Price</label>
+                                        <input type="text" id="updatePrice" name="updatePrice" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputRate">Rate</label>
-                                        <input type="text" id="updateRate" name="rate" class="form-control">
+                                        <label for="updateRate">Rate</label>
+                                        <input type="text" id="updateRate" name="updateRate" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputDiscount">Discount</label>
-                                        <input type="text" id="updateDiscount" name="discount" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputQuantityImport">Quantity Import</label>
-                                        <input type="text" id="updateQuantityImport" name="quantityImport"
+                                        <label for="updateDiscount">Discount</label>
+                                        <input type="text" id="updateDiscount" name="updateDiscount"
                                                class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputQuantityStock">Quantity Stock</label>
-                                        <input type="text" id="updateQuantityStock" name="quantityStock"
-                                               class="form-control">
+                                        <label for="updateActive">Active</label>
+                                        <select id="updateActive" name="updateActive"
+                                                class="form-control custom-select">
+                                            <option id="option-true" value="1">True</option>
+                                            <option id="option-false" value="0">False</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -297,7 +262,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" id="update-product" class="btn btn-primary" value="Update"/>
+                        <input type="submit" id="update-submit" class="btn btn-primary" value="Update"/>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -337,8 +302,8 @@
     <!-- Firebase js -->
 
     <script>
-        $(function () {
-            $("#product").DataTable({
+        jQuery(function () {
+            let table = jQuery("#product").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 "columnDefs": [
                     {
@@ -346,86 +311,171 @@
                         orderable: false,
                         searchable: false,
                         render: function (data, type, row, meta) {
-                            return '<div class="d-flex justify-content-center align-middle">' +
-                                '<button type="button" class="btn btn-info btn-sm" pid="' + data + '" data-toggle="modal" data-target="#modal-update" ><i class="fas fa-edit"></i></button>' +
-                                '<button type="button" class="btn btn-danger btn-sm" pid="' + data + '"> <i class="fas fa-trash"></i></button>'
+                            return '<div class="d-flex justify-content-around align-middle">' +
+                                '<button type="button" onclick="getData(' + data + ')" class="btn-update btn btn-info btn-sm p-2" data-toggle="modal" data-target="#modal-update" ><i class="fas fa-edit"></i></button>' +
+                                '<button type="button" onclick="deleteData(' + data + ')" class="btn-delete btn btn-danger btn-sm p-2"> <i class="fas fa-trash"></i></button>'
                                 + '</div>';
                         }
                     },
                     {
-                        targets: 1,
+                        targets: 3,
                         searchable: false,
                         render: function (data, type, row, meta) {
-                            return '<img src="/' + data + '" width="50px" height="50px" alt="">';
+                            return '<img src="' + data + '" width="50px" height="50px" alt="">';
                         }
                     },
-                    {
-                        targets: 7,
-                        visible: false
-                    },
                 ],
+                initComplete: function () {
+                    table.buttons().container().appendTo('.col-md-6:eq(0)', table.table().container());
+                },
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
                 ajax: {
-                    url: `${pageContext.request.contextPath}/api/product/IPH1`,
-                    dataSrc: ""
+                    url: `/api/product`,
+                    dataSrc: "data"
                 },
                 columns: [
                     {data: "id"},
-                    {data: "urlImage"},
+                    {data: "sku"},
                     {data: "name"},
-                    {data: "type"},
+                    {data: "urlImage"},
+                    {data: "typeProduct.name"},
                     {data: "price"},
                     {data: "rate"},
                     {data: "discount"},
                     {data: "viewed"},
-                    {data: "quantityImport"},
-                    {data: "quantityStock"},
+                    {data: "dateCreated"},
+                    {data: "lastUpdated"},
                     {data: "active"},
-                    {data: "dateImport"},
                     {data: "id"}
                 ],
-            }).buttons().container().appendTo('#product_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
             });
+            // $('#example2').DataTable({
+            //     "paging": true,
+            //     "lengthChange": false,
+            //     "searching": false,
+            //     "ordering": true,
+            //     "info": true,
+            //     "autoWidth": false,
+            //     "responsive": true,
+            // });
 
         });
 
+        jQuery("#btn-add").on("click", function (e) {
+            jQuery.ajax({
+                url: "/api/type-product",
+                type: "GET",
+                success: function (data) {
+                    jQuery.map(data.data, (type, i) => {
+                        if (i === 0)
+                            jQuery("#addTypeId").append('<option selected value="' + type.id + '">' + type.name + '</option>');
+                        else
+                            jQuery("#addTypeId").append('<option value="' + type.id + '">' + type.name + '</option>');
+                    });
+                }
+            })
+        })
 
-        jQuery("#add-product").on("click", function (e) {
+        function reloadData() {
+            jQuery('#product').DataTable().ajax.reload();
+        }
+
+        function getData(id) {
+            jQuery.ajax({
+                url: `/api/product/` + id,
+                type: 'GET',
+                success: function (data) {
+                    reloadData();
+                    jQuery('#updateId').val(data.data.id);
+                    jQuery('#updateSku').val(data.data.sku);
+                    jQuery('#updateName').val(data.data.name);
+                    jQuery('#updatePrice').val(data.data.price);
+                    jQuery('#updateRate').val(data.data.rate);
+                    jQuery('#updateDiscount').val(data.data.discount);
+                    jQuery('#updateViewed').val(data.data.viewed);
+                    if (data.data.active) {
+                        jQuery('#option-true').prop('selected', true);
+                        jQuery('#option-false').prop('selected', false);
+
+                    } else {
+                        jQuery('#option-true').prop('selected', false);
+                        jQuery('#option-false').prop('selected', true);
+                    }
+                }
+            });
+            jQuery.ajax({
+                url: "/api/type-product",
+                type: "GET",
+                success: function (data) {
+                    jQuery.map(data.data, (type, i) => {
+                        console.log(type.id)
+                        if (id === type.id)
+                            jQuery("#updateTypeId").append('<option selected value="' + type.id + '">' + type.name + '</option>');
+                        else
+                            jQuery("#updateTypeId").append('<option value="' + type.id + '">' + type.name + '</option>');
+                    });
+                }
+            })
+
+        }
+
+        function deleteData(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    jQuery.ajax({
+                        url: `/api/product/` + id,
+                        type: 'DELETE',
+                        success: function (data) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            ).then(function () {
+                                reloadData();
+                            });
+                        }
+                    });
+                }
+            })
+        }
+
+        jQuery("#add-submit").on("click", function (e) {
             e.preventDefault();
             let valid = jQuery("#modal-add").valid();
 
-            let urlImage = "";
-            const ref = firebase.storage().ref();
-            const file = document.querySelector("#inputImage").files[0];
-            console.log(file)
-            const name = file.name;
-            const metadata = {
-                contentType: file.type
-            };
-            const task = ref.child("apple-store/image/product/" + Date.now() + name).put(file, metadata);
-            task
-                .then(snapshot => snapshot.ref.getDownloadURL())
-                .then(url => {
-                    console.log(url)
-                })
-                .catch(console.error);
+            // let urlImage = "";
+            // const ref = firebase.storage().ref();
+            // const file = document.querySelector("#inputImage").files[0];
+            // console.log(file)
+            // const name = file.name;
+            // const metadata = {
+            //     contentType: file.type
+            // };
+            // const task = ref.child("apple-store/image/product/" + Date.now() + name).put(file, metadata);
+            // task
+            //     .then(snapshot => snapshot.ref.getDownloadURL())
+            //     .then(url => {
+            //         console.log(url)
+            //     })
+            //     .catch(console.error);
             if (valid) {
                 let data = new FormData(jQuery("#modal-add")[0]);
                 $.ajax({
                     type: "POST",
-                    url: `${pageContext.request.contextPath}/api/product/?action=add`,
+                    url: `/api/product`,
                     processData: false,
                     contentType: false,
                     data: data,
                     success: function () {
+                        reloadData();
                         Swal.fire({
                             icon: 'success',
                             title: 'Product is existed in your cart so amount will be extra 1.',
@@ -440,87 +490,102 @@
                 });
             }
         })
+        jQuery("#update-submit").on("click", function (e) {
+            e.preventDefault();
+            let valid = jQuery("#modal-update").valid();
+            if (valid) {
+                let data = new FormData(jQuery("#modal-update")[0]);
+                let id = data.get("updateId");
+                $.ajax({
+                    type: "PUT",
+                    url: `/api/product/` + id,
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    success: function () {
+                        reloadData();
+                        if (data.success) {
+                            reloadData();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'SUCCESS',
+                                text: data.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'ERROR',
+                                text: data.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        }
+                    }
+                });
+            }
+        })
         jQuery("#modal-add").validate({
             rules: {
-                image: {
-                    required: true,
-                    extension: "jpg|png|jpeg|gif"
-                },
-                namePro: {
+                addSku: {
                     required: true,
                     minlength: 3,
-                    maxlength: 50
+                    maxlength: 20
                 },
-                selectType: {
-                    required: true
-                },
-                price: {
+                addName: {
                     required: true,
+                    minlength: 3,
+                    maxlength: 20
+                },
+                addPrice: {
                     number: true,
+                    required: true,
                     min: 0
                 },
-                rate: {
-                    required: true,
+                addDiscount: {
                     number: true,
-                    min: 1,
-                    max: 5
-                },
-                discount: {
                     required: true,
-                    number: true,
                     min: 0,
                     max: 1
                 },
-                quantityImport: {
-                    required: true,
-                    number: true,
-                    min: 0
+                addType: {
+                    required: true
                 },
-                quantityStock: {
+                addImage: {
                     required: true,
-                    number: true,
-                    min: 0
+                    accept: "image/*"
                 }
             },
             messages: {
-                image: {
-                    required: "Please choose image",
-                    extension: "Please choose image with extension jpg, png, jpeg, gif"
+                addSku: {
+                    required: "Please enter sku",
+                    minlength: "Sku must be at least 3 characters long",
+                    maxlength: "Sku cannot be more than 20 characters long"
                 },
-                namePro: {
-                    required: "Please enter name product",
-                    minlength: "Please enter at least 3 characters",
-                    maxlength: "Please enter no more than 50 characters"
+                addName: {
+                    required: "Please enter name",
+                    minlength: "Name must be at least 3 characters long",
+                    maxlength: "Name cannot be more than 20 characters long"
                 },
-                selectType: {
-                    required: "Please choose type"
-                },
-                price: {
+                addPrice: {
+                    number: "Price must be a number",
                     required: "Please enter price",
-                    number: "Please enter number",
-                    min: "Please enter number greater than 0"
+                    min: "Price must be greater than 0"
                 },
-                rate: {
-                    required: "Please enter rate",
-                    number: "Please enter number",
-                    min: "Please enter number greater than 0",
-                    max: "Please enter number less than 5"
+                addType: {
+                    required: "Please enter type"
                 },
-                discount: {
+                addDiscount: {
+                    number: "Discount must be a number",
                     required: "Please enter discount",
-                    number: "Please enter number",
-                    min: "Please enter number greater than 0",
-                    max: "Please enter number less than 1"
+                    min: "Discount must be greater than 0",
+                    max: "Discount must be less than 1"
                 },
-                quantityImport: {
-                    required: "Please enter quantity import",
-                    number: "Please enter number",
-                    min: "Please enter number greater than 0"
-                },
-                quantityStock: {
-                    required: "Please enter quantity stock",
-                    number: "Please enter number",
-                    min: "Please enter number greater than 0"
+                addImage: {
+                    required: "Please enter image",
+                    accept: "Image must be in png, jpg, jpeg or gif format"
+
                 }
             },
             errorElement: 'span',
@@ -529,10 +594,10 @@
                 element.closest('.form-group').append(error);
             },
             highlight: function (element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
+                jQuery(element).addClass('is-invalid');
             },
             unhighlight: function (element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
+                jQuery(element).removeClass('is-invalid');
             }
         })
 
