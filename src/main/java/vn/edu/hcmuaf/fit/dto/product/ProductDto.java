@@ -1,12 +1,11 @@
-package vn.edu.hcmuaf.fit.model.product;
+package vn.edu.hcmuaf.fit.dto.product;
 
-import org.jdbi.v3.core.mapper.Nested;
+
 import vn.edu.hcmuaf.fit.model.typeproduct.TypeProduct;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Product implements Serializable {
+public class ProductDto {
     private Long id;
     private String sku;
     private String name;
@@ -20,11 +19,11 @@ public class Product implements Serializable {
     private Date lastUpdated;
     private boolean active;
 
-    public Product() {
+    public ProductDto() {
 
     }
 
-    public Product(String sku, String name, TypeProduct typeProduct, Integer price, String urlImage, Integer rate, Double discount, Integer viewed) {
+    public ProductDto(String sku, String name, TypeProduct typeProduct, Integer price, String urlImage, Integer rate, Double discount, Integer viewed) {
         this.id = 0L;
         this.sku = sku;
         this.name = name;
@@ -37,7 +36,7 @@ public class Product implements Serializable {
         this.active = true;
     }
 
-    public Product(String sku, String name, TypeProduct typeProduct, Integer price, String urlImage, Double discount) {
+    public ProductDto(String sku, String name, TypeProduct typeProduct, Integer price, String urlImage, Double discount) {
         this.id = 0L;
         this.sku = sku;
         this.name = name;
@@ -50,7 +49,7 @@ public class Product implements Serializable {
         this.active = true;
     }
 
-    public Product(Long id, String sku, String name, TypeProduct typeProduct, Integer price, String urlImage, Integer rate, Double discount, Integer viewed, Date dateCreated, Date lastUpdated, boolean active) {
+    public ProductDto(Long id, String sku, String name, TypeProduct typeProduct, Integer price, String urlImage, Integer rate, Double discount, Integer viewed, Date dateCreated, Date lastUpdated, boolean active) {
         this.id = id;
         this.sku = sku;
         this.name = name;
