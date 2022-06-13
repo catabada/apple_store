@@ -65,6 +65,7 @@ public class TypeProductServiceImpl implements TypeProductService {
             if (typeProduct.getSku().equals(update.getSku())) {
                 typeProduct.setSku(update.getSku());
                 typeProduct.setName(update.getName());
+                typeProduct.setActive(update.isActive());
                 dao.save(typeProduct);
                 return new BaseResponse(true, 200, "Success!");
             } else {
@@ -73,6 +74,7 @@ public class TypeProductServiceImpl implements TypeProductService {
                 } else {
                     typeProduct.setSku(update.getSku());
                     typeProduct.setName(update.getName());
+                    typeProduct.setActive(update.isActive());
                     dao.save(typeProduct);
                     return new BaseResponse(true, 200, "Success!");
                 }
