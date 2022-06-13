@@ -208,6 +208,13 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
+                                        <label hidden for="updateId"></label>
+                                        <input hidden type="text" id="updateId"
+                                               name="updateId"
+                                               class="form-control"
+                                               placeholder="Ex: PH, PA,..">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="updateImage">Image</label>
                                         <input type="file" id="updateImage" name="updateImage" class="form-control">
                                     </div>
@@ -379,6 +386,7 @@
                 type: 'GET',
                 success: function (data) {
                     reloadData();
+                    jQuery('#updateId').val(data.data.id);
                     jQuery('#updateSku').val(data.data.sku);
                     jQuery('#updateName').val(data.data.name);
                     jQuery('#updatePrice').val(data.data.price);
@@ -479,6 +487,42 @@
 
                     }
 
+                });
+            }
+        })
+        jQuery("#update-submit").on("click", function (e) {
+            e.preventDefault();
+            let valid = jQuery("#modal-update").valid();
+            if (valid) {
+                let data = new FormData(jQuery("#modal-update")[0]);
+                let id = data.get("updateId");
+                $.ajax({
+                    type: "PUT",
+                    url: `/api/product/` + id,
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    success: function () {
+                        reloadData();
+                        if (data.success) {
+                            reloadData();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'SUCCESS',
+                                text: data.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'ERROR',
+                                text: data.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        }
+                    }
                 });
             }
         })

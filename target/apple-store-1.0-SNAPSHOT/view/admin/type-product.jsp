@@ -415,7 +415,6 @@
                         })
                         jQuery("#type-product").trigger("reset");
                         jQuery('#modal-update').modal('hide');
-                        setInputDefault("#modal-update");
                     } else {
                         Swal.fire({
                             icon: 'error',
