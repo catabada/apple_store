@@ -1,9 +1,3 @@
-  Created by IntelliJ IDEA.
-  User: huynh
-  Date: 2/14/2022
-  Time: 4:25 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -20,14 +14,15 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-<%--        <%--%>
-<%--            HttpSession ss = request.getSession();--%>
-<%--            User user = UserDAO.getInstance().get((int) ss.getAttribute("idUser"));--%>
-<%--            request.setAttribute("user", user);--%>
-<%--        %>--%>
+        <%--        <%--%>
+        <%--            HttpSession ss = request.getSession();--%>
+        <%--            User user = UserDAO.getInstance().get((int) ss.getAttribute("idUser"));--%>
+        <%--            request.setAttribute("user", user);--%>
+        <%--        %>--%>
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="https://ui-avatars.com/api/?name=${user.first}+${user.last}" class="img-circle elevation-2" alt="User Image">
+                <img src="https://ui-avatars.com/api/?name=${user.first}+${user.last}" class="img-circle elevation-2"
+                     alt="User Image">
             </div>
             <div class="info">
                 <a href="" class="d-block">${user.first} ${user.last}</a>
@@ -70,6 +65,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="/admin/type-product" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Type Product
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="/admin/product" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
@@ -78,13 +81,22 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/admin/type-product" class="nav-link">
+                    <a href="/admin/color" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Type Product
+                            Color
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="/admin/product-color" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Product Color
+                        </p>
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a href="/admin/orders" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>

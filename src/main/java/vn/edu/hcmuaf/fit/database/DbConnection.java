@@ -16,7 +16,7 @@ public class DbConnection implements IConnectionPool {
     public static DbConnection init(String uid, String pwd, String database) {
         List<Connection> pool = new ArrayList<>(MAX_POOL_SIZE);
         for (int i = 0; i < MAX_POOL_SIZE; i++) {
-            pool.add(createConnection(uid, pwd, database));
+            pool.add(createConnection());
         }
         return new DbConnection(uid, pwd, database, pool);
     }
@@ -33,14 +33,14 @@ public class DbConnection implements IConnectionPool {
         try {
             if (connectionPool.isEmpty()) {
                 if (usedConnections.size() < MAX_POOL_SIZE) {
-                    connectionPool.add(createConnection(uid, pwd, database));
+                    connectionPool.add(createConnection());
                 } else {
                     throw new RuntimeException("Maximum pool size reached, no available connections!");
                 }
             }
             Connection connection = connectionPool.remove(connectionPool.size() - 1);
             if (!connection.isValid(MAX_TIMEOUT)) {
-                connection = createConnection(uid, pwd, database);
+                connection = createConnection();
             }
             usedConnections.add(connection);
             return connection;
@@ -56,10 +56,10 @@ public class DbConnection implements IConnectionPool {
         usedConnections.remove(connection);
     }
 
-    private static Connection createConnection(String uid, String pwd, String database) {
+    private static Connection createConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
-            return DriverManager.getConnection("jdbc:mysql://localhost/" + database, uid, pwd);
+            return DriverManager.getConnection("jdbc:mysql://localhost/" + "apple_store", "root", "");
         } catch (Exception e) {
             return null;
         }

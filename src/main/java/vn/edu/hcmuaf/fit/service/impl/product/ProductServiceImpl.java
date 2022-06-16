@@ -19,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
 
     public ProductServiceImpl() {
-        this.productDao = new ProductDAOImpl();
+        this.productDao = ProductDAOImpl.getInstance();
         this.productMapper = new ProductMapper();
     }
 
@@ -60,13 +60,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public BaseResponse deleteProductById(Long id) {
-        Product product = productDao.findById(id).orElse(null);
-        if (product == null) {
+        if (productDao.findById(id).isPresent()) {
             return new BaseResponse(false, 401, "Can't find by id = " + id);
-        } else {
-            productDao.removeById(id);
-            return new BaseResponse(true, 0, "Success!");
         }
+        productDao.removeById(id);
+        return new BaseResponse(true, 0, "Success!");
     }
 
     @Override
