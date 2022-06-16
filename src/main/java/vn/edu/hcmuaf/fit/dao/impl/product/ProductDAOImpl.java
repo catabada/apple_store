@@ -21,7 +21,7 @@ public class ProductDAOImpl implements ProductDAO {
     private final IConnectionPool connectionPool;
     private Connection connection;
 
-    public ProductDAOImpl() {
+    private ProductDAOImpl() {
         this.connectionPool = DbConnection.init("root", "", "apple_store");
     }
 
@@ -52,7 +52,6 @@ public class ProductDAOImpl implements ProductDAO {
                 Date dateUpdated = rs.getDate("date_created");
                 Date lastUpdated = rs.getDate("last_updated");
                 boolean active = rs.getBoolean("active");
-                System.out.println(id + " " + sku + " " + name + " " + urlImage + " " + typeProductId + " " + price + " " + discount + " " + rate + " " + viewed + " " + dateUpdated + " " + lastUpdated + " " + active);
 
                 TypeProduct typeProduct = TypeProductDAOImpl.getInstance().findById(typeProductId).orElseGet(null);
                 Product product = new Product(id, sku, name, typeProduct, price, urlImage, rate, discount, viewed, dateUpdated, lastUpdated, active);
@@ -61,7 +60,7 @@ public class ProductDAOImpl implements ProductDAO {
 
         } catch (SQLException e) {
             connectionPool.releaseConnection(connection);
-            return null;
+            return products;
         }
         connectionPool.releaseConnection(connection);
         return products;
@@ -70,7 +69,6 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public Optional<Product> findById(Long id) {
         connection = connectionPool.getConnection();
-        Product product = null;
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT.GET_BY_ID);
             statement.setLong(1, id);
@@ -90,14 +88,16 @@ public class ProductDAOImpl implements ProductDAO {
                 boolean active = rs.getBoolean("active");
 
                 TypeProduct typeProduct = TypeProductDAOImpl.getInstance().findById(typeProductId).orElseGet(null);
-                product = new Product(id, sku, name, typeProduct, price, urlImage, rate, discount, viewed, dateCreated, lastUpdated, active);
+                Product product = new Product(id, sku, name, typeProduct, price, urlImage, rate, discount, viewed, dateCreated, lastUpdated, active);
+                connectionPool.releaseConnection(connection);
+                return Optional.of(product);
             }
         } catch (SQLException e) {
             connectionPool.releaseConnection(connection);
             return Optional.empty();
         }
         connectionPool.releaseConnection(connection);
-        return Optional.ofNullable(product);
+        return Optional.empty();
     }
 
     @Override
@@ -146,7 +146,4 @@ public class ProductDAOImpl implements ProductDAO {
 
     }
 
-    public static void main(String[] args) {
-        System.out.println(ProductDAOImpl.getInstance().findById(3L).orElse(null).getName());
-    }
 }

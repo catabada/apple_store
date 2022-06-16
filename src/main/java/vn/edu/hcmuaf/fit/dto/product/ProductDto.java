@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.dto.product;
 
 
+import vn.edu.hcmuaf.fit.dto.typeproduct.TypeProductDto;
 import vn.edu.hcmuaf.fit.model.typeproduct.TypeProduct;
 
 import java.util.Date;
@@ -9,7 +10,7 @@ public class ProductDto {
     private Long id;
     private String sku;
     private String name;
-    private TypeProduct typeProduct;
+    private TypeProductDto typeProduct;
     private Integer price;
     private String urlImage;
     private Integer rate;
@@ -23,7 +24,7 @@ public class ProductDto {
 
     }
 
-    public ProductDto(String sku, String name, TypeProduct typeProduct, Integer price, String urlImage, Integer rate, Double discount, Integer viewed) {
+    public ProductDto(String sku, String name, TypeProductDto typeProduct, Integer price, String urlImage, Integer rate, Double discount, Integer viewed) {
         this.id = 0L;
         this.sku = sku;
         this.name = name;
@@ -36,7 +37,7 @@ public class ProductDto {
         this.active = true;
     }
 
-    public ProductDto(String sku, String name, TypeProduct typeProduct, Integer price, String urlImage, Double discount) {
+    public ProductDto(String sku, String name, TypeProductDto typeProduct, Integer price, String urlImage, Double discount) {
         this.id = 0L;
         this.sku = sku;
         this.name = name;
@@ -49,7 +50,7 @@ public class ProductDto {
         this.active = true;
     }
 
-    public ProductDto(Long id, String sku, String name, TypeProduct typeProduct, Integer price, String urlImage, Integer rate, Double discount, Integer viewed, Date dateCreated, Date lastUpdated, boolean active) {
+    public ProductDto(Long id, String sku, String name, TypeProductDto typeProduct, Integer price, String urlImage, Integer rate, Double discount, Integer viewed, Date dateCreated, Date lastUpdated, boolean active) {
         this.id = id;
         this.sku = sku;
         this.name = name;
@@ -88,11 +89,11 @@ public class ProductDto {
         this.name = name;
     }
 
-    public TypeProduct getTypeProduct() {
+    public TypeProductDto getTypeProduct() {
         return typeProduct;
     }
 
-    public void setTypeProduct(TypeProduct typeProduct) {
+    public void setTypeProduct(TypeProductDto typeProduct) {
         this.typeProduct = typeProduct;
     }
 

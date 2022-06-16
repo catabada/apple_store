@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Type Product</title>
+    <title>Color</title>
     <link rel="shortcut icon" type="image/png" href="../dist/img/admin.png">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -43,7 +43,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Type Product Page</li>
+                            <li class="breadcrumb-item active">Color Page</li>
                         </ol>
                     </div>
                 </div>
@@ -60,13 +60,13 @@
                                 <button class="btn btn-success float-left" type="button" data-toggle="modal"
                                         data-target="#modal-add">Add
                                 </button>
-                                <table id="type-product" class="table table-bordered table-striped">
+                                <table id="color" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>Id</th>
                                         <th>Sku</th>
                                         <th>Name</th>
-                                        <th>Active</th>
+                                        <th>Hex</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -79,7 +79,7 @@
                                         <th>Id</th>
                                         <th>Sku</th>
                                         <th>Name</th>
-                                        <th>Active</th>
+                                        <th>Hex</th>
                                         <th></th>
                                     </tr>
                                     </tfoot>
@@ -103,7 +103,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Type Product</h4>
+                        <h4 class="modal-title">Add Color</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -125,14 +125,22 @@
                                         <input type="text" id="addSku"
                                                name="addSku"
                                                class="form-control"
-                                               placeholder="Ex: PH, PA,..">
+                                               placeholder="Ex: BA, BU,..">
                                     </div>
                                     <div class="form-group">
                                         <label for="addName">Name</label>
                                         <input type="text"
                                                id="addName"
                                                name="addName"
-                                               placeholder="Ex: IPHONE, IPAD,.."
+                                               placeholder="Ex: Black, Blue,.."
+                                               class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addHex">Hex</label>
+                                        <input type="text"
+                                               id="addHex"
+                                               name="addHex"
+                                               placeholder="Ex: 111111, cc11cc,.."
                                                class="form-control">
                                     </div>
                                 </div>
@@ -159,7 +167,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Update Product</h4>
+                        <h4 class="modal-title">Update Color</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -181,14 +189,14 @@
                                         <input hidden type="text" id="updateId"
                                                name="updateId"
                                                class="form-control"
-                                               placeholder="Ex: PH, PA,..">
+                                               placeholder="Ex: BA, BU,..">
                                     </div>
                                     <div class="form-group">
                                         <label for="updateSku">Sku</label>
                                         <input type="text" id="updateSku"
                                                name="updateSku"
                                                class="form-control"
-                                               placeholder="Ex: PH, PA,..">
+                                               placeholder="Ex: Black, Blue,..">
                                     </div>
                                     <div class="form-group">
                                         <label for="updateName">Name</label>
@@ -199,12 +207,12 @@
                                                class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="updateActive">Active</label>
-                                        <select id="updateActive" name="updateActive"
-                                                class="form-control custom-select">
-                                            <option id="option-true" value="1">True</option>
-                                            <option id="option-false" value="0">False</option>
-                                        </select>
+                                        <label for="updateHex">Hex</label>
+                                        <input type="text"
+                                               id="updateHex"
+                                               name="updateHex"
+                                               placeholder="Ex: 111111, cc11cc,.."
+                                               class="form-control">
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -267,14 +275,11 @@
 
 <script>
     jQuery(function () {
-        let table = jQuery("#type-product").DataTable({
+        let table = jQuery("#color").DataTable({
             "responsive": true, "lengthChange": false, "autoWidth": false,
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-            initComplete: function () {
-                table.buttons().container().appendTo('.col-md-6:eq(0)', table.table().container());
-            },
             ajax: {
-                url: `/api/type-product`,
+                url: `/api/color`,
                 dataSrc: "data"
             },
             "columnDefs": [
@@ -291,11 +296,14 @@
                     }
                 },
             ],
+            initComplete: function () {
+                table.buttons().container().appendTo('.col-md-6:eq(0)', table.table().container());
+            },
             columns: [
                 {data: "id"},
                 {data: "sku"},
                 {data: "name"},
-                {data: "active"},
+                {data: "hex"},
                 {data: "id"},
             ],
         });
@@ -303,21 +311,14 @@
 
     function getData(id) {
         jQuery.ajax({
-            url: `/api/type-product/` + id,
+            url: `/api/color/` + id,
             type: 'GET',
             success: function (data) {
                 reloadData();
                 jQuery('#updateId').val(data.data.id);
                 jQuery('#updateSku').val(data.data.sku);
                 jQuery('#updateName').val(data.data.name);
-                if (data.data.active) {
-                    jQuery('#option-true').prop('selected', true);
-                    jQuery('#option-false').prop('selected', false);
-
-                } else {
-                    jQuery('#option-true').prop('selected', false);
-                    jQuery('#option-false').prop('selected', true);
-                }
+                jQuery('#updateHex').val(data.data.hex);
             }
         });
     }
@@ -340,7 +341,7 @@
                 );
 
                 jQuery.ajax({
-                    url: `/api/type-product/` + id,
+                    url: `/api/color/` + id,
                     type: 'DELETE',
                     success: function (data) {
                         reloadData();
@@ -356,7 +357,7 @@
         if (validate) {
             let data = new FormData(jQuery("#modal-add")[0]);
             jQuery.ajax({
-                url: "/api/type-product",
+                url: "/api/color",
                 type: "POST",
                 data: data,
                 processData: false,
@@ -371,7 +372,7 @@
                             showConfirmButton: false,
                             timer: 2000
                         })
-                        jQuery("#type-product").trigger("reset");
+                        jQuery("#color").trigger("reset");
                         jQuery('#modal-add').modal('hide');
                         setInputDefault("#modal-add");
                     } else {
@@ -395,9 +396,8 @@
         if (validate) {
             let data = new FormData(jQuery("#modal-update")[0]);
             let id = data.get("updateId");
-            console.log(data.get("updateActive"))
             jQuery.ajax({
-                url: "/api/type-product/" + id,
+                url: "/api/color/" + id,
                 type: "PUT",
                 data: data,
                 processData: false,
@@ -412,7 +412,7 @@
                             showConfirmButton: false,
                             timer: 2000
                         })
-                        jQuery("#type-product").trigger("reset");
+                        jQuery("#color").trigger("reset");
                         jQuery('#modal-update').modal('hide');
                     } else {
                         Swal.fire({
@@ -436,7 +436,7 @@
     }
 
     function reloadData() {
-        jQuery('#type-product').DataTable().ajax.reload();
+        jQuery('#color').DataTable().ajax.reload();
     }
 
     jQuery("#modal-add").validate({
@@ -450,6 +450,11 @@
                 required: true,
                 minlength: 3,
                 maxlength: 50
+            },
+            addHex: {
+                required: true,
+                minlength: 1,
+                maxlength: 7
             }
         },
         messages: {
@@ -462,6 +467,11 @@
                 required: "Please enter name",
                 minlength: "Name must be at least 3 characters long",
                 maxlength: "Name cannot be more than 50 characters long"
+            },
+            addHex: {
+                required: "Please enter name",
+                minlength: "Name must be at least 1 characters long",
+                maxlength: "Name cannot be more than 7 characters long"
             }
         },
         errorElement: 'span',
@@ -488,7 +498,12 @@
                 required: true,
                 minlength: 3,
                 maxlength: 50
-            }
+            },
+            updateHex: {
+                required: true,
+                minlength: 1,
+                maxlength: 7
+            },
         },
         messages: {
             updateSku: {
@@ -500,7 +515,12 @@
                 required: "Please enter name",
                 minlength: "Name must be at least 3 characters long",
                 maxlength: "Name cannot be more than 50 characters long"
-            }
+            },
+            updateHex: {
+                required: "Please enter name",
+                minlength: "Name must be at least 1 characters long",
+                maxlength: "Name cannot be more than 7 characters long"
+            },
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {

@@ -17,17 +17,17 @@ public class ProductMapper {
     }
 
     public Product toProduct(final ProductDto dto) {
-        return new Product(dto.getId(), dto.getSku(), dto.getName(), null, dto.getPrice(), dto.getUrlImage(), dto.getRate(), dto.getDiscount(), dto.getViewed(), dto.getDateCreated(), dto.getLastUpdated(), dto.isActive());
+        return new Product(dto.getId(), dto.getSku(), dto.getName(), typeProductMapper.toTypeProduct(dto.getTypeProduct()), dto.getPrice(), dto.getUrlImage(), dto.getRate(), dto.getDiscount(), dto.getViewed(), dto.getDateCreated(), dto.getLastUpdated(), dto.isActive());
     }
 
     public ProductDto toProductDto(final Product model) {
-        return new ProductDto(model.getId(), model.getSku(), model.getName(), model.getTypeProduct(), model.getPrice(), model.getUrlImage(), model.getRate(), model.getDiscount(), model.getViewed(), model.getDateCreated(), model.getLastUpdated(), model.isActive());
+        return new ProductDto(model.getId(), model.getSku(), model.getName(), typeProductMapper.toTypeProductDto(model.getTypeProduct()), model.getPrice(), model.getUrlImage(), model.getRate(), model.getDiscount(), model.getViewed(), model.getDateCreated(), model.getLastUpdated(), model.isActive());
     }
 
     public List<Product> toListProduct(final List<ProductDto> listDto) {
         List<Product> listModel = new ArrayList<Product>();
         for (ProductDto dto : listDto) {
-            listModel.add(new Product(dto.getId(), dto.getSku(), dto.getName(), dto.getTypeProduct(), dto.getPrice(), dto.getUrlImage(), dto.getRate(), dto.getDiscount(), dto.getViewed(), dto.getDateCreated(), dto.getLastUpdated(), dto.isActive()));
+            listModel.add(new Product(dto.getId(), dto.getSku(), dto.getName(), typeProductMapper.toTypeProduct(dto.getTypeProduct()), dto.getPrice(), dto.getUrlImage(), dto.getRate(), dto.getDiscount(), dto.getViewed(), dto.getDateCreated(), dto.getLastUpdated(), dto.isActive()));
         }
         return listModel;
     }
@@ -35,7 +35,7 @@ public class ProductMapper {
     public List<ProductDto> toListProductDto(final List<Product> listModel) {
         List<ProductDto> listDto = new ArrayList<ProductDto>();
         for (Product model : listModel) {
-            listDto.add(new ProductDto(model.getId(), model.getSku(), model.getName(), model.getTypeProduct(), model.getPrice(), model.getUrlImage(), model.getRate(), model.getDiscount(), model.getViewed(), model.getDateCreated(), model.getLastUpdated(), model.isActive()));
+            listDto.add(new ProductDto(model.getId(), model.getSku(), model.getName(), typeProductMapper.toTypeProductDto(model.getTypeProduct()), model.getPrice(), model.getUrlImage(), model.getRate(), model.getDiscount(), model.getViewed(), model.getDateCreated(), model.getLastUpdated(), model.isActive()));
         }
         return listDto;
     }

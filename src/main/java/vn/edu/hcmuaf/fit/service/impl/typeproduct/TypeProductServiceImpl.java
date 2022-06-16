@@ -17,7 +17,7 @@ public class TypeProductServiceImpl implements TypeProductService {
     private TypeProductMapper mapper;
 
     public TypeProductServiceImpl() {
-        dao = new TypeProductDAOImpl();
+        dao = TypeProductDAOImpl.getInstance();
         mapper = new TypeProductMapper();
     }
 
@@ -85,12 +85,11 @@ public class TypeProductServiceImpl implements TypeProductService {
     @Override
     public BaseResponse deleteTypeProduct(Long id) {
         TypeProduct typeProduct = dao.findById(id).orElse(null);
-        if (typeProduct == null) {
+        if (!dao.findById(id).isPresent()) {
             return new BaseResponse(false, 401, "Can't find by id = " + id);
-        } else {
-            dao.removeById(id);
-            return new BaseResponse(true, 200, "Success!");
         }
+        dao.removeById(id);
+        return new BaseResponse(true, 200, "Success!");
     }
 
     @Override

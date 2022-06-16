@@ -15,7 +15,7 @@ public class TypeProductDAOImpl implements TypeProductDAO {
     private Connection connection;
 
 
-    public TypeProductDAOImpl() {
+    private TypeProductDAOImpl() {
         this.connectionPool = DbConnection.init("root", "", "apple_store");
     }
 
@@ -51,25 +51,25 @@ public class TypeProductDAOImpl implements TypeProductDAO {
 
     @Override
     public Optional<TypeProduct> findById(Long id) {
-        TypeProduct typeProduct = null;
         connection = connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.TYPE_PRODUCT.GET_BY_ID);
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
-            if (!rs.isBeforeFirst() && rs.getRow() == 0) return null;
+            if (!rs.isBeforeFirst() && rs.getRow() == 0) return Optional.empty();
             if (rs.next()) {
                 String sku = rs.getString("sku");
                 String name = rs.getString("name");
                 boolean active = rs.getBoolean("active");
-                typeProduct = new TypeProduct(id, sku, name, active);
+                TypeProduct typeProduct = new TypeProduct(id, sku, name, active);
+                connectionPool.releaseConnection(connection);
+                return Optional.of(typeProduct);
             }
         } catch (SQLException e) {
             connectionPool.releaseConnection(connection);
-            return null;
+            return Optional.empty();
         }
-        connectionPool.releaseConnection(connection);
-        return Optional.of(typeProduct);
+        return Optional.empty();
     }
 
     @Override
@@ -106,25 +106,25 @@ public class TypeProductDAOImpl implements TypeProductDAO {
 
     @Override
     public Optional<TypeProduct> findBySku(String sku) {
-        TypeProduct typeProduct = null;
         connection = connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.TYPE_PRODUCT.GET_BY_SKU);
             statement.setString(1, sku);
             ResultSet rs = statement.executeQuery();
-            if (!rs.isBeforeFirst() && rs.getRow() == 0) return null;
+            if (!rs.isBeforeFirst() && rs.getRow() == 0) return Optional.empty();
             if (rs.next()) {
                 Long id = rs.getLong("id");
                 String name = rs.getString("name");
                 boolean active = rs.getBoolean("active");
-                typeProduct = new TypeProduct(id, sku, name, active);
+                TypeProduct typeProduct = new TypeProduct(id, sku, name, active);
+                connectionPool.releaseConnection(connection);
+                return Optional.of(typeProduct);
             }
         } catch (SQLException e) {
             connectionPool.releaseConnection(connection);
-            return null;
+            return Optional.empty();
         }
-        connectionPool.releaseConnection(connection);
-        return Optional.of(typeProduct);
+        return Optional.empty();
     }
 
     @Override
