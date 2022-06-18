@@ -65,6 +65,10 @@ public class Product implements Serializable {
         this.active = active;
     }
 
+    public Integer sales() {
+        return this.price - (int) (this.price * this.discount);
+    }
+
     public Long getId() {
         return id;
     }

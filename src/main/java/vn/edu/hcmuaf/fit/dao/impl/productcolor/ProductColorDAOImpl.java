@@ -96,6 +96,7 @@ public class ProductColorDAOImpl implements ProductColorDAO {
             statement.setLong(2, object.getColor().getId());
             statement.setString(3, object.getBgImage());
             statement.setString(4, object.getDeImages());
+            System.out.println(object.getDeImages());
             if (object.getId() != 0) {
                 statement.setLong(5, object.getId());
             }

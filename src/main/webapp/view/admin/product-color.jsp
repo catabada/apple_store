@@ -142,7 +142,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="addDeImages">Detail Images</label>
-                                        <input type="file" id="addDeImages" name="addDeImages" class="form-control">
+                                        <input multiple type="file" id="addDeImages" name="addDeImages"
+                                               class="form-control">
                                     </div>
 
                                 </div>
@@ -192,7 +193,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="updateColorId">Color</label>
-                                        <select id="updateColorId" name="updateColorId" class="form-control custom-select">
+                                        <select id="updateColorId" name="updateColorId"
+                                                class="form-control custom-select">
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -201,7 +203,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="updateDeImages">Detail Images</label>
-                                        <input type="file" id="updateDeImages" name="updateDeImages" class="form-control">
+                                        <input type="file" id="updateDeImages" name="updateDeImages"
+                                               class="form-control">
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -266,13 +269,30 @@
                                 + '</div>';
                         }
                     },
-                    // {
-                    //     targets: 3,
-                    //     searchable: false,
-                    //     render: function (data, type, row, meta) {
-                    //         return '<img src="' + data + '" width="50px" height="50px" alt="">';
-                    //     }
-                    // },
+                    {
+                        targets: 3,
+                        searchable: false,
+                        width: 200,
+                        render: function (data, type, row, meta) {
+                            return '<div class="d-flex align-center justify-content-around">' +
+                                '<img src="${pageContext.request.contextPath}/image/' + data + '" width="50px" height="50px" alt="">' +
+                                '</div>';
+
+                        }
+                    },
+                    {
+                        targets: 4,
+                        searchable: false,
+                        render: function (data, type, row, meta) {
+                            const nameImages = data.split("_");
+                            let imagesTag = '<div class="d-flex align-center justify-content-around">';
+                            for (let i = 0; i < nameImages.length - 1; i++) {
+                                imagesTag += '<img src="${pageContext.request.contextPath}/image/' + nameImages[i] + '" width="50px" height="50px" alt="">';
+                            }
+                            imagesTag += '</div>';
+                            return imagesTag;
+                        }
+                    },
                 ],
                 initComplete: function () {
                     table.buttons().container().appendTo('.col-md-6:eq(0)', table.table().container());
@@ -308,6 +328,7 @@
                 url: "/api/product",
                 type: "GET",
                 success: function (data) {
+                    jQuery("#addProductId").empty();
                     jQuery.map(data.data, (type, i) => {
                         if (i === 0)
                             jQuery("#addProductId").append('<option selected value="' + type.id + '">' + type.name + '</option>');
@@ -320,6 +341,7 @@
                 url: "/api/color",
                 type: "GET",
                 success: function (data) {
+                    jQuery("#addColorId").empty();
                     jQuery.map(data.data, (type, i) => {
                         if (i === 0)
                             jQuery("#addColorId").append('<option selected value="' + type.id + '">' + type.name + '</option>');
@@ -446,9 +468,8 @@
                                 showConfirmButton: false,
                                 timer: 2000
                             })
-                            jQuery("#type-product").trigger("reset");
+                            jQuery("#product-color").trigger("reset");
                             jQuery('#modal-add').modal('hide');
-                            setInputDefault("#modal-add");
                         } else {
                             Swal.fire({
                                 icon: 'error',

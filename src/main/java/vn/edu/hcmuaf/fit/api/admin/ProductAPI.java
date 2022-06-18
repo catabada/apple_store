@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.api.admin;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import vn.edu.hcmuaf.fit.constant.AppError;
+import vn.edu.hcmuaf.fit.constant.FileConstant;
 import vn.edu.hcmuaf.fit.dto.product.ProductCreate;
 import vn.edu.hcmuaf.fit.dto.product.ProductDto;
 import vn.edu.hcmuaf.fit.dto.typeproduct.TypeProductCreate;
@@ -20,7 +21,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-@MultipartConfig()
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 50)
 @WebServlet(name = "ProductAPI", urlPatterns = "/api/product/*")
 public class ProductAPI extends HttpServlet {
     private final Gson GSON = new GsonBuilder().create();
@@ -79,20 +82,16 @@ public class ProductAPI extends HttpServlet {
 
         String fileName = System.currentTimeMillis() + "-" + part.getSubmittedFileName();
 
-        String path = pathFolderUploadFile().getAbsolutePath() + fileName;
+        File folder = new File(FileConstant.BASE_FOLDER);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
 
-        part.write(path);
+        part.write(FileConstant.BASE_FOLDER + File.separator + fileName);
 
         return fileName;
     }
 
-    private File pathFolderUploadFile() {
-        File folder = new File(System.getProperty("user.home") + File.separator + "App-Store/upload/images/product/");
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
-        return folder;
-    }
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
