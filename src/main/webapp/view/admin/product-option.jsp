@@ -544,7 +544,7 @@
                 addSku: {
                     required: true,
                     minlength: 1,
-                    maxlength: 3
+                    maxlength: 10
                 },
                 addName: {
                     required: true,
@@ -559,7 +559,7 @@
                 addSku: {
                     required: "Please enter sku",
                     minlength: "Sku must be at least 1 characters long",
-                    maxlength: "Sku cannot be more than 3 characters long"
+                    maxlength: "Sku cannot be more than 10 characters long"
                 },
                 addName: {
                     required: "Please enter name",
