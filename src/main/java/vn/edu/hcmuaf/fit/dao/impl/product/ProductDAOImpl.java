@@ -146,4 +146,38 @@ public class ProductDAOImpl implements ProductDAO {
 
     }
 
+    @Override
+    public List<Product> findAllByTypeProductId(Long typeProductId) {
+        List<Product> products = new ArrayList<Product>();
+        connection = connectionPool.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT.GET_LIST_BY_TYPE_PRODUCT_ID);
+            statement.setLong(1, typeProductId);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                String sku = rs.getString("sku");
+                String name = rs.getString("name");
+                String urlImage = rs.getString("url_image");
+                Integer price = rs.getInt("price");
+                Double discount = rs.getDouble("discount");
+                Integer rate = rs.getInt("rate");
+                Integer viewed = rs.getInt("viewed");
+                Date dateUpdated = rs.getDate("date_created");
+                Date lastUpdated = rs.getDate("last_updated");
+                boolean active = rs.getBoolean("active");
+
+                TypeProduct typeProduct = TypeProductDAOImpl.getInstance().findById(typeProductId).orElseGet(null);
+                Product product = new Product(id, sku, name, typeProduct, price, urlImage, rate, discount, viewed, dateUpdated, lastUpdated, active);
+                products.add(product);
+            }
+
+        } catch (SQLException e) {
+            connectionPool.releaseConnection(connection);
+            return products;
+        }
+        connectionPool.releaseConnection(connection);
+        return products;
+    }
+
 }

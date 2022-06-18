@@ -89,10 +89,26 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="/admin/option" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Option
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="/admin/product-color" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Product Color
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/product-option" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Product Option
                         </p>
                     </a>
                 </li>

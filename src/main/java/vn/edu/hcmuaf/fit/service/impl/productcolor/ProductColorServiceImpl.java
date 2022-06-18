@@ -6,9 +6,11 @@ import vn.edu.hcmuaf.fit.dao.impl.product.ProductDAOImpl;
 import vn.edu.hcmuaf.fit.dao.impl.productcolor.ProductColorDAOImpl;
 import vn.edu.hcmuaf.fit.dao.product.ProductDAO;
 import vn.edu.hcmuaf.fit.dao.productcolor.ProductColorDAO;
+import vn.edu.hcmuaf.fit.dto.option.OptionDto;
 import vn.edu.hcmuaf.fit.dto.productcolor.*;
 import vn.edu.hcmuaf.fit.mapper.productcolor.ProductColorMapper;
 import vn.edu.hcmuaf.fit.model.color.Color;
+import vn.edu.hcmuaf.fit.model.option.Option;
 import vn.edu.hcmuaf.fit.model.product.Product;
 import vn.edu.hcmuaf.fit.model.productcolor.ProductColor;
 import vn.edu.hcmuaf.fit.response.BaseResponse;
@@ -33,7 +35,11 @@ public class ProductColorServiceImpl implements ProductColorService {
 
     @Override
     public DataResponse<ProductColorDto> getProductColorById(Long id) {
-        return null;
+        Optional<ProductColor> optional = productColorDAO.findById(id);
+        return optional.map(productColor -> {
+            ProductColorDto productColorDto = productColorMapper.toProductColorDto(productColor);
+            return new DataResponse<ProductColorDto>(true, 200, "Success", productColorDto);
+        }).orElseGet(() -> new DataResponse<ProductColorDto>(false, 401, "Not found!", null));
     }
 
     @Override

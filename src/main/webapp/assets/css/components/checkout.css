@@ -1,0 +1,225 @@
+.body {
+    position: relative;
+    top: var(--header-navbar-height);
+    padding-bottom:20px;
+    background-color:#f5f5f5;
+}
+.body__title {
+    text-transform: capitalize;
+    font-weight: bold;
+    text-align: center;
+    font-size: 3rem;
+    margin:20px 0;
+    padding:50px 0;
+
+}
+.body__form {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px 28px !important;
+
+}
+.body__form_title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #000000;
+    margin: 20px 0;
+}
+.body__form__input {
+    padding:14px 20px;
+    border:1px solid #c5c5c5;
+    border-radius:10px;
+    font-size: 1.4rem;
+    margin: 10px 20px;
+}
+.body__form__input {
+    width: 95% ;
+}
+.form__item {}
+
+.form__item__label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #7ed321;
+    margin: 20px 0;
+}
+
+.form__item__inputs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form__item__inputs__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 3px;
+    border: 1px solid #c2c2c2;
+    margin: 10px 0;
+    width: 100%;
+    margin: 10px 20px;
+    padding: 0px 0px;
+    border-radius:10px ;
+}
+
+.form__item__inputs__item__icon {
+    padding: 5px 15px;
+    text-align: center;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items:center;
+    font-size: 1.2rem;
+
+}
+
+.form__item__inputs__item__icon::after {
+    content: "";
+    position: absolute;
+    width: 1px;
+    top: 15%;
+    bottom: 15%;
+    right: 0;
+    background-color: #c2c2c2;
+}
+
+.form__item__inputs__item__icon i {
+    width: 16px;
+    color: #b9b9b9;
+    font-size:2rem;
+}
+
+.form__item__inputs__item__input {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    width: 95%;
+    margin: 10px;
+}
+
+.form__item__inputs__item__input input {
+    font-size:1.4rem;
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+.form__item__buttons {
+    display: flex;
+    margin:20px 20px;
+}
+
+.form__item__buttons__item {
+    cursor: pointer;
+    text-decoration: none;
+    color: #c5c5c5;
+    border: 1px solid #c5c5c5;
+    width: 50%;
+    padding: 15px;
+    text-align: center;
+    background-color: #f9f9f9;
+    font-size: 1.6rem;
+}
+
+/* Cart css */
+.body__cart {
+    padding:30px 50px !important;
+    background-color: #fff;
+    border-radius: 12px;
+}
+.body__cart--wrapper {
+    padding:0px 30px;
+}
+.body__cart__tilte {
+    font-size: 2rem;
+    text-align: left;
+    font-weight: bold;
+
+}
+.body__cart__amount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.body__cart__amount__title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+.body__cart__amount__num {
+    font-size:2rem;
+    border-radius: 50%;
+    background-color: #000;
+    color:#fff;
+    padding: 8px 10px;
+}
+.body__cart__list {
+    padding:10px 10px;
+}
+.body__cart__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:20px 0;
+}
+.body__cart__item__img {
+    width: 30%;
+}
+.body__cart__item__img img{
+    width: 50%;
+}
+.body__cart__item__detail {
+    width: 70%;
+}
+.body__cart__item__detail__name {
+    font-size: 1.5rem;
+    line-height:2.2rem;
+    font-weight: bold;
+    margin: 5px 0px;
+}
+.body__cart__item__detail__amount {
+    font-size:1.6rem;
+    line-height: 2.6rem;
+    text-align: right;
+    color:#0071e3;
+}
+.body__cart__item__detail__price {
+    font-size: 1.6rem;
+    color:#666;
+    line-height: 2.6rem;
+}
+.body__cart__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+.body__cart__total__title {
+    font-size: 2rem;
+}
+.body__cart__total__num {
+    font-size: 2rem;
+}
+.body__cart__btn {
+    background-color: #0071e3;
+    width: 80%;
+    margin:auto;
+    display: block;
+    color:#fff;
+    border-radius:12px;
+    padding:12px 10px;
+    border:none;
+    outline:none;
+    font-size:2.2rem;
+    margin-top: 20px;
+}
+.swal2-html-container {
+    font-size:1.4rem !important;
+}
+.swal2-confirm {
+    letter-spacing: 1px;
+    font-size: 1.3rem;
+}
+#go-to-profile {
+    font-size:1.2rem !important;
+}
