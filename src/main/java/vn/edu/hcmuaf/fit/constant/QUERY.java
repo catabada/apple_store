@@ -58,4 +58,13 @@ public final class QUERY {
         public static final String DELETE_BY_ID = "delete from product_option where id = ?";
         public static final String UPDATE = "update product_option set sku = ?, name = ?, product_id = ?, option_id = ? where id = ?";
     }
+    public static final class USER {
+        public static final String GET_LIST = "select * from user";
+        public static final String GET_BY_ID = "select * from user where id = ?";
+        public static final String GET_BY_USERNAME = "select * from user where user_name = ?";
+        public static final String INSERT = "insert into user(user+name, password, active, date_created, role,sku) values (?, ?, ?, ?, ?, ?)";
+        public static final String DELETE_BY_ID = "delete from user where id = ?";
+        public static final String UPDATE = "update user set user_name = ?, password = ?, active = ?, date_created = ?, role = ?,sku = ? where id = ?";
+
+    }
 }
