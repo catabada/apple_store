@@ -562,6 +562,7 @@
     }
 
     function getDataOptionByProductColorId(productColorId) {
+        let productOptionId = jQuery("input[name=radio-option]:checked").val();
         jQuery.map(jQuery(".body__images--wrapper"), (item, i) => {
             let image = jQuery(item);
             if (image.attr("id") === "image-color-" + productColorId) {
@@ -591,7 +592,25 @@
             }
 
         })
+        jQuery.ajax({
+            url: "/api/product-detail/listByProductOptionId" + productOptionId,
+            type: "GET",
+            success: function (response) {
+                if (response.success) {
+                    let list = response.data;
+                    let productColor = jQuery("input[name=radio-color]:checked").val();
+                    for (let productDetail of list) {
+                        if (productDetail.productColor.id == productColor) {
+                            jQuery("#breadcrumb-price").empty();
+                            jQuery("#price-total").empty();
+                            jQuery("#breadcrumb-price").append("$" + productDetail.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") + ".00");
+                            jQuery("#price-total").append("$" + productDetail.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") + ".00");
+                        }
+                    }
+                }
+            }
 
+        })
         jQuery.ajax({
             url: "/api/product-detail/listByProductColorId" + productColorId,
             type: "GET",
