@@ -5,6 +5,7 @@ import vn.edu.hcmuaf.fit.dao.impl.product.ProductDAOImpl;
 import vn.edu.hcmuaf.fit.dao.impl.productoption.ProductOptionDAOImpl;
 import vn.edu.hcmuaf.fit.dao.productoption.ProductOptionDAO;
 import vn.edu.hcmuaf.fit.dto.productcolor.ProductColorDto;
+import vn.edu.hcmuaf.fit.dto.productdetail.ProductDetailDto;
 import vn.edu.hcmuaf.fit.dto.productoption.*;
 import vn.edu.hcmuaf.fit.mapper.productoption.ProductOptionMapper;
 import vn.edu.hcmuaf.fit.model.color.Color;
@@ -55,7 +56,7 @@ public class ProductOptionServiceImpl implements ProductOptionService {
     @Override
     public DataResponse<List<ProductOptionDto>> getListProductOption() {
         List<ProductOption> productOptions = productOptionDao.findAll();
-        return new DataResponse<List<ProductOptionDto>>(true, 200, "Success!", productOptionMapper.toProductoptionDtoList(productOptions));
+        return new DataResponse<List<ProductOptionDto>>(true, 200, "Success!", productOptionMapper.toProductOptionDtoList(productOptions));
     }
 
     @Override
@@ -88,5 +89,16 @@ public class ProductOptionServiceImpl implements ProductOptionService {
         productOption.setProduct(product);
         productOptionDao.save(productOption);
         return new BaseResponse(true, 200, "Success!");
+    }
+
+    @Override
+    public DataResponse<List<ProductOptionDto>> getListByProductId(Long productId) {
+        List<ProductOption> productOptions = productOptionDao.findAllByProductId(productId);
+        return new DataResponse<List<ProductOptionDto>>(true, 200, "Success!", productOptionMapper.toProductOptionDtoList(productOptions));
+    }
+
+    @Override
+    public DataResponse<List<ProductDetailDto>> getListByProductColorId(Long productColorId) {
+        return null;
     }
 }

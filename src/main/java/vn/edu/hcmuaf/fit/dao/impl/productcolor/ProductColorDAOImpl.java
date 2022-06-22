@@ -120,11 +120,31 @@ public class ProductColorDAOImpl implements ProductColorDAO {
         connectionPool.releaseConnection(connection);
     }
 
-    public static void main(String[] args) {
-        ProductColorDAOImpl productColorDAO = ProductColorDAOImpl.getInstance();
-        List<ProductColor> productColors = productColorDAO.findAll();
-        for (ProductColor productColor : productColors) {
-            System.out.println(productColor);
+    @Override
+    public List<ProductColor> findAllByProductId(Long productId) {
+        List<ProductColor> productColors = new ArrayList<ProductColor>();
+        connection = connectionPool.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_COLOR.GET_LIST_BY_PRODUCT_ID);
+            statement.setLong(1, productId);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                String bgImage = rs.getString("bg_image");
+                String deImages = rs.getString("de_images");
+
+                Product product = ProductDAOImpl.getInstance().findById(rs.getLong("product_id")).orElse(null);
+                Color color = ColorDAOImpl.getInstance().findById(rs.getLong("color_id")).orElse(null);
+
+                ProductColor productColor = new ProductColor(id, product, color, bgImage, deImages);
+                productColors.add(productColor);
+            }
+        } catch (SQLException e) {
+            connectionPool.releaseConnection(connection);
+            return null;
         }
+
+        connectionPool.releaseConnection(connection);
+        return productColors;
     }
 }

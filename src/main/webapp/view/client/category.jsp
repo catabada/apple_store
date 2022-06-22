@@ -73,7 +73,7 @@
                 <div class="body-all-product__products">
                     <div class="body-all-product__products-row row">
                         <c:forEach var="product" items="${listProduct}">
-                            <a href="${pageContext.request.contextPath}/apple-store/detail-product?id=${product.id}"
+                            <a href="${pageContext.request.contextPath}/apple-store/product-detail?id=${product.id}"
                                class="body-all-product__products-item col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
                                 <div class="body-all-product__products-item__img body-all-product__products-item__img--active"
                                      style="background-image: url(${pageContext.request.contextPath}/image/${product.urlImage})">

@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import vn.edu.hcmuaf.fit.constant.AppError;
 import vn.edu.hcmuaf.fit.dto.option.*;
+import vn.edu.hcmuaf.fit.dto.productcolor.ProductColorDto;
+import vn.edu.hcmuaf.fit.dto.productdetail.ProductDetailDto;
 import vn.edu.hcmuaf.fit.dto.productoption.*;
 import vn.edu.hcmuaf.fit.response.BaseResponse;
 import vn.edu.hcmuaf.fit.response.DataResponse;
@@ -36,6 +38,14 @@ public class ProductOptionAPI extends HttpServlet {
         String pathInfo = request.getPathInfo();
         if (pathInfo == null) {
             DataResponse<List<ProductOptionDto>> result = productOptionService.getListProductOption();
+            response.getWriter().write(GSON.toJson(result));
+        } else if (pathInfo.contains("/listByProductId")) {
+            Long productId = Long.parseLong(pathInfo.substring(16));
+            DataResponse<List<ProductOptionDto>> result = productOptionService.getListByProductId(productId);
+            response.getWriter().write(GSON.toJson(result));
+        } else if (pathInfo.contains("/listByProductColorId")) {
+            Long productColorId = Long.parseLong(pathInfo.substring(21));
+            DataResponse<List<ProductDetailDto>> result = productOptionService.getListByProductColorId(productColorId);
             response.getWriter().write(GSON.toJson(result));
         } else {
             try {

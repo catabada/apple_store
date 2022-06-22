@@ -132,10 +132,4 @@ public class TypeProductDAOImpl implements TypeProductDAO {
         return Optional.ofNullable(null);
     }
 
-    public static void main(String[] args) {
-        TypeProductDAOImpl dao = new TypeProductDAOImpl();
-        for (TypeProduct type : TypeProductDAOImpl.getInstance().findAll()) {
-            System.out.println(type.getSku());
-        }
-    }
 }

@@ -40,14 +40,14 @@ public class ProductOptionMapper {
         return listProductOption;
     }
 
-    public List<ProductOptionDto> toProductoptionDtoList(final List<ProductOption> productoptionList) {
-        List<ProductOptionDto> listProductoptionDto = new ArrayList<ProductOptionDto>();
+    public List<ProductOptionDto> toProductOptionDtoList(final List<ProductOption> productoptionList) {
+        List<ProductOptionDto> listProductOptionDto = new ArrayList<ProductOptionDto>();
         for (ProductOption productOption : productoptionList) {
             ProductOptionDto productOptionDto = new ProductOptionDto(productOption.getId(), productOption.getSku(), productOption.getName(),
                     productMapper.toProductDto(productOption.getProduct()),
                     optionMapper.toOptionDto(productOption.getOption()));
-            listProductoptionDto.add(productOptionDto);
+            listProductOptionDto.add(productOptionDto);
         }
-        return listProductoptionDto;
+        return listProductOptionDto;
     }
 }
