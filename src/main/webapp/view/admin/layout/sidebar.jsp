@@ -112,6 +112,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="/admin/product-detail" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Product Detail
+                        </p>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a href="/admin/orders" class="nav-link">

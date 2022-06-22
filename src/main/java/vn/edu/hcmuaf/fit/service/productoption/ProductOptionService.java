@@ -1,5 +1,7 @@
 package vn.edu.hcmuaf.fit.service.productoption;
 
+import vn.edu.hcmuaf.fit.dto.productcolor.ProductColorDto;
+import vn.edu.hcmuaf.fit.dto.productdetail.ProductDetailDto;
 import vn.edu.hcmuaf.fit.dto.productoption.*;
 import vn.edu.hcmuaf.fit.response.BaseResponse;
 import vn.edu.hcmuaf.fit.response.DataResponse;
@@ -20,4 +22,8 @@ public interface ProductOptionService {
     public BaseResponse deleteProductOptionById(final Long id);
 
     public BaseResponse updateProductOption(final ProductOptionUpdate update);
+
+    DataResponse<List<ProductOptionDto>> getListByProductId(Long productId);
+
+    DataResponse<List<ProductDetailDto>> getListByProductColorId(Long productColorId);
 }

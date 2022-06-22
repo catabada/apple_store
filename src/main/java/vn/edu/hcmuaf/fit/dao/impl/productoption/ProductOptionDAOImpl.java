@@ -7,6 +7,7 @@ import vn.edu.hcmuaf.fit.dao.productoption.ProductOptionDAO;
 import vn.edu.hcmuaf.fit.database.*;
 import vn.edu.hcmuaf.fit.model.option.Option;
 import vn.edu.hcmuaf.fit.model.product.Product;
+import vn.edu.hcmuaf.fit.model.productcolor.ProductColor;
 import vn.edu.hcmuaf.fit.model.productoption.ProductOption;
 
 import java.sql.*;
@@ -115,6 +116,34 @@ public class ProductOptionDAOImpl implements ProductOptionDAO {
             connectionPool.releaseConnection(connection);
         } catch (SQLException e) {
             connectionPool.releaseConnection(connection);
+        }
+    }
+
+    @Override
+    public List<ProductOption> findAllByProductId(Long productId) {
+        List<ProductOption> productOptions = new ArrayList<ProductOption>();
+        connection = connectionPool.getConnection();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_OPTION.GET_LIST_BY_PRODUCT_ID);
+            statement.setLong(1, productId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String sku = resultSet.getString("sku");
+                String name = resultSet.getString("name");
+                Long optionId = resultSet.getLong("option_id");
+
+                Product product = ProductDAOImpl.getInstance().findById(productId).get();
+                Option option = OptionDAOImpl.getInstance().findById(optionId).get();
+                ProductOption productOption = new ProductOption(id, sku, name, product, option);
+                productOptions.add(productOption);
+            }
+            connectionPool.releaseConnection(connection);
+            return productOptions;
+        } catch (SQLException e) {
+            connectionPool.releaseConnection(connection);
+            return productOptions;
         }
     }
 }
