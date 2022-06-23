@@ -6,11 +6,9 @@ import vn.edu.hcmuaf.fit.dao.impl.product.ProductDAOImpl;
 import vn.edu.hcmuaf.fit.dao.impl.productcolor.ProductColorDAOImpl;
 import vn.edu.hcmuaf.fit.dao.product.ProductDAO;
 import vn.edu.hcmuaf.fit.dao.productcolor.ProductColorDAO;
-import vn.edu.hcmuaf.fit.dto.option.OptionDto;
 import vn.edu.hcmuaf.fit.dto.productcolor.*;
 import vn.edu.hcmuaf.fit.mapper.productcolor.ProductColorMapper;
 import vn.edu.hcmuaf.fit.model.color.Color;
-import vn.edu.hcmuaf.fit.model.option.Option;
 import vn.edu.hcmuaf.fit.model.product.Product;
 import vn.edu.hcmuaf.fit.model.productcolor.ProductColor;
 import vn.edu.hcmuaf.fit.response.BaseResponse;
@@ -87,5 +85,11 @@ public class ProductColorServiceImpl implements ProductColorService {
         productColor.setDeImages(update.getDeImages());
         productColorDAO.save(productColor);
         return new BaseResponse(true, 200, "Success!");
+    }
+
+    @Override
+    public DataResponse<List<ProductColorDto>> getListByProductId(Long productId) {
+        List<ProductColor> productColors = productColorDAO.findAllByProductId(productId);
+        return new DataResponse<List<ProductColorDto>>(true, 200, "Success!", productColorMapper.toProductColorDtoList(productColors));
     }
 }

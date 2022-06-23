@@ -20,5 +20,5 @@ public interface ProductColorService {
 
     public BaseResponse updateProductColor(final ProductColorUpdate update);
 
-
+    public DataResponse<List<ProductColorDto>> getListByProductId(final Long productId);
 }

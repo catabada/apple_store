@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import vn.edu.hcmuaf.fit.constant.AppError;
 import vn.edu.hcmuaf.fit.constant.FileConstant;
+import vn.edu.hcmuaf.fit.dto.option.OptionDto;
 import vn.edu.hcmuaf.fit.dto.productcolor.ProductColorCreate;
 import vn.edu.hcmuaf.fit.dto.productcolor.ProductColorDto;
 import vn.edu.hcmuaf.fit.response.BaseResponse;
@@ -38,6 +39,10 @@ public class ProductColorAPI extends HttpServlet {
         if (pathInfo == null) {
             DataResponse<List<ProductColorDto>> result = productColorService.getListProductColor();
             response.getWriter().println(GSON.toJson(result));
+        } else if (pathInfo.contains("/listByProductId")) {
+            Long productId = Long.parseLong(pathInfo.substring(16));
+            DataResponse<List<ProductColorDto>> result = productColorService.getListByProductId(productId);
+            response.getWriter().write(GSON.toJson(result));
         } else {
             try {
                 Long id = Long.parseLong(pathInfo.substring(1));
