@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public DataResponse<UserDto> createUser(UserCreate create) {
-        User user = new User(create.getUsername(),create.getPassword(),create.getFirstName(),create.getLastName(),create.getEmail(),create.getAddress());
+        User user = new User(create.getUsername(),create.getPassword(),create.getFirstName(),create.getLastName(),create.getPhone(),create.getEmail(),create.getAddress());
         userDao.save(user);
         return new DataResponse<>(true, 200, "Success!", userMapper.toUserDto(user));
     }
@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(update.getPassword());
             user.setFirstName(update.getFirstName());
             user.setLastName(update.getLastName());
+            user.setPhone(update.getPhone());
             user.setEmail(update.getEmail());
             user.setAddress(update.getAddress());
             user.setRole(update.getRole());
@@ -90,7 +91,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public BaseResponse signUp(UserSignUp signUp) {
-        User user = new User(0L,signUp.getUsername(), signUp.getPassword(), signUp.getFirstName(),signUp.getLastName(), signUp.getEmail()," ",0,null,true);
+        User user = new User(0L,signUp.getUsername(), signUp.getPassword(), signUp.getFirstName(),signUp.getLastName()," ", signUp.getEmail()," ",0,null,true);
         if (userDao.checkUsername(user.getUsername()).isPresent()){
             return new BaseResponse(false,401,"Username Exist");
         }

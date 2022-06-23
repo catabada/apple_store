@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Product Option</title>
+    <title>Product Detail</title>
     <link rel="shortcut icon" type="image/png" href="../assets/img/admin.png">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -34,12 +34,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Product Option Page</h1>
+                        <h1>Product Detail Page</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Product Option Page</li>
+                            <li class="breadcrumb-item active">Product Detail Page</li>
                         </ol>
                     </div>
                 </div>
@@ -61,15 +61,18 @@
                                         data-toggle="modal"
                                         data-target="#modal-add">Add
                                 </button>
-                                <table id="product-option" class="table table-bordered table-striped">
+                                <table id="product-detail" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th data-priority="1">ID</th>
-                                        <th>Product</th>
-                                        <th>Option</th>
-                                        <th>Sku</th>
+                                        <th data-priority="2">Sku</th>
                                         <th>Name</th>
-                                        <th data-priority="2"></th>
+                                        <th>Price</th>
+                                        <th>Amount</th>
+                                        <th>Created</th>
+                                        <th>Updated</th>
+                                        <th>Active</th>
+                                        <th data-priority="3"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -80,11 +83,14 @@
                                     <tfoot>
                                     <tr>
                                         <th data-priority="1">ID</th>
-                                        <th>Product</th>
-                                        <th>Option</th>
-                                        <th>Sku</th>
+                                        <th data-priority="2">Sku</th>
                                         <th>Name</th>
-                                        <th data-priority="2"></th>
+                                        <th>Price</th>
+                                        <th>Amount</th>
+                                        <th>Created</th>
+                                        <th>Updated</th>
+                                        <th>Active</th>
+                                        <th data-priority="3"></th>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -108,7 +114,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Product Option</h4>
+                        <h4 class="modal-title">Add Product Detail</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -133,18 +139,24 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="addOptionId">Option</label>
-                                        <select id="addOptionId" name="addOptionId"
+                                        <label for="addProductColorId">Product Color</label>
+                                        <select id="addProductColorId" name="addProductColorId"
                                                 class="form-control custom-select">
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="addSku">Sku</label>
-                                        <input type="text" id="addSku" name="addSku" class="form-control">
+                                        <label for="addProductOptionId">Product Option</label>
+                                        <select id="addProductOptionId" name="addProductOptionId"
+                                                class="form-control custom-select">
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="addName">Name</label>
-                                        <input type="text" id="addName" name="addName" class="form-control">
+                                        <label for="addPrice">Price</label>
+                                        <input type="text" id="addPrice" name="addPrice" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addAmount">Amount</label>
+                                        <input type="text" id="addAmount" name="addAmount" class="form-control">
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -194,7 +206,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="updateProductId">Product</label>
-                                        <select onchange="changeOptionByProductUpdate()" id="updateProductId" name="updateProductId"
+                                        <select onchange="changeOptionByProductUpdate()" id="updateProductId"
+                                                name="updateProductId"
                                                 class="form-control custom-select">
                                         </select>
                                     </div>
@@ -262,51 +275,54 @@
 
     <script>
         jQuery(function () {
-            let table = jQuery("#product-option").DataTable({
+            let table = jQuery("#product-detail").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 "columnDefs": [
                     {
-                        targets: 5,
+                        targets: 8,
                         width: 100,
                         orderable: false,
                         searchable: false,
                         render: function (data, type, row, meta) {
-                            let productOption = data;
+                            let productDetail = data;
                             return '<div class="d-flex justify-content-around align-middle">' +
-                                '<button type="button" onclick="getData(' + productOption.id + ', ' + productOption.product.id + ', ' + productOption.option.id + ')"  class="btn-update btn btn-info btn-sm p-2" data-toggle="modal" data-target="#modal-update" ><i class="fas fa-edit"></i></button>' +
-                                '<button type="button" onclick="deleteData(' + productOption.id + ')" class="btn-delete btn btn-danger btn-sm p-2"> <i class="fas fa-trash"></i></button>'
+                                '<button type="button" onclick="getData(' + productDetail.id + ')"  class="btn-update btn btn-info btn-sm p-2" data-toggle="modal" data-target="#modal-update" ><i class="fas fa-edit"></i></button>' +
+                                '<button type="button" onclick="deleteData(' + productDetail.id + ')" class="btn-delete btn btn-danger btn-sm p-2"> <i class="fas fa-trash"></i></button>'
                                 + '</div>';
                         }
                     },
-                    {
-                        targets: 1,
-                        render: function (data, type, row, meta) {
-                            let product = data;
-                            return '<div class="productId" value="' + product.id + '">' + product.name + '</div>';
-                        }
-                    },
-                    {
-                        targets: 2,
-                        render: function (data, type, row, meta) {
-                            let option = data;
-                            return '<div class="optionId" value="' + option.id + '">' + option.name + '</div>';
-                        }
-                    },
+                    // {
+                    //     targets: 1,
+                    //     render: function (data, type, row, meta) {
+                    //         let product = data;
+                    //         return '<div class="productId" value="' + product.id + '">' + product.name + '</div>';
+                    //     }
+                    // },
+                    // {
+                    //     targets: 2,
+                    //     render: function (data, type, row, meta) {
+                    //         let option = data;
+                    //         return '<div class="optionId" value="' + option.id + '">' + option.name + '</div>';
+                    //     }
+                    // },
                 ],
                 initComplete: function () {
                     table.buttons().container().appendTo('.col-md-6:eq(0)', table.table().container());
                 },
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
                 ajax: {
-                    url: `/api/product-option`,
+                    url: `/api/product-detail`,
                     dataSrc: "data"
                 },
                 columns: [
                     {data: "id"},
-                    {data: "product"},
-                    {data: "option"},
                     {data: "sku"},
                     {data: "name"},
+                    {data: "price"},
+                    {data: "amount"},
+                    {data: "createdAt"},
+                    {data: "updatedAt"},
+                    {data: "active"},
                     {data: {}},
                 ],
             });
@@ -329,28 +345,42 @@
             }).done(function () {
                 let productId = jQuery("#addProductId").val();
                 jQuery.ajax({
-                    url: "/api/option/listByTypeProductId" + productId,
+                    url: "/api/product-color/listByProductId" + productId,
                     type: "GET",
                     success: function (data) {
-                        jQuery("#addOptionId").empty();
-                        jQuery.map(data.data, (option, i) => {
+                        jQuery("#addProductColorId").empty();
+                        jQuery.map(data.data, (productColor, i) => {
                             if (i === 0)
-                                jQuery("#addOptionId").append('<option selected value="' + option.id + '">' + option.name + '</option>');
+                                jQuery("#addProductColorId").append('<option selected value="' + productColor.id + '">' + productColor.color.name + '</option>');
                             else
-                                jQuery("#addOptionId").append('<option value="' + option.id + '">' + option.name + '</option>');
+                                jQuery("#addProductColorId").append('<option value="' + productColor.id + '">' + productColor.color.name + '</option>');
                         });
+                    }
+                })
+                jQuery.ajax({
+                    url: "/api/product-option/listByProductId" + productId,
+                    type: "GET",
+                    success: function (data) {
+                        jQuery("#addProductOptionId").empty();
+                        jQuery.map(data.data, (productOption, i) => {
+                            if (i === 0)
+                                jQuery("#addProductOptionId").append('<option selected value="' + productOption.id + '">' + productOption.name + '</option>');
+                            else
+                                jQuery("#addProductOptionId").append('<option value="' + productOption.id + '">' + productOption.name + '</option>');
+                        });
+
                     }
                 })
             })
         })
 
         function reloadData() {
-            jQuery('#product-option').DataTable().ajax.reload();
+            jQuery('#product-detail').DataTable().ajax.reload();
         }
 
         function getData(id, productId, optionId) {
             jQuery.ajax({
-                url: `/api/product-option/` + id,
+                url: `/api/product-detail/` + id,
                 type: 'GET',
                 success: function (data) {
                     reloadData();
@@ -403,7 +433,7 @@
             }).then((result) => {
                 if (result.value) {
                     jQuery.ajax({
-                        url: `/api/product-option/` + id,
+                        url: `/api/product-detail/` + id,
                         type: 'DELETE',
                         success: function (data) {
                             Swal.fire(
@@ -467,12 +497,11 @@
                 let data = new FormData(jQuery("#modal-add")[0]);
                 $.ajax({
                     type: "POST",
-                    url: `/api/product-option`,
+                    url: `/api/product-detail`,
                     processData: false,
                     contentType: false,
                     data: data,
                     success: function (data) {
-                        reloadData();
                         if (data.success) {
                             reloadData();
                             Swal.fire({
@@ -482,9 +511,8 @@
                                 showConfirmButton: false,
                                 timer: 2000
                             })
-                            jQuery("#product-option").trigger("reset");
+                            jQuery("#product-detail").trigger("reset");
                             jQuery('#modal-add').modal('hide');
-                            setInputDefault("#modal-add");
                         } else {
                             Swal.fire({
                                 icon: 'error',
@@ -508,7 +536,7 @@
                 let id = data.get("updateId");
                 $.ajax({
                     type: "PUT",
-                    url: `/api/product-option/` + id,
+                    url: `/api/product-detail/` + id,
                     processData: false,
                     contentType: false,
                     data: data,
@@ -524,7 +552,7 @@
                                 timer: 2000
                             }).then(function () {
                                 jQuery('#modal-update').modal('hide');
-                                jQuery('#product-option').trigger("reset");
+                                jQuery('#product-detail').trigger("reset");
                             });
                         } else {
                             Swal.fire({

@@ -8,6 +8,7 @@ public class UserDto {
     private String password;
     private String firstName;
     private String lastName;
+    private String phone;
     private String email;
     private String address;
     private Integer role;
@@ -17,12 +18,13 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(Long id,String username, String password, String firstName, String lastName, String email, String address, Integer role, Date createdDate, boolean active) {
+    public UserDto(Long id, String username, String password, String firstName, String lastName, String phone, String email, String address, Integer role, Date createdDate, boolean active) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phone = phone;
         this.email = email;
         this.address = address;
         this.role = role;
@@ -119,5 +121,13 @@ public class UserDto {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
