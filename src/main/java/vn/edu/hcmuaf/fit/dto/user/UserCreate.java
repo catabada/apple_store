@@ -7,17 +7,19 @@ public class UserCreate {
     private String password;
     private String firstName;
     private String lastName;
+    private String phone;
     private String email;
     private String address;
 
     public UserCreate() {
     }
 
-    public UserCreate(String username, String password, String firstName, String lastName, String email, String address) {
+    public UserCreate(String username, String password, String firstName, String lastName,String phone, String email, String address) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phone = phone;
         this.email = email;
         this.address = address;
     }
@@ -73,5 +75,11 @@ public class UserCreate {
         this.address = address;
     }
 
+    public String getPhone() {
+        return phone;
+    }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }

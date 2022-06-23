@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-public class UserDAOImpl implements UserDAO{
+public class UserDAOImpl implements UserDAO {
     private final IConnectionPool connectionPool;
     private static UserDAOImpl instance;
     private Connection connection;
@@ -44,14 +44,15 @@ public class UserDAOImpl implements UserDAO{
                 Long id = rs.getLong("id");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                String firstName =rs.getString("first_name");
+                String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
+                String phone = rs.getString("phone");
                 String email = rs.getString("email");
                 String address = rs.getString("address");
                 Integer role = rs.getInt("role");
                 Date createdDate = new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString("date_created"));
                 boolean active = rs.getBoolean("active");
-                User user = new User(id,username,password,firstName,lastName,email,address,role,createdDate,active);
+                User user = new User(id, username, password, firstName, lastName, phone, email, address, role, createdDate, active);
                 users.add(user);
             }
 
@@ -74,14 +75,15 @@ public class UserDAOImpl implements UserDAO{
             if (rs.next()) {
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                String firstName =rs.getString("first_name");
+                String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
+                String phone = rs.getString("phone");
                 String email = rs.getString("email");
                 String address = rs.getString("address");
                 Integer role = rs.getInt("role");
                 Date createdDate = new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString("date_created"));
                 boolean active = rs.getBoolean("active");
-                User user = new User(id,username,password,firstName,lastName,email,address,role,createdDate,active);
+                User user = new User(id, username, password, firstName, lastName, phone, email, address, role, createdDate, active);
                 connectionPool.releaseConnection(connection);
                 return Optional.of(user);
             }
@@ -99,23 +101,24 @@ public class UserDAOImpl implements UserDAO{
         try {
             PreparedStatement statement = connection.prepareStatement(object.getId() == 0 ? QUERY.USER.INSERT : QUERY.USER.UPDATE);
             statement.setString(1, object.getUsername());
-            statement.setString(2,object.getPassword());
-            statement.setString(3,object.getFirstName());
-            statement.setString(4,object.getLastName());
-            statement.setString(5,object.getEmail());
-            statement.setString(6,object.getAddress());
+            statement.setString(2, object.getPassword());
+            statement.setString(3, object.getFirstName());
+            statement.setString(4, object.getLastName());
+            statement.setString(5, object.getPhone());
+            statement.setString(6, object.getEmail());
+            statement.setString(7, object.getAddress());
             System.out.println(object.getFirstName() + " " + object.getAddress());
 
             if (object.getId() != 0) {
-                statement.setBoolean(7, object.isActive());
-                statement.setInt(8, object.getRole());
-                statement.setLong(9, object.getId());
+                statement.setBoolean(8, object.isActive());
+                statement.setInt(9, object.getRole());
+                statement.setLong(10, object.getId());
 
             }
             statement.executeUpdate();
             connectionPool.releaseConnection(connection);
         } catch (SQLException e) {
-           e.printStackTrace();
+            e.printStackTrace();
             connectionPool.releaseConnection(connection);
         }
         connectionPool.releaseConnection(connection);
@@ -155,14 +158,15 @@ public class UserDAOImpl implements UserDAO{
             if (!rs.isBeforeFirst() && rs.getRow() == 0) return Optional.empty();
             if (rs.next()) {
                 Long id = rs.getLong("id");
-                String firstName =rs.getString("first_name");
+                String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
+                String phone = rs.getString("phone");
                 String email = rs.getString("email");
                 String address = rs.getString("address");
                 Integer role = rs.getInt("role");
                 Date createdDate = new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString("date_created"));
                 boolean active = rs.getBoolean("active");
-                User user = new User(id,username,password,firstName,lastName,email,address,role,createdDate,active);
+                User user = new User(id, username, password, firstName, lastName, phone, email, address, role, createdDate, active);
                 connectionPool.releaseConnection(connection);
                 return Optional.of(user);
             }
@@ -185,14 +189,15 @@ public class UserDAOImpl implements UserDAO{
             if (rs.next()) {
                 Long id = rs.getLong("id");
                 String password = rs.getString("password");
-                String firstName =rs.getString("first_name");
+                String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
+                String phone = rs.getString("phone");
                 String email = rs.getString("email");
                 String address = rs.getString("address");
                 Integer role = rs.getInt("role");
                 Date createdDate = new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString("date_created"));
                 boolean active = rs.getBoolean("active");
-                User user = new User(id,username,password,firstName,lastName,email,address,role,createdDate,active);
+                User user = new User(id, username, password, firstName, lastName, phone, email, address, role, createdDate, active);
                 connectionPool.releaseConnection(connection);
                 return Optional.of(user);
             }
@@ -204,8 +209,4 @@ public class UserDAOImpl implements UserDAO{
         return Optional.empty();
     }
 
-    public static void main(String[] args) {
-        System.out.println(UserDAOImpl.getInstance().signIn("oooo3","345123").get().getId());
-
-    }
 }
