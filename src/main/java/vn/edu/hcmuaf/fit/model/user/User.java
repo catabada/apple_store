@@ -9,6 +9,7 @@ public class User implements Serializable {
     private String password;
     private String firstName;
     private String lastName;
+    private String phone;
     private String email;
     private String address;
     private Integer role;
@@ -19,12 +20,13 @@ public class User implements Serializable {
 
     }
 
-    public User(Long id, String username, String password, String firstName, String lastName, String email, String address, Integer role, Date createdDate, boolean active) {
+    public User(Long id, String username, String password, String firstName, String lastName,String phone, String email, String address, Integer role, Date createdDate, boolean active) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phone = phone;
         this.email = email;
         this.address = address;
         this.role = role;
@@ -32,12 +34,13 @@ public class User implements Serializable {
         this.active = active;
     }
 
-    public User(String username, String password, String firstName, String lastName, String email,String address) {
+    public User(String username, String password, String firstName, String lastName,String phone, String email,String address) {
         this.id = 0L;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phone = phone;
         this.email = email;
         this.address = address;
         this.active=true;
@@ -54,8 +57,6 @@ public class User implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-
 
     public String getUsername() {
         return username;
@@ -87,6 +88,12 @@ public class User implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+    public String getPhone() {
+        return phone;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {
@@ -128,4 +135,5 @@ public class User implements Serializable {
     public void setActive(boolean active) {
         this.active = active;
     }
+
 }

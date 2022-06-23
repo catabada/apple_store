@@ -9,6 +9,7 @@ public class UserUpdate {
     private String password;
     private String firstName;
     private String lastName;
+    private String phone;
     private String email;
     private String address;
     private Integer role;
@@ -17,13 +18,14 @@ public class UserUpdate {
     public UserUpdate() {
     }
 
-    public UserUpdate(Long id, String sku, String username, String password, String firstName, String lastName, String email, String address, Integer role, boolean active) {
+    public UserUpdate(Long id, String sku, String username, String password, String firstName, String lastName, String phone, String email, String address, Integer role, boolean active) {
         this.id = id;
         this.sku = sku;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phone = phone;
         this.email = email;
         this.address = address;
         this.role = role;
@@ -75,6 +77,14 @@ public class UserUpdate {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {

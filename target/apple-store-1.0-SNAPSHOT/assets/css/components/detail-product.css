@@ -130,13 +130,11 @@
     line-height: 4rem;
 }
 .body__details__detail__name-color {
-    display: none;
 }
 .body__details__detail__name-color.body__details__detail__name-color--active{
     display: inline;
 }
 .body__details__detail__name-option{
-    display: none;
 }
 .body__details__detail__name-option.body__details__detail__name-option--active {
     display: inline;
@@ -509,7 +507,6 @@
     line-height: 4.4rem;
     font-weight: 700;
     letter-spacing: .004em;
-    display: none;
 }
 .body__details__summary__heading__price.body__details__summary__heading__price--active {
     display: block;

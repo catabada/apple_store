@@ -58,9 +58,10 @@ public class UserAPI extends HttpServlet {
         String password = request.getParameter("addPassword");
         String firstName = request.getParameter("addFirstName");
         String lastName = request.getParameter("addLastName");
+String phone = request.getParameter("addPhone");
         String email = request.getParameter("addEmail");
         String address = request.getParameter("addAddress");
-        UserCreate create = new UserCreate(username, password, firstName, lastName, email, address);
+        UserCreate create = new UserCreate(username, password, firstName, lastName,phone, email, address);
         DataResponse<UserDto> result = userService.createUser(create);
         response.getWriter().println(GSON.toJson(result));
     }

@@ -121,7 +121,7 @@
             <div class="header-nav__mobile__modal"></div>
 
         </div>
-        <a href="/home" class="header-navbar__brand">
+        <a href="/apple-store" class="header-navbar__brand">
             <img src="${pageContext.request.contextPath}/assets/img/apple-brand-white.png" alt=""
                  class="header-navbar__brand-img">
         </a>
@@ -265,8 +265,8 @@
                                         height="35">${fn:substring(user.firstName.toUpperCase(),0,1)}${fn:substring(user.lastName.toUpperCase(),0,1)}
                                 </canvas>
                                 <div class="header-navbar__icon__list">
-                                    <a href="/profile" class="header-navbar__icon__profile"><i class="fa fa-user"></i> Profile</a>
-                                    <a href="/sign-out" class="header-navbar__icon__signout"><i class="fas fa-sign-out-alt"></i>
+                                    <a href="/apple-store/profile" class="header-navbar__icon__profile"><i class="fa fa-user"></i> Profile</a>
+                                    <a href="/apple-store/sign-out" class="header-navbar__icon__signout"><i class="fas fa-sign-out-alt"></i>
                                         Sign out</a>
                                 </div>
                             </div>

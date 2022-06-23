@@ -65,12 +65,13 @@ public final class QUERY {
         public static final String GET_LIST = "select * from user";
         public static final String GET_BY_ID = "select * from user where id = ?";
         public static final String GET_BY_USERNAME = "select * from user where username = ?";
-        public static final String INSERT = "insert into user(username, password, first_name, last_name, email, address) values (?, ?, ?, ?, ?, ?)";
+        public static final String INSERT = "insert into user(username, password, first_name, last_name,phone, email, address) values (?, ?, ?, ?, ?, ?, ?)";
         public static final String DELETE_BY_ID = "delete from user where id = ?";
-        public static final String UPDATE = "update user set username = ?, password = ?, first_name = ?,last_name = ?,email = ?, address = ?, active = ?, role = ?";
+        public static final String UPDATE = "update user set username = ?, password = ?, first_name = ?,last_name = ?,phone = ?,email = ?, address = ?, active = ?, role = ?";
         public static final String SIGN_IN = " select * from user where username = ? and password= ? ";
         public static final String CHECK_USERNAME = "select * from user where username = ?";
     }
+
     public static final class PRODUCT_DETAIL {
         public static final String GET_LIST = "select * from product_detail";
         public static final String GET_LIST_BY_PRODUCT_ID = "select * from product_detail where product_id = ?";
