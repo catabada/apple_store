@@ -14,9 +14,12 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/fontawesome-free/css/all.min.css">
     <!-- DataTables -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/dist/css/adminlte.min.css">
 </head>
@@ -306,7 +309,7 @@
                         searchable: false,
                         render: function (data, type, row, meta) {
                             return '<div class="d-flex justify-content-around align-middle">' +
-                                '<button type="button" onclick="getData(' + data + ')" class="btn-update btn btn-info btn-sm p-2" data-toggle="modal" data-target="#modal-update" ><i class="fas fa-edit"></i></button>' +
+                                '<button type="button" onclick="getData(' + data.id + ', ' + data.typeProduct.id + ')"  class="btn-update btn btn-info btn-sm p-2" data-toggle="modal" data-target="#modal-update" ><i class="fas fa-edit"></i></button>' +
                                 '<button type="button" onclick="deleteData(' + data + ')" class="btn-delete btn btn-danger btn-sm p-2"> <i class="fas fa-trash"></i></button>'
                                 + '</div>';
                         }
@@ -315,7 +318,7 @@
                         targets: 3,
                         searchable: false,
                         render: function (data, type, row, meta) {
-                            return '<img src="' + data + '" width="50px" height="50px" alt="">';
+                            return '<img src="${pageContext.request.contextPath}/image/' + data + '" width="50px" height="50px" alt="">';
                         }
                     },
                 ],
@@ -340,7 +343,7 @@
                     {data: "dateCreated"},
                     {data: "lastUpdated"},
                     {data: "active"},
-                    {data: "id"}
+                    {data: {}}
                 ],
             });
             // $('#example2').DataTable({
@@ -360,6 +363,7 @@
                 url: "/api/type-product",
                 type: "GET",
                 success: function (data) {
+                    jQuery("#addTypeId").empty();
                     jQuery.map(data.data, (type, i) => {
                         if (i === 0)
                             jQuery("#addTypeId").append('<option selected value="' + type.id + '">' + type.name + '</option>');
@@ -374,7 +378,7 @@
             jQuery('#product').DataTable().ajax.reload();
         }
 
-        function getData(id) {
+        function getData(id, typeProductId) {
             jQuery.ajax({
                 url: `/api/product/` + id,
                 type: 'GET',
@@ -403,7 +407,7 @@
                 success: function (data) {
                     jQuery("#updateTypeId").empty();
                     jQuery.map(data.data, (type, i) => {
-                        if (id === type.id)
+                        if (typeProductId == type.id)
                             jQuery("#updateTypeId").append('<option selected value="' + type.id + '">' + type.name + '</option>');
                         else
                             jQuery("#updateTypeId").append('<option value="' + type.id + '">' + type.name + '</option>');
@@ -440,12 +444,14 @@
                 }
             })
         }
+
         function setInputDefault(idName) {
             jQuery.map(jQuery("#modal-add").find("input"), (item, i) => {
                 jQuery(item).val("");
             })
 
         }
+
         jQuery("#add-submit").on("click", function (e) {
             e.preventDefault();
             let valid = jQuery("#modal-add").valid();

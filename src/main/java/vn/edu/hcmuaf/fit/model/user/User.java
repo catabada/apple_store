@@ -7,48 +7,45 @@ public class User implements Serializable {
     private Long id;
     private String username;
     private String password;
-    private boolean active;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String address;
+    private Integer role;
     private Date createdDate;
-    private String role;
-    private String Sku;
+    private boolean active;
 
     public User() {
 
     }
 
-    public User(Long id, String username, String password, boolean active, Date createdDate, String role, String sku) {
+    public User(Long id, String username, String password, String firstName, String lastName, String email, String address, Integer role, Date createdDate, boolean active) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.active = active;
-        this.createdDate = createdDate;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
         this.role = role;
-        Sku = sku;
+        this.createdDate = createdDate;
+        this.active = active;
     }
-    public User( String username, String password, boolean active, Date createdDate, String role) {
+
+    public User(String username, String password, String firstName, String lastName, String email,String address) {
         this.id = 0L;
         this.username = username;
         this.password = password;
-        this.active = active;
-        this.createdDate = createdDate;
-        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.active=true;
+        this.role =0;
+
     }
 
-    public String getName() {
-        return username;
-    }
 
-    public void setName(String username) {
-        this.username = username;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
 
     public Long getId() {
         return id;
@@ -58,33 +55,77 @@ public class User implements Serializable {
         this.id = id;
     }
 
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getPassword() {
         return password;
     }
 
-    public String getRole() {
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 
-    public String getSku() {
-        return Sku;
-    }
-    public String setSku(String sku) {
-        return Sku = sku;
-    }
-
-    public Date getDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setDate(Date createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
-    //    public void setPassword(String password) {
-//        this.password = password;
-//    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

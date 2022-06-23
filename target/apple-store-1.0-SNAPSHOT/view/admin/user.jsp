@@ -17,13 +17,16 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/fontawesome-free/css/all.min.css">
     <!-- DataTables -->
-    <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition sidebar-mini dark-mode">
 <!-- Site wrapper -->
@@ -62,46 +65,38 @@
                             <div class="card">
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
+                                    <table id="user" class="table table-bordered table-striped">
                                         <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>First</th>
-                                            <th>Last(s)</th>
                                             <th>Username</th>
                                             <th>Password</th>
+                                            <th>First</th>
+                                            <th>Last(s)</th>
                                             <th>Email</th>
+                                            <th>Address</th>
                                             <th>Role</th>
+                                            <th>CreatedDate</th>
                                             <th>Active</th>
-                                            <th>Date Register</th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach var="user" items="${listUser}">
-                                            <tr>
-                                                <td>${user.id}</td>
-                                                <td>${user.first}</td>
-                                                <td>${user.last}</td>
-                                                <td>${user.userName}</td>
-                                                <td>${user.password}</td>
-                                                <td>${user.email}</td>
-                                                <td>${user.role}</td>
-                                                <td>${user.active}</td>
-                                                <td>${user.dateRegistered}</td>
-                                            </tr>
-                                        </c:forEach>
+                                        <tr>
+                                        </tr>
                                         </tbody>
                                         <tfoot>
                                         <tr>
                                             <th>ID</th>
-                                            <th>First</th>
-                                            <th>Last(s)</th>
                                             <th>Username</th>
                                             <th>Password</th>
+                                            <th>First</th>
+                                            <th>Last(s)</th>
                                             <th>Email</th>
+                                            <th>Address</th>
                                             <th>Role</th>
+                                            <th>CreatedDate</th>
                                             <th>Active</th>
-                                            <th>Date Register</th>
                                         </tr>
                                         </tfoot>
                                     </table>
@@ -132,43 +127,55 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables  & Plugins -->
-<script src="plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="plugins/jszip/jszip.min.js"></script>
-<script src="plugins/pdfmake/pdfmake.min.js"></script>
-<script src="plugins/pdfmake/vfs_fonts.js"></script>
-<script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & ${pageContext.request.contextPath}/assets/plugins -->
+<script src="${pageContext.request.contextPath}/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/jszip/jszip.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
-
+<script src="${pageContext.request.contextPath}/assets/dist/js/demo.js"></script>
 
 
 <script>
-    $(function () {
-        $("#example1").DataTable({
+    jQuery(function () {
+        let table = jQuery("#user").DataTable({
             "responsive": true, "lengthChange": false, "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            ajax: {
+                url: `/api/user`,
+                dataSrc: "data"
+            },
+            "columnDefs": [
+                {},
+            ],
+            initComplete: function () {
+                table.buttons().container().appendTo('.col-md-6:eq(0)', table.table().container());
+            },
+            columns: [
+                {data: "id"},
+                {data: "username"},
+                {data: "password"},
+                {data: "firstName"},
+                {data: "lastName"},
+                {data: "email"},
+                {data: "address"},
+                {data: "role"},
+                {data: "createdDate"},
+                {data: "active"}
+            ],
         });
     });
 </script>
