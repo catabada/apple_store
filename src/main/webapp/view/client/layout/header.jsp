@@ -1,5 +1,6 @@
 <%@ page import="vn.edu.hcmuaf.fit.dao.user.UserDAO" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.user.User" %>
+<%@ page import="vn.edu.hcmuaf.fit.dao.impl.user.UserDAOImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -244,9 +245,9 @@
                 </div>
             </div>
                      <%;
-                            if (session.getAttribute("user") != null) {
-                                User user = (User) session.getAttribute("user");
-                                request.setAttribute("user", user);
+                            if (session.getAttribute("userId") != null) {
+                                Long userId = (Long) session.getAttribute("userId");
+                                request.setAttribute("user", UserDAOImpl.getInstance().findById(userId).orElse(null));
                             }
                         %>
                         <c:if test="${user == null}">

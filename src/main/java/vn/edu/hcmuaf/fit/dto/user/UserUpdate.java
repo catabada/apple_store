@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class UserUpdate {
     private Long id;
-    private String sku;
     private String username;
     private String password;
     private String firstName;
@@ -18,9 +17,8 @@ public class UserUpdate {
     public UserUpdate() {
     }
 
-    public UserUpdate(Long id, String sku, String username, String password, String firstName, String lastName, String phone, String email, String address, Integer role, boolean active) {
+    public UserUpdate(Long id, String username, String password, String firstName, String lastName, String phone, String email, String address, Integer role, boolean active) {
         this.id = id;
-        this.sku = sku;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -31,6 +29,15 @@ public class UserUpdate {
         this.role = role;
     }
 
+    public UserUpdate(Long id, String firstName, String lastName, String phone, String email, String address) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+    }
+
     public Long getId() {
         return id;
     }
@@ -38,15 +45,6 @@ public class UserUpdate {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public String getSku() {
-        return sku;
-    }
-
-    public void setSku(String sku) {
-        this.sku = sku;
-    }
-
     public String getUsername() {
         return username;
     }

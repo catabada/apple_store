@@ -22,6 +22,7 @@ public interface UserService {
     public BaseResponse updateUser(final UserUpdate update);
     public DataResponse<User> signIn(final UserSignIn user);
     public BaseResponse signUp(final UserSignUp user);
+    public DataResponse<User> updateProfile(final UserUpdate user);
 
 
 }

@@ -2,7 +2,6 @@ package vn.edu.hcmuaf.fit.dao.impl.user;
 import vn.edu.hcmuaf.fit.constant.QUERY;
 import vn.edu.hcmuaf.fit.dao.user.UserDAO;
 import vn.edu.hcmuaf.fit.database.DbConnection;
-import vn.edu.hcmuaf.fit.database.*;
 import vn.edu.hcmuaf.fit.database.IConnectionPool;
 import vn.edu.hcmuaf.fit.model.user.User;
 
@@ -107,7 +106,6 @@ public class UserDAOImpl implements UserDAO {
             statement.setString(5, object.getPhone());
             statement.setString(6, object.getEmail());
             statement.setString(7, object.getAddress());
-            System.out.println(object.getFirstName() + " " + object.getAddress());
 
             if (object.getId() != 0) {
                 statement.setBoolean(8, object.isActive());
@@ -208,5 +206,4 @@ public class UserDAOImpl implements UserDAO {
         connectionPool.releaseConnection(connection);
         return Optional.empty();
     }
-
-}
+    }

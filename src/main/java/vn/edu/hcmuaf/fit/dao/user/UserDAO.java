@@ -11,5 +11,4 @@ public interface UserDAO extends BaseDAO<User> {
     Optional<User> signIn(String username,String password);
     Optional<User> checkUsername(String username);
 
-
 }

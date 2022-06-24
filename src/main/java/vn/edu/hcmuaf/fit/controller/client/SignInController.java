@@ -39,7 +39,7 @@ public class SignInController extends HttpServlet {
         User user = result.getData();
         if(user != null){
             HttpSession session = request.getSession();
-            session.setAttribute("user", user);
+            session.setAttribute("userId", user.getId());
         }
         response.getWriter().println(GSON.toJson(result));
 
