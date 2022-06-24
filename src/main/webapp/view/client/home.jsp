@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <link rel="shortcut icon" type="image/png" href="./${pageContext.request.contextPath}/assets/img/apple-brand-white.png">
+    <link rel="shortcut icon" type="image/png"
+          href="./${pageContext.request.contextPath}/assets/img/apple-brand-white.png">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home/styles.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home/responsive.css">
@@ -18,7 +19,7 @@
 <body>
 <div class="main" id="on-top">
     <!-- Begin header -->
-<%--    <c:import url="layout/header.jsp" />--%>
+    <%--    <c:import url="layout/header.jsp" />--%>
     <!-- End  Header -->
 
     <!-- Begin Slider -->
@@ -36,22 +37,29 @@
             </div>
             <div class="slides">
                 <div class="slide slide__first">
-                    <img class="slide__img " src="./${pageContext.request.contextPath}/assets/img/banner_slider/iphone_banner.png" alt="">
+                    <img class="slide__img "
+                         src="./${pageContext.request.contextPath}/assets/img/banner_slider/iphone_banner.png" alt="">
                 </div>
                 <div class="slide">
-                    <img class="slide__img" src="./${pageContext.request.contextPath}/assets/img/banner_slider/imac_banner.png" alt="">
+                    <img class="slide__img"
+                         src="./${pageContext.request.contextPath}/assets/img/banner_slider/imac_banner.png" alt="">
                 </div>
                 <div class="slide">
-                    <img class="slide__img" src="./${pageContext.request.contextPath}/assets/img/banner_slider/ipad_banner.png" alt="">
+                    <img class="slide__img"
+                         src="./${pageContext.request.contextPath}/assets/img/banner_slider/ipad_banner.png" alt="">
                 </div>
                 <div class="slide">
-                    <img class="slide__img" src="./${pageContext.request.contextPath}/assets/img/banner_slider/airtag_banner.png" alt="">
+                    <img class="slide__img"
+                         src="./${pageContext.request.contextPath}/assets/img/banner_slider/airtag_banner.png" alt="">
                 </div>
                 <div class="slide">
-                    <img class="slide__img" src="./${pageContext.request.contextPath}/assets/img/banner_slider/apple_watch_banner.png" alt="">
+                    <img class="slide__img"
+                         src="./${pageContext.request.contextPath}/assets/img/banner_slider/apple_watch_banner.png"
+                         alt="">
                 </div>
                 <div class="slide">
-                    <img class="slide__img" src="./${pageContext.request.contextPath}/assets/img/banner_slider/airpod_banner.png" alt="">
+                    <img class="slide__img"
+                         src="./${pageContext.request.contextPath}/assets/img/banner_slider/airpod_banner.png" alt="">
                 </div>
             </div>
         </div>
@@ -101,7 +109,8 @@
                         </div>
                     </div>
                     <div class="col-xxl-4 col-xl-4 col-lg-5 col-md-6 col-sm-12 body-advertisement-cd-col-img">
-                        <img src="${pageContext.request.contextPath}/assets/img/home/av1.png" alt="" class="body-advertisement-cd__img">
+                        <img src="${pageContext.request.contextPath}/assets/img/home/av1.png" alt=""
+                             class="body-advertisement-cd__img">
                     </div>
                 </div>
             </div>
@@ -131,7 +140,8 @@
                         <div class="body__hot-product__banners-item__price">
                             From $999.00 or $41.62/month for 24 month before trade in*
                         </div>
-                        <img src="${pageContext.request.contextPath}/assets/img/home/av2.png" alt="" class="body__hot-product__banners-item__img">
+                        <img src="${pageContext.request.contextPath}/assets/img/home/av2.png" alt=""
+                             class="body__hot-product__banners-item__img">
                     </a>
                     <div class="body__hot-product__banners-item col-xxl-7 col-xl-7 col-lg-7 col-md-12">
                         <div class="body__hot-product__banners-item__sub">
@@ -149,7 +159,8 @@
                                 </div>
                                 <div
                                         class="col-xxl-6 col-xs-4 body__hot-product__banners-item__sub-item__img--wrapper ">
-                                    <img src="${pageContext.request.contextPath}/assets/img/home/ipad-mini-gallery1-202109.png" alt=""
+                                    <img src="${pageContext.request.contextPath}/assets/img/home/ipad-mini-gallery1-202109.png"
+                                         alt=""
                                          class="body__hot-product__banners-item__sub-item__img">
                                 </div>
                             </div>
@@ -260,7 +271,8 @@
                         Buy Now
                     </a>
                 </div>
-                <img src="${pageContext.request.contextPath}/assets/img/home/apple-iphone-12-4.png" alt="" class="body-advertisement__img">
+                <img src="${pageContext.request.contextPath}/assets/img/home/apple-iphone-12-4.png" alt=""
+                     class="body-advertisement__img">
             </div>
         </div>
         <!-- End advertisement -->
@@ -323,7 +335,8 @@
                         <a href="" class="body-hot-collection__item-btn">
                             View All
                         </a>
-                        <img src="./${pageContext.request.contextPath}/assets/img/home/airpot.png" alt="" class="body-hot-collection__item-img">
+                        <img src="./${pageContext.request.contextPath}/assets/img/home/airpot.png" alt=""
+                             class="body-hot-collection__item-img">
                     </div>
                     <div class="body-hot-collection__item">
                         <div class="body-hot-collection__item-title">
@@ -335,7 +348,8 @@
                         <a href="" class="body-hot-collection__item-btn">
                             View All
                         </a>
-                        <img src="${pageContext.request.contextPath}/assets/img/home/airtag.png" alt="" class="body-hot-collection__item-img">
+                        <img src="${pageContext.request.contextPath}/assets/img/home/airtag.png" alt=""
+                             class="body-hot-collection__item-img">
                     </div>
                     <div class="body-hot-collection__item ">
                         <div class="body-hot-collection__item-title">
@@ -347,7 +361,8 @@
                         <a href="" class="body-hot-collection__item-btn">
                             View All
                         </a>
-                        <img src="${pageContext.request.contextPath}/assets/img/home/apple-watch.png" alt="" class="body-hot-collection__item-img">
+                        <img src="${pageContext.request.contextPath}/assets/img/home/apple-watch.png" alt=""
+                             class="body-hot-collection__item-img">
                     </div>
                 </div>
             </div>
@@ -689,7 +704,7 @@
     </div>
 
     <!-- Footer -->
-<%--    <jsp:include page="layout/footer.jsp"/>--%>
+    <%--    <jsp:include page="layout/footer.jsp"/>--%>
     <a href="#on-top" class="button-on-top">
         <i class="fas fa-chevron-up"></i>
     </a>

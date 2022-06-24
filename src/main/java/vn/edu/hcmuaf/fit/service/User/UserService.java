@@ -10,9 +10,6 @@ import java.util.List;
 public interface UserService {
     public DataResponse<UserDto> getUserById(final Long id);
 
-
-    public DataResponse<UserDto> getUserByName(final String name);
-
     public DataResponse<UserDto> createUser(final UserCreate create);
 
     public DataResponse<List<UserDto>> getListUser();
@@ -20,8 +17,12 @@ public interface UserService {
     public BaseResponse deleteUserById(final Long id);
 
     public BaseResponse updateUser(final UserUpdate update);
+
     public DataResponse<User> signIn(final UserSignIn user);
+
     public BaseResponse signUp(final UserSignUp user);
+
+    public DataResponse<UserDto> getUserByUsername(final String username);
 
 
 }

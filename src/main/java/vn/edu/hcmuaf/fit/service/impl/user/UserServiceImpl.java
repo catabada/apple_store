@@ -16,6 +16,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private UserDAO userDao;
     private UserMapper userMapper;
+
     public UserServiceImpl() {
         this.userDao = UserDAOImpl.getInstance();
         this.userMapper = new UserMapper();
@@ -32,12 +33,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public DataResponse<UserDto> getUserByName(String name) {return null;}
+    public DataResponse<UserDto> getUserByUsername(String username) {
+        Optional<User> optional = userDao.checkUsername(username);
+        return optional.map(
+                        user -> new DataResponse<>(true, 200, "Success", userMapper.toUserDto(user)))
+                .orElseGet(() -> new DataResponse<>(false, 401, "Can't find by id = " + username, null));
+    }
 
 
     @Override
     public DataResponse<UserDto> createUser(UserCreate create) {
-        User user = new User(create.getUsername(),create.getPassword(),create.getFirstName(),create.getLastName(),create.getPhone(),create.getEmail(),create.getAddress());
+        User user = new User(create.getUsername(), create.getPassword(), create.getFirstName(), create.getLastName(), create.getPhone(), create.getEmail(), create.getAddress());
         userDao.save(user);
         return new DataResponse<>(true, 200, "Success!", userMapper.toUserDto(user));
     }
@@ -62,8 +68,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> optional = userDao.findById(update.getId());
         if (!optional.isPresent()) {
             return new BaseResponse(false, 404, "Not found!");
-        }
-        else {
+        } else {
             User user = optional.get();
             user.setUsername(update.getUsername());
             user.setPassword(update.getPassword());
@@ -83,20 +88,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public DataResponse<User> signIn(UserSignIn user) {
         Optional<User> optional = userDao.signIn(user.getUsername(), user.getPassword());
-        if(optional.isPresent()) {
-            return new DataResponse<User>(true,200,"Success",optional.get());
+        if (optional.isPresent()) {
+            return new DataResponse<User>(true, 200, "Success", optional.get());
         }
-        return new DataResponse<User>(false,401,"Username or password is wrong",null);
+        return new DataResponse<User>(false, 401, "Username or password is wrong", null);
     }
 
     @Override
     public BaseResponse signUp(UserSignUp signUp) {
-        User user = new User(0L,signUp.getUsername(), signUp.getPassword(), signUp.getFirstName(),signUp.getLastName()," ", signUp.getEmail()," ",0,null,true);
-        if (userDao.checkUsername(user.getUsername()).isPresent()){
-            return new BaseResponse(false,401,"Username Exist");
+        User user = new User(0L, signUp.getUsername(), signUp.getPassword(), signUp.getFirstName(), signUp.getLastName(), " ", signUp.getEmail(), " ", 0, null, true);
+        if (userDao.checkUsername(user.getUsername()).isPresent()) {
+            return new BaseResponse(false, 401, "Username Exist");
         }
         userDao.signUp(user);
-        return new BaseResponse(true,200,"Success");
+        return new BaseResponse(true, 200, "Success");
     }
 }
 

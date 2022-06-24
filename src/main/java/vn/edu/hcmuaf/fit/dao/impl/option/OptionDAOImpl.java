@@ -17,10 +17,10 @@ public class OptionDAOImpl implements OptionDAO {
     private Connection connection;
 
 
+
     private OptionDAOImpl() {
         connectionPool = DbConnection.init("root", "", "apple_store");
     }
-
     public static OptionDAOImpl getInstance() {
         if (instance == null) {
             instance = new OptionDAOImpl();
