@@ -214,7 +214,7 @@
                     <div class="header__navbar__cart__list--wrapper">
                         <div class="header__navbar__cart__list" id="list-cart-item">
                         </div>
-                        <a href="/cart" class="header__navbar__cart__btn-check">
+                        <a href="${pageContext.request.contextPath}/apple-store/cart" class="header__navbar__cart__btn-check">
                             Check out
                         </a>
                     </div>

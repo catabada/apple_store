@@ -143,4 +143,33 @@ public class CartItemDAOImpl implements CartItemDAO {
         return Optional.empty();
     }
 
+    @Override
+    public List<CartItem> findAllByCartId(Long cartId) {
+        connection = DbManager.connectionPool.getConnection();
+        List<CartItem> cartItems = new ArrayList<CartItem>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(QUERY.CART_ITEM.GET_LIST_BY_CART_ID);
+            statement.setLong(1, cartId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                Long productDetailId = resultSet.getLong("product_detail_id");
+                Integer quantity = resultSet.getInt("quantity");
+
+                Cart cart = CartDAOImpl.getInstance().findById(cartId).orElse(null);
+                ProductDetail productDetail = ProductDetailDAOImpl.getInstance().findById(productDetailId).orElse(null);
+
+                CartItem cartItem = new CartItem(id, cart, productDetail, quantity);
+                cartItems.add(cartItem);
+            }
+            DbManager.connectionPool.releaseConnection(connection);
+            return cartItems;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            DbManager.connectionPool.releaseConnection(connection);
+            return cartItems;
+        }
+    }
+
 }

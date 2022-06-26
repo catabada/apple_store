@@ -98,6 +98,7 @@ public final class QUERY {
     public static final class CART_ITEM {
         public static final String GET_LIST = "select * from cart_item";
         public static final String GET_LIST_BY_CART_ID_AND_PRODUCT_DETAIL_ID = "select * from cart_item where cart_id = ? and product_detail_id = ?";
+        public static final String GET_LIST_BY_CART_ID = "select * from cart_item where cart_id = ?";
         public static final String GET_BY_ID = "select * from cart_item where id = ?";
         public static final String INSERT = "insert into cart_item(cart_id , product_detail_id, quantity) values (?, ?, ?)";
         public static final String DELETE_BY_ID = "delete from cart_item where id = ?";

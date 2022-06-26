@@ -35,9 +35,15 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
+    public DataResponse<List<CartItemDto>> getListCartItemByCartId(Long cartId) {
+        List<CartItem> cartItems = cartItemDao.findAllByCartId(cartId);
+        return new DataResponse<List<CartItemDto>>(true, 200, "Success!", cartItemMapper.toCartItemDtoList(cartItems));
+    }
+
+    @Override
     public DataResponse<CartItemDto> createCartItem(CartItemCreate create) {
         Optional<CartItem> optional = cartItemDao.findByCartIdAndProductDetailId(create.getCartId(), create.getProductDetailId());
-        if(!optional.isPresent()) {
+        if (!optional.isPresent()) {
             Cart cart = CartDAOImpl.getInstance().findById(create.getCartId()).orElse(null);
             ProductDetail productDetail = ProductDetailDAOImpl.getInstance().findById(create.getProductDetailId()).orElse(null);
             CartItem cartItem = new CartItem(cart, productDetail, create.getQuantity());
@@ -50,6 +56,16 @@ public class CartItemServiceImpl implements CartItemService {
             return new DataResponse<CartItemDto>(true, 200, "Quantity product increase by 1", cartItemMapper.toCartItemDto(cartItemDto));
         }
 
+    }
+
+    @Override
+    public DataResponse<Integer> totalPriceInCart(Long cartId) {
+        List<CartItem> cartItems = cartItemDao.findAllByCartId(cartId);
+        int totalPrice = 0;
+        for (CartItem cartItem : cartItems) {
+            totalPrice += (cartItem.getProductDetail().getPrice() - (cartItem.getProductDetail().getPrice() * cartItem.getProductDetail().getProduct().getDiscount())) * cartItem.getQuantity();
+        }
+        return new DataResponse<Integer>(true, 200, "Success!", totalPrice);
     }
 
     @Override
@@ -68,13 +84,14 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public BaseResponse updateAmount(CartItemUpdate update) {
+    public DataResponse<CartItemDto> updateAmount(CartItemUpdate update) {
         CartItem cartItem = cartItemDao.findById(update.getId()).orElse(null);
         if (cartItem == null) {
-            return new BaseResponse(false, 401, "Cart item not found");
+            return new DataResponse<CartItemDto>(false, 401, "Cart item not found", null);
         }
         cartItem.setQuantity(update.getQuantity());
         cartItemDao.save(cartItem);
-        return new BaseResponse(true, 200, "Success");
+        return new DataResponse<CartItemDto>(true, 200, "Success", cartItemMapper.toCartItemDto(cartItem));
     }
+
 }

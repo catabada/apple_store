@@ -4,8 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import vn.edu.hcmuaf.fit.constant.AppError;
 import vn.edu.hcmuaf.fit.dto.cart.CartDto;
-import vn.edu.hcmuaf.fit.dto.cartitem.CartItemCreate;
-import vn.edu.hcmuaf.fit.dto.cartitem.CartItemDto;
+import vn.edu.hcmuaf.fit.dto.cartitem.*;
 import vn.edu.hcmuaf.fit.dto.productdetail.ProductDetailDto;
 import vn.edu.hcmuaf.fit.dto.user.UserCreate;
 import vn.edu.hcmuaf.fit.dto.user.UserDto;
@@ -53,6 +52,10 @@ public class CartUserAPI extends HttpServlet {
         if (pathInfo == null) {
             DataResponse<List<CartItemDto>> result = cartItemService.getListCartItem();
             response.getWriter().println(GSON.toJson(result));
+        } else if (pathInfo.contains("/totalPriceInCart")) {
+            Long cartId = Long.parseLong(pathInfo.substring(17));
+            DataResponse<Integer> result = cartItemService.totalPriceInCart(cartId);
+            response.getWriter().println(GSON.toJson(result));
         } else {
             try {
                 Long id = Long.parseLong(pathInfo.substring(1));
@@ -88,7 +91,15 @@ public class CartUserAPI extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        super.doPut(request, response);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        String pathInfo = request.getPathInfo();
+        Long id = Long.parseLong(pathInfo.substring(1));
+        Integer quantity = Integer.parseInt(request.getParameter("quantity"));
+        CartItemUpdate cartItemUpdate = new CartItemUpdate(id, quantity);
+        DataResponse<CartItemDto> result = cartItemService.updateAmount(cartItemUpdate);
+        response.getWriter().println(GSON.toJson(result));
     }
 
     @Override

@@ -466,7 +466,6 @@
         let productOptionId = jQuery("input[name=radio-option]:checked").val();
         let productId = ${product.id};
         let data = new FormData();
-        console.log(productId)
         data.append("productId", productId);
         data.append("productOptionId", productOptionId);
         data.append("productColorId", productColorId);
