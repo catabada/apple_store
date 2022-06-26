@@ -1,9 +1,9 @@
 package vn.edu.hcmuaf.fit.dao.impl.option;
 
+import vn.edu.hcmuaf.fit.constant.DbManager;
 import vn.edu.hcmuaf.fit.constant.QUERY;
 import vn.edu.hcmuaf.fit.dao.impl.typeproduct.TypeProductDAOImpl;
 import vn.edu.hcmuaf.fit.dao.option.OptionDAO;
-import vn.edu.hcmuaf.fit.database.IConnectionPool;
 import vn.edu.hcmuaf.fit.model.option.Option;
 import vn.edu.hcmuaf.fit.database.*;
 import vn.edu.hcmuaf.fit.model.typeproduct.TypeProduct;
@@ -12,15 +12,13 @@ import java.sql.*;
 import java.util.*;
 
 public class OptionDAOImpl implements OptionDAO {
-    private IConnectionPool connectionPool;
     private static OptionDAOImpl instance;
     private Connection connection;
 
 
-    private OptionDAOImpl() {
-        connectionPool = DbConnection.init("root", "", "apple_store");
-    }
 
+    private OptionDAOImpl() {
+    }
     public static OptionDAOImpl getInstance() {
         if (instance == null) {
             instance = new OptionDAOImpl();
@@ -30,7 +28,7 @@ public class OptionDAOImpl implements OptionDAO {
 
     @Override
     public List<Option> findAll() {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         List<Option> options = new ArrayList<Option>();
 
         try {
@@ -45,17 +43,17 @@ public class OptionDAOImpl implements OptionDAO {
                 Option option = new Option(id, sku, name, typeProduct);
                 options.add(option);
             }
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return options;
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return options;
         }
     }
 
     @Override
     public Optional<Option> findById(Long id) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.OPTION.GET_BY_ID);
             statement.setLong(1, id);
@@ -68,11 +66,11 @@ public class OptionDAOImpl implements OptionDAO {
 
                 Option option = new Option(id, sku, name, typeProduct);
 
-                connectionPool.releaseConnection(connection);
+                DbManager.connectionPool.releaseConnection(connection);
                 return Optional.of(option);
             }
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return Optional.empty();
         }
         return Optional.empty();
@@ -80,7 +78,7 @@ public class OptionDAOImpl implements OptionDAO {
 
     @Override
     public void save(Option object) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(object.getId() == 0 ? QUERY.OPTION.INSERT : QUERY.OPTION.UPDATE);
             statement.setString(1, object.getSku());
@@ -89,29 +87,29 @@ public class OptionDAOImpl implements OptionDAO {
             if (object.getId() != 0)
                 statement.setLong(4, object.getId());
             statement.executeUpdate();
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
         }
 
     }
 
     @Override
     public void removeById(Long id) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.OPTION.DELETE_BY_ID);
             statement.setLong(1, id);
             statement.executeUpdate();
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
         }
     }
 
     @Override
     public List<Option> findAllByTypeProductId(Long typeProductId) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         List<Option> options = new ArrayList<Option>();
 
         try {
@@ -127,10 +125,10 @@ public class OptionDAOImpl implements OptionDAO {
                 Option option = new Option(id, sku, name, typeProduct);
                 options.add(option);
             }
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return options;
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return options;
         }
     }

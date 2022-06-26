@@ -1,18 +1,16 @@
 package vn.edu.hcmuaf.fit.dao.impl.productdetail;
 
+import vn.edu.hcmuaf.fit.constant.DbManager;
 import vn.edu.hcmuaf.fit.constant.QUERY;
 import vn.edu.hcmuaf.fit.dao.impl.product.ProductDAOImpl;
 import vn.edu.hcmuaf.fit.dao.impl.productcolor.ProductColorDAOImpl;
 import vn.edu.hcmuaf.fit.dao.impl.productoption.ProductOptionDAOImpl;
-import vn.edu.hcmuaf.fit.dao.product.ProductDAO;
 import vn.edu.hcmuaf.fit.dao.productdetail.ProductDetailDAO;
 import vn.edu.hcmuaf.fit.database.*;
 import vn.edu.hcmuaf.fit.model.product.Product;
 import vn.edu.hcmuaf.fit.model.productcolor.ProductColor;
 import vn.edu.hcmuaf.fit.model.productdetail.ProductDetail;
 import vn.edu.hcmuaf.fit.model.productoption.ProductOption;
-import vn.edu.hcmuaf.fit.model.typeproduct.TypeProduct;
-import vn.edu.hcmuaf.fit.response.BaseResponse;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -20,12 +18,10 @@ import java.util.*;
 import java.util.Date;
 
 public class ProductDetailDAOImpl implements ProductDetailDAO {
-    private final IConnectionPool connectionPool;
     private static ProductDetailDAOImpl instance;
     private Connection connection;
 
     private ProductDetailDAOImpl() {
-        this.connectionPool = DbConnection.init("root", "", "apple_store");
     }
 
     public static ProductDetailDAOImpl getInstance() {
@@ -38,7 +34,7 @@ public class ProductDetailDAOImpl implements ProductDetailDAO {
     @Override
     public List<ProductDetail> findAll() {
         List<ProductDetail> productDetails = new ArrayList<ProductDetail>();
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_DETAIL.GET_LIST);
             ResultSet rs = statement.executeQuery();
@@ -63,16 +59,16 @@ public class ProductDetailDAOImpl implements ProductDetailDAO {
                 productDetails.add(productDetail);
             }
         } catch (Exception e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return null;
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return productDetails;
     }
 
     @Override
     public Optional<ProductDetail> findById(Long id) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_DETAIL.GET_BY_ID);
             statement.setLong(1, id);
@@ -94,11 +90,11 @@ public class ProductDetailDAOImpl implements ProductDetailDAO {
                 ProductColor productColor = ProductColorDAOImpl.getInstance().findById(productColorId).orElse(null);
                 ProductOption productOption = ProductOptionDAOImpl.getInstance().findById(productOptionId).orElse(null);
                 ProductDetail productDetail = new ProductDetail(id, sku, name, product, productColor, productOption, price, amount, createdAt, updatedAt, active);
-                connectionPool.releaseConnection(connection);
+                DbManager.connectionPool.releaseConnection(connection);
                 return Optional.of(productDetail);
             }
         } catch (Exception e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return Optional.empty();
         }
         return Optional.empty();
@@ -106,7 +102,7 @@ public class ProductDetailDAOImpl implements ProductDetailDAO {
 
     @Override
     public void save(ProductDetail object) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(object.getId() == 0 ? QUERY.PRODUCT_DETAIL.INSERT : QUERY.PRODUCT_DETAIL.UPDATE);
             statement.setString(1, object.getSku());
@@ -124,12 +120,12 @@ public class ProductDetailDAOImpl implements ProductDetailDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
     }
 
     @Override
     public void removeById(Long id) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_DETAIL.DELETE_BY_ID);
             statement.setLong(1, id);
@@ -137,12 +133,12 @@ public class ProductDetailDAOImpl implements ProductDetailDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
     }
 
     @Override
     public boolean checkExistColorAndOption(Long productColorId, Long productOptionId) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_DETAIL.CHECK_COLOR_AND_OPTION);
             statement.setLong(1, productColorId);
@@ -150,7 +146,7 @@ public class ProductDetailDAOImpl implements ProductDetailDAO {
             ResultSet rs = statement.executeQuery();
             return rs.isBeforeFirst() || rs.getRow() != 0;
         } catch (Exception e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return false;
         }
     }
@@ -158,7 +154,7 @@ public class ProductDetailDAOImpl implements ProductDetailDAO {
     @Override
     public List<ProductDetail> findAllByProductId(Long productId) {
         List<ProductDetail> productDetails = new ArrayList<ProductDetail>();
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_DETAIL.GET_LIST_BY_PRODUCT_ID);
             statement.setLong(1, productId);
@@ -183,17 +179,17 @@ public class ProductDetailDAOImpl implements ProductDetailDAO {
                 productDetails.add(productDetail);
             }
         } catch (Exception e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return null;
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return productDetails;
     }
 
     @Override
     public List<ProductDetail> findAllByProductColorId(Long productColorId) {
         List<ProductDetail> productDetails = new ArrayList<ProductDetail>();
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_DETAIL.GET_LIST_BY_PRODUCT_COLOR_ID);
             statement.setLong(1, productColorId);
@@ -218,16 +214,17 @@ public class ProductDetailDAOImpl implements ProductDetailDAO {
                 productDetails.add(productDetail);
             }
         } catch (Exception e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return null;
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return productDetails;
     }
+
     @Override
     public List<ProductDetail> findAllByProductOptionId(Long productOptionId) {
         List<ProductDetail> productDetails = new ArrayList<ProductDetail>();
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_DETAIL.GET_LIST_BY_PRODUCT_OPTION_ID);
             statement.setLong(1, productOptionId);
@@ -252,10 +249,46 @@ public class ProductDetailDAOImpl implements ProductDetailDAO {
                 productDetails.add(productDetail);
             }
         } catch (Exception e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return null;
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return productDetails;
+    }
+
+    @Override
+    public Optional<ProductDetail> findByProductIdAndProductColorIdAndProductOptionId(Long productId, Long productColorId, Long productOptionId) {
+        List<ProductDetail> productDetails = new ArrayList<ProductDetail>();
+        connection = DbManager.connectionPool.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_DETAIL.GET_LIST_BY_PRODUCT_ID_AND_PRODUCT_COLOR_ID_AND_PRODUCT_OPTION_ID);
+            statement.setLong(1, productId);
+            statement.setLong(2, productColorId);
+            statement.setLong(3, productOptionId);
+            ResultSet rs = statement.executeQuery();
+            if (!rs.isBeforeFirst() && rs.getRow() == 0) return Optional.empty();
+            if (rs.next()) {
+                long id = rs.getLong("id");
+                String sku = rs.getString("sku");
+                String name = rs.getString("name");
+                Integer price = rs.getInt("price");
+                Integer amount = rs.getInt("amount");
+                Date createdAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("created_at"));
+                Date updatedAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("updated_at"));
+                boolean active = rs.getBoolean("active");
+
+                Product product = ProductDAOImpl.getInstance().findById(productId).orElse(null);
+                ProductColor productColor = ProductColorDAOImpl.getInstance().findById(productColorId).orElse(null);
+                ProductOption productOption = ProductOptionDAOImpl.getInstance().findById(productOptionId).orElse(null);
+
+                ProductDetail productDetail = new ProductDetail(id, sku, name, product, productColor, productOption, price, amount, createdAt, updatedAt, active);
+                DbManager.connectionPool.releaseConnection(connection);
+                return Optional.of(productDetail);
+            }
+        } catch (Exception e) {
+            DbManager.connectionPool.releaseConnection(connection);
+            return Optional.empty();
+        }
+        return Optional.empty();
     }
 }

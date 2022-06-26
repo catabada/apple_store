@@ -1,8 +1,9 @@
 package vn.edu.hcmuaf.fit.dao.impl.user;
+
+import vn.edu.hcmuaf.fit.constant.DbManager;
 import vn.edu.hcmuaf.fit.constant.QUERY;
 import vn.edu.hcmuaf.fit.dao.user.UserDAO;
 import vn.edu.hcmuaf.fit.database.DbConnection;
-import vn.edu.hcmuaf.fit.database.IConnectionPool;
 import vn.edu.hcmuaf.fit.model.user.User;
 
 import java.sql.Connection;
@@ -16,13 +17,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDAOImpl implements UserDAO {
-    private final IConnectionPool connectionPool;
     private static UserDAOImpl instance;
     private Connection connection;
 
 
     private UserDAOImpl() {
-        this.connectionPool = DbConnection.init("root", "", "apple_store");
     }
 
     public static UserDAOImpl getInstance() {
@@ -35,7 +34,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<User>();
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.USER.GET_LIST);
             ResultSet rs = statement.executeQuery();
@@ -56,16 +55,16 @@ public class UserDAOImpl implements UserDAO {
             }
 
         } catch (Exception e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return users;
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return users;
     }
 
     @Override
     public Optional<User> findById(Long id) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.USER.GET_BY_ID);
             statement.setLong(1, id);
@@ -83,20 +82,20 @@ public class UserDAOImpl implements UserDAO {
                 Date createdDate = new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString("date_created"));
                 boolean active = rs.getBoolean("active");
                 User user = new User(id, username, password, firstName, lastName, phone, email, address, role, createdDate, active);
-                connectionPool.releaseConnection(connection);
+                DbManager.connectionPool.releaseConnection(connection);
                 return Optional.of(user);
             }
         } catch (Exception e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return Optional.empty();
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return Optional.empty();
     }
 
     @Override
     public void save(User object) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(object.getId() == 0 ? QUERY.USER.INSERT : QUERY.USER.UPDATE);
             statement.setString(1, object.getUsername());
@@ -114,25 +113,25 @@ public class UserDAOImpl implements UserDAO {
 
             }
             statement.executeUpdate();
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
     }
 
     @Override
     public void removeById(Long id) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.USER.DELETE_BY_ID);
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
     }
 
     @Override
@@ -147,7 +146,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public Optional<User> signIn(String username, String password) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.USER.SIGN_IN);
             statement.setString(1, username);
@@ -165,20 +164,20 @@ public class UserDAOImpl implements UserDAO {
                 Date createdDate = new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString("date_created"));
                 boolean active = rs.getBoolean("active");
                 User user = new User(id, username, password, firstName, lastName, phone, email, address, role, createdDate, active);
-                connectionPool.releaseConnection(connection);
+                DbManager.connectionPool.releaseConnection(connection);
                 return Optional.of(user);
             }
         } catch (Exception e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return Optional.empty();
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return Optional.empty();
     }
 
     @Override
     public Optional<User> checkUsername(String username) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.USER.CHECK_USERNAME);
             statement.setString(1, username);
@@ -196,14 +195,14 @@ public class UserDAOImpl implements UserDAO {
                 Date createdDate = new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString("date_created"));
                 boolean active = rs.getBoolean("active");
                 User user = new User(id, username, password, firstName, lastName, phone, email, address, role, createdDate, active);
-                connectionPool.releaseConnection(connection);
+                DbManager.connectionPool.releaseConnection(connection);
                 return Optional.of(user);
             }
         } catch (Exception e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return Optional.empty();
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return Optional.empty();
     }
-    }
+}

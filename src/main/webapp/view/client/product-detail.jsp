@@ -218,8 +218,11 @@
                                 </div>
                             </div>
                             <div class="body__details__summary__body__add--wrapper">
-                                <input type="button" class="body__details__summary__body__btn-add-to-bag"
-                                       value="Add to bag"/>
+                                <input onclick="addProductToCart()" type="button"
+                                       class="body__details__summary__body__btn-add-to-bag"
+                                       value="Add to bag"
+                                       id="add-to-bag"
+                                />
                                 <svg viewBox="0 0 35 35" class="body__details__summary__body__love" role="img"
                                      aria-hidden="true" width="35px" height="35px">
                                     <path fill="none" d="M0 1.213h35v35H0z"></path>
@@ -458,66 +461,75 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="${pageContext.request.contextPath}/assets/js/detail-product.js"></script>
 <script>
-    <%--$(".body__details__summary__body__btn-add-to-bag").on("click", (e) => {--%>
-    <%--    let idPro = $("input.idPro").val();--%>
-    <%--    let idColor = $('input[name="radio-color"]:checked').val();--%>
-    <%--    var idProOption = $('input[name="radio-option"]:checked').val();--%>
-    <%--    if(typeof(idProOption) === 'undefined') idProOption = '-1';--%>
-    <%--    let href = "/detail-product?id=" + idPro + "&idColor=" + idColor + "&idProOption=" + idProOption;--%>
-    <%--    history.pushState({}, null, href);--%>
-    <%--    $.ajax({--%>
-    <%--        type: "POST",--%>
-    <%--        url: "/cart-crud?action=add",--%>
-    <%--        data: {--%>
-    <%--            idPro: idPro,--%>
-    <%--            idColor: idColor,--%>
-    <%--            idProOption: idProOption--%>
-    <%--        },--%>
-    <%--        success: function () {--%>
-    <%--            <% HttpSession ss = request.getSession(); %>--%>
-    <%--            <%if(ss.getAttribute("idUser") == null) {%>--%>
-    <%--            window.location.href = "/sign-in"--%>
-    <%--            <%} else {%>--%>
-    <%--            e.preventDefault();--%>
-    <%--            <%--%>
-    <%--            int idCart = (int) ss.getAttribute("idCart");--%>
-    <%--            String idPro = request.getParameter("id");--%>
-    <%--            String idColor = request.getParameter("idColor");--%>
-    <%--            String idProOption = request.getParameter("idProOption");--%>
-    <%--            if(idProOption == null) idProOption = "-1";--%>
+    function addProductToCart() {
+        let productColorId = jQuery("input[name=radio-color]:checked").val();
+        let productOptionId = jQuery("input[name=radio-option]:checked").val();
+        let productId = ${product.id};
+        let data = new FormData();
+        data.append("productId", productId);
+        data.append("productOptionId", productOptionId);
+        data.append("productColorId", productColorId);
+        jQuery.ajax({
+            url: "/api/cart-item",
+            type: "POST",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                let data = JSON.parse(response);
+                if (data.success) {
+                    Swal.fire({
+                        title: 'Success',
+                        text: data.message,
+                        icon: 'success',
+                        type: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(function () {
+                        jQuery.ajax({
+                            url: "/api/cart-item",
+                            type: "GET",
+                            dataType: "json",
+                            processData: false,
+                            contentType: false,
+                            success: function (response) {
+                                if (response.success) {
+                                    let listCartItem = response.data;
+                                    jQuery("#quantity").text(listCartItem.length);
+                                    jQuery("#list-cart-item").empty();
+                                    for (let cartItem of listCartItem) {
+                                        let html = `<div class="header__navbar__cart__item">
+                                    <div class="header__navbar__cart__item__img">
+                                        <img src="${pageContext.request.contextPath}/image/` + cartItem.productDetail.productColor.bgImage + `" alt="">
+                                    </div>
+                                    <div class="header__navbar__cart__item__name">
+                                            ` + cartItem.productDetail.name + `
+                                           <br>
+                                           x` + cartItem.quantity + `
+                                    </div>
+                                </div>`;
+                                        jQuery("#list-cart-item").append(html);
+                                    }
+                                }
 
-    <%--            %>--%>
-    <%--            if(!existProInCart(idPro, idColor, idProOption)) {--%>
-    <%--                Swal.fire({--%>
-    <%--                    icon: 'success',--%>
-    <%--                    title: 'Successfully added to cart.',--%>
-    <%--                    showConfirmButton: false,--%>
-    <%--                    timer: 1500--%>
-    <%--                })--%>
-    <%--                if($(".header__navbar__cart--amount").text() === '0') {--%>
-    <%--                    $(".header__navbar__cart--amount").show();--%>
-    <%--                    $(".header__navbar__cart__list--wrapper").show();--%>
-    <%--                    $(".header__navbar__cart__none").hide();--%>
-    <%--                    $(".header__navbar__cart--amount").text('1');--%>
-    <%--                } else {--%>
-    <%--                    var numOfList = Number.parseInt($(".header__navbar__cart--amount").text());--%>
-    <%--                    numOfList += 1;--%>
-    <%--                    $(".header__navbar__cart--amount").text(numOfList)--%>
-    <%--                }--%>
-    <%--                addProduct()--%>
-    <%--            } else {--%>
-    <%--                Swal.fire({--%>
-    <%--                    icon: 'success',--%>
-    <%--                    title: 'Product have added successfully.',--%>
-    <%--                    showConfirmButton: false,--%>
-    <%--                    timer: 1500--%>
-    <%--                })--%>
-    <%--                <%}%>--%>
-    <%--            }--%>
-    <%--        },--%>
+                            }
+                        });
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Warning',
+                        text: data.message,
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.value) {
+                            window.location.href = "${pageContext.request.contextPath}/apple-store/login";
+                        }
+                    })
+                }
+            }
+        })
 
-    <%--    })--%>
-    <%--})--%>
+    }
 
     function clickOption(productOptionId) {
         jQuery.map(jQuery(".body__details__choose-capacity__item--wrapper"), (item, i) => {
@@ -562,6 +574,7 @@
     }
 
     function getDataOptionByProductColorId(productColorId) {
+        let productOptionId = jQuery("input[name=radio-option]:checked").val();
         jQuery.map(jQuery(".body__images--wrapper"), (item, i) => {
             let image = jQuery(item);
             if (image.attr("id") === "image-color-" + productColorId) {
@@ -591,7 +604,25 @@
             }
 
         })
+        jQuery.ajax({
+            url: "/api/product-detail/listByProductOptionId" + productOptionId,
+            type: "GET",
+            success: function (response) {
+                if (response.success) {
+                    let list = response.data;
+                    let productColor = jQuery("input[name=radio-color]:checked").val();
+                    for (let productDetail of list) {
+                        if (productDetail.productColor.id == productColor) {
+                            jQuery("#breadcrumb-price").empty();
+                            jQuery("#price-total").empty();
+                            jQuery("#breadcrumb-price").append("$" + productDetail.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") + ".00");
+                            jQuery("#price-total").append("$" + productDetail.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") + ".00");
+                        }
+                    }
+                }
+            }
 
+        })
         jQuery.ajax({
             url: "/api/product-detail/listByProductColorId" + productColorId,
             type: "GET",

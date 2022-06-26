@@ -5,14 +5,11 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "SignOutController", value = "/apple-store/sign-out")
-public class SignOutController extends HttpServlet {
+@WebServlet(name = "CheckOutPageController", urlPatterns = "/apple-store/checkout")
+public class CheckOutPageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        session.removeAttribute("userId");
-        session.removeAttribute("cartId");
-        request.getRequestDispatcher("/view/client/login.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/client/checkout.jsp").forward(request, response);
     }
 
     @Override
