@@ -1,5 +1,7 @@
 package vn.edu.hcmuaf.fit.database;
 
+import vn.edu.hcmuaf.fit.constant.DbManager;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ public class DbConnection implements IConnectionPool {
     public static DbConnection init(String uid, String pwd, String database) {
         List<Connection> pool = new ArrayList<>(MAX_POOL_SIZE);
         for (int i = 0; i < MAX_POOL_SIZE; i++) {
-            pool.add(createConnection());
+            pool.add(createConnection(uid, pwd, database));
         }
         return new DbConnection(uid, pwd, database, pool);
     }
@@ -33,14 +35,15 @@ public class DbConnection implements IConnectionPool {
         try {
             if (connectionPool.isEmpty()) {
                 if (usedConnections.size() < MAX_POOL_SIZE) {
-                    connectionPool.add(createConnection());
+                    connectionPool.add(createConnection(uid, pwd, database));
                 } else {
-                    throw new RuntimeException("Maximum pool size reached, no available connections!");
+                    DbManager.connectionPool = DbConnection.init(uid, pwd, database);
+                    // throw new RuntimeException("Maximum pool size reached, no available connections!");
                 }
             }
-            Connection connection = connectionPool.remove(connectionPool.size() - 1);
-            if (!connection.isValid(MAX_TIMEOUT)) {
-                connection = createConnection();
+            Connection connection = connectionPool.remove(0);
+            if (connection == null || !connection.isValid(MAX_TIMEOUT)) {
+                connection = createConnection(uid, pwd, database);
             }
             usedConnections.add(connection);
             return connection;
@@ -51,16 +54,28 @@ public class DbConnection implements IConnectionPool {
     }
 
     @Override
+    public void shutdown() {
+        try {
+            usedConnections.forEach(this::releaseConnection);
+            for (Connection c : connectionPool) c.close();
+            connectionPool.clear();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void releaseConnection(Connection connection) {
         connectionPool.add(connection);
         usedConnections.remove(connection);
     }
 
-    private static Connection createConnection() {
+    private static Connection createConnection(String uid, String pwd, String database) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
-            return DriverManager.getConnection("jdbc:mysql://localhost/" + "apple_store", "root", "");
+            return DriverManager.getConnection("jdbc:mysql://localhost/" + database, uid, pwd);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

@@ -19,7 +19,7 @@
 <body>
 <div class="main" id="on-top">
     <!-- Begin header -->
-    <c:import url="layout/header.jsp" />
+    <c:import url="layout/header.jsp"/>
     <!-- End  Header -->
     <div class="container body-profile">
         <div class="main-body">
@@ -28,7 +28,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="https://ui-avatars.com/api/?name=${user.firstName}+${user.lastName}" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                                <img src="https://ui-avatars.com/api/?name=${user.firstName}+${user.lastName}"
+                                     alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                                 <div class="mt-3">
                                     <h1>${user.firstName} ${user.lastName}</h1>
                                     <p class="text-secondary mb-1">Customer</p>
@@ -40,13 +41,17 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="card">
-                        <form class="card-body">
+                        <form id="profile-form"
+                              enctype="multipart/form-data"
+                              novalidate="novalidate"
+                              class="card-body">
                             <div class="row mb-3">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">First Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" name="first" value="${user.firstName}">
+                                    <input id="firstName" type="text" class="form-control" name="firstName"
+                                           value="${user.firstName}">
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -54,7 +59,8 @@
                                     <h6 class="mb-0">Last Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" name="last" value="${user.lastName}">
+                                    <input id="lastName" type="text" class="form-control" name="lastName"
+                                           value="${user.lastName}">
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -62,7 +68,8 @@
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" name="email" value="${user.email}">
+                                    <input id="email" type="text" class="form-control" name="email"
+                                           value="${user.email}">
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -70,7 +77,8 @@
                                     <h6 class="mb-0">Phone number</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" name="phone-number" value="${user.phone}">
+                                    <input id="phone" type="text" class="form-control" name="phone"
+                                           value="${user.phone}">
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -78,13 +86,15 @@
                                     <h6 class="mb-0">Address</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" name="address" value="${user.address}">
+                                    <input id="address" type="text" class="form-control" name="address"
+                                           value="${user.address}">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="button" class="btn btn-primary px-4" id="save-changes" value="Save Changes">
+                                    <input type="button" onclick="updateProfile()" class="btn btn-primary px-4"
+                                           id="save-changes" value="Save Changes">
                                 </div>
                             </div>
                         </form>
@@ -110,7 +120,7 @@
                                                     <tr class="row100 head">
                                                         <th class="cell100 column1">#</th>
                                                         <th class="cell100 column2">Full Name</th>
-<%--                                                        <th class="cell100 column2">Phone number</th>--%>
+                                                        <%--                                                        <th class="cell100 column2">Phone number</th>--%>
                                                         <th class="cell100 column3">Email</th>
                                                         <th class="cell100 column3">Address</th>
                                                         <th class="cell100 column2">Payment</th>
@@ -120,21 +130,21 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-<%--&lt;%&ndash;                                                    <c:set var="i" value="0"/>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                                    <c:forEach var="itemOrder" items="${listOrder}" >&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                                        <c:set var="i" value="${i + 1}"/>&ndash;%&gt;--%>
-<%--                                                        <tr class="row100 body">--%>
-<%--                                                            <td class="cell100 column1">${i}</td>--%>
-<%--                                                            <td class="cell100 column2">${itemOrder.fullname}</td>--%>
-<%--                                                            <td class="cell100 column2">${itemOrder.phoneNumber}</td>--%>
-<%--                                                            <td class="cell100 column3">${itemOrder.email}</td>--%>
-<%--                                                            <td class="cell100 column3">${itemOrder.address}</td>--%>
-<%--                                                            <td class="cell100 column2">${orderDao.getTypePayment(itemOrder.idTypePay)}</td>--%>
-<%--                                                            <td class="cell100 column2">$${itemOrder.price}</td>--%>
-<%--                                                            <td class="cell100 column2">${itemOrder.status}</td>--%>
-<%--                                                            <td class="cell100 column2">${itemOrder.date}</td>--%>
-<%--                                                        </tr>--%>
-<%--&lt;%&ndash;                                                    </c:forEach>&ndash;%&gt;--%>
+                                                    <%--&lt;%&ndash;                                                    <c:set var="i" value="0"/>&ndash;%&gt;--%>
+                                                    <%--&lt;%&ndash;                                                    <c:forEach var="itemOrder" items="${listOrder}" >&ndash;%&gt;--%>
+                                                    <%--&lt;%&ndash;                                                        <c:set var="i" value="${i + 1}"/>&ndash;%&gt;--%>
+                                                    <%--                                                        <tr class="row100 body">--%>
+                                                    <%--                                                            <td class="cell100 column1">${i}</td>--%>
+                                                    <%--                                                            <td class="cell100 column2">${itemOrder.fullname}</td>--%>
+                                                    <%--                                                            <td class="cell100 column2">${itemOrder.phoneNumber}</td>--%>
+                                                    <%--                                                            <td class="cell100 column3">${itemOrder.email}</td>--%>
+                                                    <%--                                                            <td class="cell100 column3">${itemOrder.address}</td>--%>
+                                                    <%--                                                            <td class="cell100 column2">${orderDao.getTypePayment(itemOrder.idTypePay)}</td>--%>
+                                                    <%--                                                            <td class="cell100 column2">$${itemOrder.price}</td>--%>
+                                                    <%--                                                            <td class="cell100 column2">${itemOrder.status}</td>--%>
+                                                    <%--                                                            <td class="cell100 column2">${itemOrder.date}</td>--%>
+                                                    <%--                                                        </tr>--%>
+                                                    <%--&lt;%&ndash;                                                    </c:forEach>&ndash;%&gt;--%>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -154,6 +164,42 @@
         <i class="fas fa-chevron-up"></i>
     </a>
 </div>
+<script>
+    function updateProfile() {
+        let data = new FormData(jQuery("#profile-form")[0]);
+
+        jQuery.ajax({
+            url: "/apple-store/profile?id=${user.id}",
+            type: "POST",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                let data = JSON.parse(response);
+                if (data.success) {
+                    Swal.fire({
+                            icon: 'success',
+                            title: 'SUCCESS',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 2000
+                        }
+                    );
+
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'ERROR',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                }
+            }
+            ,
+        });
+    }
+</script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="${pageContext.request.contextPath}/assets/js/profile.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>

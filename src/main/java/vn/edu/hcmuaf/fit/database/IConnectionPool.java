@@ -6,4 +6,6 @@ public interface IConnectionPool {
     Connection getConnection();
 
     void releaseConnection(Connection connection);
+
+    void shutdown();
 }

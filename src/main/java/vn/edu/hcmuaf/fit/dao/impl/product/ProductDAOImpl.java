@@ -1,12 +1,12 @@
 package vn.edu.hcmuaf.fit.dao.impl.product;
 
 import org.jdbi.v3.core.mapper.reflect.BeanMapper;
+import vn.edu.hcmuaf.fit.constant.DbManager;
 import vn.edu.hcmuaf.fit.constant.QUERY;
 import vn.edu.hcmuaf.fit.dao.impl.typeproduct.TypeProductDAOImpl;
 import vn.edu.hcmuaf.fit.dao.product.ProductDAO;
 import vn.edu.hcmuaf.fit.dao.typeproduct.TypeProductDAO;
 import vn.edu.hcmuaf.fit.database.DbConnection;
-import vn.edu.hcmuaf.fit.database.IConnectionPool;
 import vn.edu.hcmuaf.fit.model.product.Product;
 import vn.edu.hcmuaf.fit.model.typeproduct.TypeProduct;
 
@@ -18,11 +18,9 @@ import java.util.stream.Collectors;
 
 public class ProductDAOImpl implements ProductDAO {
     private static ProductDAOImpl instance;
-    private final IConnectionPool connectionPool;
     private Connection connection;
 
     private ProductDAOImpl() {
-        this.connectionPool = DbConnection.init("root", "", "apple_store");
     }
 
     public static ProductDAOImpl getInstance() {
@@ -35,7 +33,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<Product> findAll() {
         List<Product> products = new ArrayList<Product>();
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT.GET_LIST);
             ResultSet rs = statement.executeQuery();
@@ -59,16 +57,16 @@ public class ProductDAOImpl implements ProductDAO {
             }
 
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return products;
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return products;
     }
 
     @Override
     public Optional<Product> findById(Long id) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT.GET_BY_ID);
             statement.setLong(1, id);
@@ -89,20 +87,20 @@ public class ProductDAOImpl implements ProductDAO {
 
                 TypeProduct typeProduct = TypeProductDAOImpl.getInstance().findById(typeProductId).orElseGet(null);
                 Product product = new Product(id, sku, name, typeProduct, price, urlImage, rate, discount, viewed, dateCreated, lastUpdated, active);
-                connectionPool.releaseConnection(connection);
+                DbManager.connectionPool.releaseConnection(connection);
                 return Optional.of(product);
             }
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return Optional.empty();
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return Optional.empty();
     }
 
     @Override
     public void save(Product object) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(object.getId() == 0 ? QUERY.PRODUCT.INSERT : QUERY.PRODUCT.UPDATE);
             statement.setString(1, object.getSku());
@@ -120,25 +118,25 @@ public class ProductDAOImpl implements ProductDAO {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return;
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
 
     }
 
     @Override
     public void removeById(Long id) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT.DELETE_BY_ID);
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return;
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
     }
 
     @Override
@@ -149,7 +147,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<Product> findAllByTypeProductId(Long typeProductId) {
         List<Product> products = new ArrayList<Product>();
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT.GET_LIST_BY_TYPE_PRODUCT_ID);
             statement.setLong(1, typeProductId);
@@ -173,10 +171,10 @@ public class ProductDAOImpl implements ProductDAO {
             }
 
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return products;
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return products;
     }
 

@@ -35,6 +35,15 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public DataResponse<CartDto> getCartByUserId(Long userId) {
+        Optional<Cart> optional = cartDao.findByUserId(userId);
+        return optional.map(cart -> {
+            CartDto cartDto = cartMapper.toCartDto(cart);
+            return new DataResponse<CartDto>(true, 200, "Success", cartDto);
+        }).orElseGet(() -> new DataResponse<CartDto>(false, 401, "Cart not found", null));
+    }
+
+    @Override
     public DataResponse<CartDto> createCart(CartCreate create) {
         User user = UserDAOImpl.getInstance().findById(create.getUserId()).orElse(null);
         Cart cart = new Cart(user);

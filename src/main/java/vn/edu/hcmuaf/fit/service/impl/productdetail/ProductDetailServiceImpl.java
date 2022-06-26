@@ -1,15 +1,12 @@
 package vn.edu.hcmuaf.fit.service.impl.productdetail;
 
-import vn.edu.hcmuaf.fit.dao.impl.option.OptionDAOImpl;
 import vn.edu.hcmuaf.fit.dao.impl.product.ProductDAOImpl;
 import vn.edu.hcmuaf.fit.dao.impl.productcolor.ProductColorDAOImpl;
 import vn.edu.hcmuaf.fit.dao.impl.productdetail.ProductDetailDAOImpl;
 import vn.edu.hcmuaf.fit.dao.impl.productoption.ProductOptionDAOImpl;
 import vn.edu.hcmuaf.fit.dao.productdetail.ProductDetailDAO;
 import vn.edu.hcmuaf.fit.dto.productdetail.*;
-import vn.edu.hcmuaf.fit.dto.productoption.ProductOptionDto;
 import vn.edu.hcmuaf.fit.mapper.productdetail.ProductDetailMapper;
-import vn.edu.hcmuaf.fit.model.option.Option;
 import vn.edu.hcmuaf.fit.model.product.Product;
 import vn.edu.hcmuaf.fit.model.productcolor.ProductColor;
 import vn.edu.hcmuaf.fit.model.productdetail.ProductDetail;
@@ -42,6 +39,15 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     @Override
     public DataResponse<ProductDetailDto> getProductDetailBySku(String sku) {
         return null;
+    }
+
+    @Override
+    public DataResponse<ProductDetailDto> getProductDetailByProductIdAndProductColorIdAndProductOptionId(Long productId, Long productColorId, Long productOptionId) {
+        Optional<ProductDetail> optional = productDetailDao.findByProductIdAndProductColorIdAndProductOptionId(productId, productColorId, productOptionId);
+        return optional.map(productDetail -> {
+            ProductDetailDto productOptionDto = productDetailMapper.toProductDetailDto(productDetail);
+            return new DataResponse<ProductDetailDto>(true, 200, "Success", productOptionDto);
+        }).orElseGet(() -> new DataResponse<ProductDetailDto>(false, 401, "Not found!", null));
     }
 
     @Override

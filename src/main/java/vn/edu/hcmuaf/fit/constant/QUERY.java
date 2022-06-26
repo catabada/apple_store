@@ -67,7 +67,7 @@ public final class QUERY {
         public static final String GET_BY_USERNAME = "select * from user where username = ?";
         public static final String INSERT = "insert into user(username, password, first_name, last_name,phone, email, address) values (?, ?, ?, ?, ?, ?, ?)";
         public static final String DELETE_BY_ID = "delete from user where id = ?";
-        public static final String UPDATE = "update user set username = ?, password = ?, first_name = ?,last_name = ?,phone = ?,email = ?, address = ?, active = ?, role = ?";
+        public static final String UPDATE = "update user set username = ?, password = ?, first_name = ?,last_name = ?,phone = ?,email = ?, address = ?, active = ?, role = ? where id=?";
         public static final String SIGN_IN = " select * from user where username = ? and password= ? ";
         public static final String CHECK_USERNAME = "select * from user where username = ?";
     }
@@ -77,6 +77,7 @@ public final class QUERY {
         public static final String GET_LIST_BY_PRODUCT_ID = "select * from product_detail where product_id = ?";
         public static final String GET_LIST_BY_PRODUCT_COLOR_ID = "select * from product_detail where product_color_id = ?";
         public static final String GET_LIST_BY_PRODUCT_OPTION_ID = "select * from product_detail where product_option_id = ?";
+        public static final String GET_LIST_BY_PRODUCT_ID_AND_PRODUCT_COLOR_ID_AND_PRODUCT_OPTION_ID = "select * from product_detail where product_id = ? and product_color_id = ? and product_option_id = ?";
         public static final String GET_BY_ID = "select * from product_detail where id = ?";
         public static final String GET_BY_SKU = "select * from product_detail where sku = ?";
         public static final String INSERT = "insert into product_detail(sku, name, product_id, product_color_id, product_option_id, price, coefficient, amount) values (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -88,13 +89,15 @@ public final class QUERY {
     public static final class CART {
         public static final String GET_LIST = "select * from cart";
         public static final String GET_BY_ID = "select * from cart where id = ?";
+        public static final String GET_BY_USER_ID = "select * from cart where user_id = ?";
         public static final String INSERT = "insert into cart(user_id) values (?)";
         public static final String DELETE_BY_ID = "delete from cart where id = ?";
         public static final String UPDATE = "update cart set user_id = ? where id = ?";
     }
+
     public static final class CART_ITEM {
         public static final String GET_LIST = "select * from cart_item";
-        public static final String GET_LIST_BY_PRODUCT_ID = "select * from cart_item where product_id = ?";
+        public static final String GET_LIST_BY_CART_ID_AND_PRODUCT_DETAIL_ID = "select * from cart_item where cart_id = ? and product_detail_id = ?";
         public static final String GET_BY_ID = "select * from cart_item where id = ?";
         public static final String INSERT = "insert into cart_item(cart_id , product_detail_id, quantity) values (?, ?, ?)";
         public static final String DELETE_BY_ID = "delete from cart_item where id = ?";

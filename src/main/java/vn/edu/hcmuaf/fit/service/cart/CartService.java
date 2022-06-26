@@ -10,11 +10,12 @@ import java.util.List;
 public interface CartService {
     public DataResponse<CartDto> getCartById(final Long id);
 
+    public DataResponse<CartDto> getCartByUserId(final Long userId);
+
     public DataResponse<CartDto> createCart(final CartCreate create);
 
     public DataResponse<List<CartDto>> getListCart();
 
     public BaseResponse deleteCartById(final Long id);
-
 
 }

@@ -103,5 +103,21 @@ public class UserServiceImpl implements UserService {
         userDao.signUp(user);
         return new BaseResponse(true, 200, "Success");
     }
+
+    @Override
+    public DataResponse<User> updateProfile(UserUpdate update) {
+        Optional<User> optional = userDao.findById(update.getId());
+        if(optional.isPresent()) {
+            User user = optional.get();
+            user.setFirstName(update.getFirstName());
+            user.setLastName(update.getLastName());
+            user.setPhone(update.getPhone());
+            user.setEmail(update.getEmail());
+            user.setAddress(update.getAddress());
+            userDao.save(user);
+            return new DataResponse<User>(true,200,"Success",optional.get());
+        }
+        return new DataResponse<User>(false,401,"Can't update profile",null);
+    }
 }
 

@@ -1,10 +1,10 @@
 package vn.edu.hcmuaf.fit.dao.impl.productcolor;
 
+import vn.edu.hcmuaf.fit.constant.DbManager;
 import vn.edu.hcmuaf.fit.constant.QUERY;
 import vn.edu.hcmuaf.fit.dao.impl.color.ColorDAOImpl;
 import vn.edu.hcmuaf.fit.dao.impl.product.ProductDAOImpl;
 import vn.edu.hcmuaf.fit.dao.productcolor.ProductColorDAO;
-import vn.edu.hcmuaf.fit.database.IConnectionPool;
 import vn.edu.hcmuaf.fit.model.color.Color;
 import vn.edu.hcmuaf.fit.model.product.Product;
 import vn.edu.hcmuaf.fit.model.productcolor.ProductColor;
@@ -16,11 +16,9 @@ import vn.edu.hcmuaf.fit.database.*;
 
 public class ProductColorDAOImpl implements ProductColorDAO {
     private static ProductColorDAOImpl instance;
-    private IConnectionPool connectionPool;
     private Connection connection;
 
     private ProductColorDAOImpl() {
-        this.connectionPool = DbConnection.init("root", "", "apple_store");
     }
 
     public static ProductColorDAOImpl getInstance() {
@@ -33,7 +31,7 @@ public class ProductColorDAOImpl implements ProductColorDAO {
     @Override
     public List<ProductColor> findAll() {
         List<ProductColor> productColors = new ArrayList<ProductColor>();
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_COLOR.GET_LIST);
             ResultSet rs = statement.executeQuery();
@@ -49,18 +47,18 @@ public class ProductColorDAOImpl implements ProductColorDAO {
                 productColors.add(productColor);
             }
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return null;
         }
 
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return productColors;
     }
 
     @Override
     public Optional<ProductColor> findById(Long id) {
 
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_COLOR.GET_BY_ID);
             statement.setLong(1, id);
@@ -74,21 +72,21 @@ public class ProductColorDAOImpl implements ProductColorDAO {
                 Color color = ColorDAOImpl.getInstance().findById(rs.getLong("color_id")).orElse(null);
 
                 ProductColor productColor = new ProductColor(id, product, color, bgImage, deImages);
-                connectionPool.releaseConnection(connection);
+                DbManager.connectionPool.releaseConnection(connection);
                 return Optional.of(productColor);
             }
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return Optional.empty();
         }
 
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return Optional.empty();
     }
 
     @Override
     public void save(ProductColor object) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         System.out.println(object.getDeImages() + "" + object.getBgImage());
         try {
             PreparedStatement statement = connection.prepareStatement(object.getId() == 0 ? QUERY.PRODUCT_COLOR.INSERT : QUERY.PRODUCT_COLOR.UPDATE);
@@ -102,28 +100,28 @@ public class ProductColorDAOImpl implements ProductColorDAO {
             }
             statement.executeUpdate();
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
     }
 
     @Override
     public void removeById(Long id) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_COLOR.DELETE_BY_ID);
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
     }
 
     @Override
     public List<ProductColor> findAllByProductId(Long productId) {
         List<ProductColor> productColors = new ArrayList<ProductColor>();
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_COLOR.GET_LIST_BY_PRODUCT_ID);
             statement.setLong(1, productId);
@@ -140,11 +138,11 @@ public class ProductColorDAOImpl implements ProductColorDAO {
                 productColors.add(productColor);
             }
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return null;
         }
 
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return productColors;
     }
 }

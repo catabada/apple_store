@@ -1,22 +1,19 @@
 package vn.edu.hcmuaf.fit.dao.impl.typeproduct;
 
+import vn.edu.hcmuaf.fit.constant.DbManager;
 import vn.edu.hcmuaf.fit.constant.QUERY;
 import vn.edu.hcmuaf.fit.dao.typeproduct.TypeProductDAO;
-import vn.edu.hcmuaf.fit.database.*;
 import vn.edu.hcmuaf.fit.model.typeproduct.TypeProduct;
 
 import java.sql.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TypeProductDAOImpl implements TypeProductDAO {
-    private final IConnectionPool connectionPool;
     private static TypeProductDAOImpl instance;
     private Connection connection;
 
 
     private TypeProductDAOImpl() {
-        this.connectionPool = DbConnection.init("root", "", "apple_store");
     }
 
     public static TypeProductDAOImpl getInstance() {
@@ -29,7 +26,7 @@ public class TypeProductDAOImpl implements TypeProductDAO {
     @Override
     public List<TypeProduct> findAll() {
         List<TypeProduct> typeProducts = new ArrayList<TypeProduct>();
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.TYPE_PRODUCT.GET_LIST);
             ResultSet rs = statement.executeQuery();
@@ -42,16 +39,16 @@ public class TypeProductDAOImpl implements TypeProductDAO {
                 typeProducts.add(typeProduct);
             }
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return null;
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return typeProducts;
     }
 
     @Override
     public Optional<TypeProduct> findById(Long id) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.TYPE_PRODUCT.GET_BY_ID);
             statement.setLong(1, id);
@@ -62,11 +59,11 @@ public class TypeProductDAOImpl implements TypeProductDAO {
                 String name = rs.getString("name");
                 boolean active = rs.getBoolean("active");
                 TypeProduct typeProduct = new TypeProduct(id, sku, name, active);
-                connectionPool.releaseConnection(connection);
+                DbManager.connectionPool.releaseConnection(connection);
                 return Optional.of(typeProduct);
             }
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return Optional.empty();
         }
         return Optional.empty();
@@ -74,7 +71,7 @@ public class TypeProductDAOImpl implements TypeProductDAO {
 
     @Override
     public void save(TypeProduct typeProduct) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(typeProduct.getId() == 0 ? QUERY.TYPE_PRODUCT.INSERT : QUERY.TYPE_PRODUCT.UPDATE);
             statement.setString(1, typeProduct.getSku());
@@ -87,13 +84,13 @@ public class TypeProductDAOImpl implements TypeProductDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
 
     }
 
     @Override
     public void removeById(Long id) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.TYPE_PRODUCT.DELETE_BY_ID);
             statement.setLong(1, id);
@@ -101,12 +98,12 @@ public class TypeProductDAOImpl implements TypeProductDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
     }
 
     @Override
     public Optional<TypeProduct> findBySku(String sku) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.TYPE_PRODUCT.GET_BY_SKU);
             statement.setString(1, sku);
@@ -117,11 +114,11 @@ public class TypeProductDAOImpl implements TypeProductDAO {
                 String name = rs.getString("name");
                 boolean active = rs.getBoolean("active");
                 TypeProduct typeProduct = new TypeProduct(id, sku, name, active);
-                connectionPool.releaseConnection(connection);
+                DbManager.connectionPool.releaseConnection(connection);
                 return Optional.of(typeProduct);
             }
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return Optional.empty();
         }
         return Optional.empty();

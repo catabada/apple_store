@@ -1,5 +1,6 @@
 <%@ page import="vn.edu.hcmuaf.fit.dao.user.UserDAO" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.user.User" %>
+<%@ page import="vn.edu.hcmuaf.fit.dao.impl.user.UserDAOImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -202,8 +203,7 @@
             </div>
             <div class="header-navbar__icon header-navbar__icon--cart">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                <span class="header__navbar__cart--amount">
-<%--                    ${listCartDetail.size()}--%>
+                <span class="header__navbar__cart--amount" id="quantity">
                     0
                 </span>
                 <div class="header__navbar__cart">
@@ -212,30 +212,7 @@
                         Your Bag is empty.
                     </div>
                     <div class="header__navbar__cart__list--wrapper">
-                        <div class="header__navbar__cart__list">
-<%--                            <c:forEach var="item" items="${listCartDetail}">--%>
-<%--                                <c:set var="idProduct" value="${cartItemDao.get(item.idCartItem).idProduct}"/>--%>
-<%--                                <c:set var="idColor" value="${cartItemDao.get(item.idCartItem).idColor}"/>--%>
-<%--                                <c:set var="idProOption" value="${cartItemDao.get(item.idCartItem).idProOption}"/>--%>
-<%--                                <div class="header__navbar__cart__item">--%>
-<%--                                    <input hidden type="text" value="${idProduct}">--%>
-<%--                                    <input hidden type="text" value="${idColor}">--%>
-<%--                                    <input hidden type="text" value="${idProOption}">--%>
-<%--                                    <div class="header__navbar__cart__item__img">--%>
-<%--                                        <img src="${imageDao.get(productColorDao.getByIdProAndIdColor(idProduct,idColor).idImg).url}"--%>
-<%--                                             alt="">--%>
-<%--                                    </div>--%>
-<%--                                    <div class="header__navbar__cart__item__name">--%>
-<%--                                            ${productDao.get(idProduct).name}--%>
-<%--                                        <br>--%>
-<%--                                            ${colorDao.get(idColor).name}--%>
-<%--                                        <br>--%>
-<%--                                        <c:if test="${idProOption != '-1'}">--%>
-<%--                                            ${proOptionDao.get(idProOption).nameOptions}--%>
-<%--                                        </c:if>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </c:forEach>--%>
+                        <div class="header__navbar__cart__list" id="list-cart-item">
                         </div>
                         <a href="/cart" class="header__navbar__cart__btn-check">
                             Check out
@@ -243,34 +220,37 @@
                     </div>
                 </div>
             </div>
-                     <%;
-                            if (session.getAttribute("user") != null) {
-                                User user = (User) session.getAttribute("user");
-                                request.setAttribute("user", user);
-                            }
-                        %>
-                        <c:if test="${user == null}">
-                            <a href="/apple-store/login" class="header-navbar__icon header-navbar__icon--user">
-                                <i class="fa fa-user"></i>
-                            </a>
-                        </c:if>
-                        <c:if test="${user != null}">
-                            <div class="header-navbar__icon header-navbar__icon--user">
-                                <canvas class="avatar black" style="background-color: #000;border-radius: 50%; display:none"
-                                        id="avatar-canvas1" width="35"
-                                        height="35">${fn:substring(user.firstName.toUpperCase(),0,1)}${fn:substring(user.lastName.toUpperCase(),0,1)}
-                                </canvas>
-                                <canvas class="avatar white" style="background-color: #fff;border-radius: 50%;" id="avatar-canvas2"
-                                        width="35"
-                                        height="35">${fn:substring(user.firstName.toUpperCase(),0,1)}${fn:substring(user.lastName.toUpperCase(),0,1)}
-                                </canvas>
-                                <div class="header-navbar__icon__list">
-                                    <a href="/apple-store/profile" class="header-navbar__icon__profile"><i class="fa fa-user"></i> Profile</a>
-                                    <a href="/apple-store/sign-out" class="header-navbar__icon__signout"><i class="fas fa-sign-out-alt"></i>
-                                        Sign out</a>
-                                </div>
-                            </div>
-                        </c:if>
+            <%
+                ;
+                if (session.getAttribute("userId") != null) {
+                    Long userId = (Long) session.getAttribute("userId");
+                    request.setAttribute("user", UserDAOImpl.getInstance().findById(userId).orElse(null));
+                }
+            %>
+            <c:if test="${user == null}">
+                <a href="/apple-store/login" class="header-navbar__icon header-navbar__icon--user">
+                    <i class="fa fa-user"></i>
+                </a>
+            </c:if>
+            <c:if test="${user != null}">
+                <div class="header-navbar__icon header-navbar__icon--user">
+                    <canvas class="avatar black" style="background-color: #000;border-radius: 50%; display:none"
+                            id="avatar-canvas1" width="35"
+                            height="35">${fn:substring(user.firstName.toUpperCase(),0,1)}${fn:substring(user.lastName.toUpperCase(),0,1)}
+                    </canvas>
+                    <canvas class="avatar white" style="background-color: #fff;border-radius: 50%;" id="avatar-canvas2"
+                            width="35"
+                            height="35">${fn:substring(user.firstName.toUpperCase(),0,1)}${fn:substring(user.lastName.toUpperCase(),0,1)}
+                    </canvas>
+                    <div class="header-navbar__icon__list">
+                        <a href="/apple-store/profile" class="header-navbar__icon__profile"><i class="fa fa-user"></i>
+                            Profile</a>
+                        <a href="/apple-store/sign-out" class="header-navbar__icon__signout"><i
+                                class="fas fa-sign-out-alt"></i>
+                            Sign out</a>
+                    </div>
+                </div>
+            </c:if>
         </div>
 
     </div>
@@ -286,26 +266,57 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
-    <%--    <%--%>
-    <%--        if(ss.getAttribute("idUser") == null) { %>--%>
-    <%--    $(".header__navbar__cart__none").show();--%>
-    <%--    $(".header__navbar__cart--amount").hide();--%>
-    <%--    $(".header__navbar__cart__list--wrapper").hide();--%>
+    <%
+        HttpSession ss = request.getSession();
+        if(ss.getAttribute("userId") == null) { %>
+    $(".header__navbar__cart__none").show();
+    $(".header__navbar__cart--amount").hide();
+    $(".header__navbar__cart__list--wrapper").hide();
 
-    <%--    <% } else { %>--%>
-    <%--    <c:if test="${listCartDetail.size() == 0}">--%>
-    <%--    $(".header__navbar__cart--amount").hide();--%>
-    <%--    $(".header__navbar__cart__none").show();--%>
-    <%--    $(".header__navbar__cart__list--wrapper").hide();--%>
-    <%--    </c:if>--%>
-    <%--    <c:if test="${listCartDetail.size() != 0}">--%>
-    <%--    $(".header__navbar__cart--amount").show();--%>
-    <%--    $(".header__navbar__cart__none").hide();--%>
-    <%--    $(".header__navbar__cart__list--wrapper").show();--%>
-    <%--    </c:if>--%>
-    <%--    <% } %>--%>
+    <% } else { %>
+    if (parseInt(jQuery("#quantity").text() == 0)) {
+        $(".header__navbar__cart--amount").hide();
+        $(".header__navbar__cart__none").show();
+        $(".header__navbar__cart__list--wrapper").hide();
+    } else {
+        $(".header__navbar__cart--amount").show();
+        $(".header__navbar__cart__none").hide();
+        $(".header__navbar__cart__list--wrapper").show();
+    }
+    <% } %>
 
     jQuery(document).ready(function () {
+        //List cart user
+        jQuery.ajax({
+            url: "/api/cart-item",
+            type: "GET",
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success) {
+                    let listCartItem = response.data;
+                    jQuery("#quantity").text(listCartItem.length);
+                    jQuery("#list-cart-item").empty();
+                    for (let cartItem of listCartItem) {
+                        let html = `<div class="header__navbar__cart__item">
+                                    <div class="header__navbar__cart__item__img">
+                                        <img src="${pageContext.request.contextPath}/image/` + cartItem.productDetail.productColor.bgImage + `" alt="">
+                                    </div>
+                                    <div class="header__navbar__cart__item__name">
+                                            ` + cartItem.productDetail.name + `
+                                           <br>
+                                           x` + cartItem.quantity + `
+                                    </div>
+                                </div>`;
+                        jQuery("#list-cart-item").append(html);
+                    }
+                }
+
+            }
+        });
+
+        //Categories
         jQuery.ajax({
             url: "/api/type-product",
             type: "GET",
@@ -326,6 +337,8 @@
                 }
             }
         });
+
+
     });
 </script>
 </body>

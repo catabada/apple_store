@@ -11,6 +11,8 @@ public interface ProductDetailService {
 
     public DataResponse<ProductDetailDto> getProductDetailBySku(final String sku);
 
+    public DataResponse<ProductDetailDto> getProductDetailByProductIdAndProductColorIdAndProductOptionId(final Long productId, final Long productColorId, final Long productOptionId);
+
     public DataResponse<ProductDetailDto> createProductDetail(final ProductDetailCreate create);
 
     public DataResponse<List<ProductDetailDto>> getListProductDetail();

@@ -1,9 +1,9 @@
 package vn.edu.hcmuaf.fit.dao.impl.color;
 
+import vn.edu.hcmuaf.fit.constant.DbManager;
 import vn.edu.hcmuaf.fit.constant.QUERY;
 import vn.edu.hcmuaf.fit.dao.color.ColorDAO;
 import vn.edu.hcmuaf.fit.database.DbConnection;
-import vn.edu.hcmuaf.fit.database.IConnectionPool;
 import vn.edu.hcmuaf.fit.model.color.Color;
 
 import java.sql.*;
@@ -11,11 +11,9 @@ import java.util.*;
 
 public class ColorDAOImpl implements ColorDAO {
     private static ColorDAOImpl instance;
-    private IConnectionPool connectionPool;
     private Connection connection;
 
     private ColorDAOImpl() {
-        connectionPool = DbConnection.init("root", "", "apple_store");
     }
 
     public static ColorDAOImpl getInstance() {
@@ -28,7 +26,7 @@ public class ColorDAOImpl implements ColorDAO {
     @Override
     public List<Color> findAll() {
         List<Color> colors = new ArrayList<Color>();
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.COLOR.GET_LIST);
             ResultSet rs = statement.executeQuery();
@@ -43,16 +41,16 @@ public class ColorDAOImpl implements ColorDAO {
             }
 
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return colors;
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return colors;
     }
 
     @Override
     public Optional<Color> findById(Long id) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.COLOR.GET_BY_ID);
             statement.setLong(1, id);
@@ -65,20 +63,20 @@ public class ColorDAOImpl implements ColorDAO {
                 String hex = rs.getString("hex");
 
                 Color color = new Color(idColor, sku, name, hex);
-                connectionPool.releaseConnection(connection);
+                DbManager.connectionPool.releaseConnection(connection);
                 return Optional.of(color);
             }
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
             return Optional.empty();
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
         return Optional.empty();
     }
 
     @Override
     public void save(Color object) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(object.getId() == 0 ? QUERY.COLOR.INSERT : QUERY.COLOR.UPDATE);
             statement.setString(1, object.getSku());
@@ -87,22 +85,22 @@ public class ColorDAOImpl implements ColorDAO {
             if (object.getId() != 0) statement.setLong(4, object.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
     }
 
     @Override
     public void removeById(Long id) {
-        connection = connectionPool.getConnection();
+        connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.COLOR.DELETE_BY_ID);
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            connectionPool.releaseConnection(connection);
+            DbManager.connectionPool.releaseConnection(connection);
         }
-        connectionPool.releaseConnection(connection);
+        DbManager.connectionPool.releaseConnection(connection);
     }
 
     public static void main(String[] args) {
