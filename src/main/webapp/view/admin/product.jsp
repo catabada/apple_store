@@ -244,6 +244,11 @@
                                                class="form-control">
                                     </div>
                                     <div class="form-group">
+                                        <label for="updateViewed">Viewed</label>
+                                        <input type="text" id="updateViewed" name="updateViewed"
+                                               class="form-control">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="updateActive">Active</label>
                                         <select id="updateActive" name="updateActive"
                                                 class="form-control custom-select">
@@ -310,7 +315,7 @@
                         render: function (data, type, row, meta) {
                             return '<div class="d-flex justify-content-around align-middle">' +
                                 '<button type="button" onclick="getData(' + data.id + ', ' + data.typeProduct.id + ')"  class="btn-update btn btn-info btn-sm p-2" data-toggle="modal" data-target="#modal-update" ><i class="fas fa-edit"></i></button>' +
-                                '<button type="button" onclick="deleteData(' + data + ')" class="btn-delete btn btn-danger btn-sm p-2"> <i class="fas fa-trash"></i></button>'
+                                '<button type="button" onclick="deleteData(' + data.id + ')" class="btn-delete btn btn-danger btn-sm p-2"> <i class="fas fa-trash"></i></button>'
                                 + '</div>';
                         }
                     },
@@ -322,10 +327,6 @@
                         }
                     },
                 ],
-                initComplete: function () {
-                    table.buttons().container().appendTo('.col-md-6:eq(0)', table.table().container());
-                },
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
                 ajax: {
                     url: `/api/product`,
                     dataSrc: "data"
@@ -431,14 +432,22 @@
                     jQuery.ajax({
                         url: `/api/product/` + id,
                         type: 'DELETE',
-                        success: function (data) {
-                            Swal.fire(
-                                'Deleted!',
-                                'Your file has been deleted.',
-                                'success'
-                            ).then(function () {
+                        success: function (response) {
+                            let data = response;
+                            if (data.success) {
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                )
                                 reloadData();
-                            });
+                            } else {
+                                Swal.fire(
+                                    'Error!',
+                                    'Your file has not been deleted.',
+                                    'error'
+                                )
+                            }
                         }
                     });
                 }
@@ -490,9 +499,8 @@
                                 showConfirmButton: false,
                                 timer: 2000
                             })
-                            jQuery("#type-product").trigger("reset");
+                            jQuery("#modal-add").trigger("reset");
                             jQuery('#modal-add').modal('hide');
-                            setInputDefault("#modal-add");
                         } else {
                             Swal.fire({
                                 icon: 'error',
@@ -520,8 +528,8 @@
                     processData: false,
                     contentType: false,
                     data: data,
-                    success: function () {
-                        reloadData();
+                    success: function (response) {
+                        let data = response
                         if (data.success) {
                             reloadData();
                             Swal.fire({
@@ -531,6 +539,7 @@
                                 showConfirmButton: false,
                                 timer: 2000
                             })
+                            jQuery('#modal-update').modal('hide');
                         } else {
                             Swal.fire({
                                 icon: 'error',

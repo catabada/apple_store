@@ -17,7 +17,7 @@ public class ProductUpdate {
 
     }
 
-    public ProductUpdate(Long id, String sku, String name, Long typeId, Integer price, String urlImage, Integer rate, Double discount, Integer viewed, boolean active) {
+    public ProductUpdate(Long id, String sku, String name, Long typeId, Integer price, String urlImage, Double discount, Integer rate, Integer viewed, boolean active) {
         this.id = id;
         this.sku = sku;
         this.name = name;

@@ -4,8 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import vn.edu.hcmuaf.fit.constant.AppError;
 import vn.edu.hcmuaf.fit.constant.FileConstant;
-import vn.edu.hcmuaf.fit.dto.product.ProductCreate;
-import vn.edu.hcmuaf.fit.dto.product.ProductDto;
+import vn.edu.hcmuaf.fit.dto.product.*;
 import vn.edu.hcmuaf.fit.dto.typeproduct.TypeProductCreate;
 import vn.edu.hcmuaf.fit.dto.typeproduct.TypeProductDto;
 import vn.edu.hcmuaf.fit.response.BaseResponse;
@@ -97,6 +96,22 @@ public class ProductAPI extends HttpServlet {
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+
+        String pathInfo = request.getPathInfo();
+        Long id = Long.parseLong(pathInfo.substring(1));
+        String sku = request.getParameter("updateSku");
+        String name = request.getParameter("updateName");
+        Integer price = Integer.parseInt(request.getParameter("updatePrice"));
+        Long typeId = Long.parseLong(request.getParameter("updateTypeId"));
+        Double discount = Double.parseDouble(request.getParameter("updateDiscount"));
+        Integer rate = Integer.parseInt(request.getParameter("updateRate"));
+        Integer viewed = Integer.parseInt(request.getParameter("updateViewed"));
+        String urlImage = uploadFile(request, response, "updateImage");
+        boolean active = Boolean.parseBoolean(request.getParameter("updateActive"));
+
+        ProductUpdate productUpdate = new ProductUpdate(id, sku, name, typeId, price, urlImage, discount, rate, viewed, active);
+        BaseResponse result = productService.updateProduct(productUpdate);
+        response.getWriter().println(GSON.toJson(result));
     }
 
     @Override

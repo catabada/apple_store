@@ -19,7 +19,7 @@ public final class QUERY {
         public static final String GET_BY_SKU = "select * from product where sku = ?";
         public static final String INSERT = "insert into product(sku, name, type_id, price, url_image, discount) values (?, ?, ?, ?, ?, ?)";
         public static final String DELETE_BY_ID = "delete from product where id = ?";
-        public static final String UPDATE = "update type_product set sku = ?, name = ?, type_id = ?, price = ?, url_image = ?, discount = ?, rate = ?, viewed = ?, active = ? where id = ?";
+        public static final String UPDATE = "update product set sku = ?, name = ?, type_id = ?, price = ?, url_image = ?, discount = ?, rate = ?, viewed = ?, active = ? where id = ?";
     }
 
     public static final class COLOR {
@@ -80,10 +80,10 @@ public final class QUERY {
         public static final String GET_LIST_BY_PRODUCT_ID_AND_PRODUCT_COLOR_ID_AND_PRODUCT_OPTION_ID = "select * from product_detail where product_id = ? and product_color_id = ? and product_option_id = ?";
         public static final String GET_BY_ID = "select * from product_detail where id = ?";
         public static final String GET_BY_SKU = "select * from product_detail where sku = ?";
-        public static final String INSERT = "insert into product_detail(sku, name, product_id, product_color_id, product_option_id, price, coefficient, amount) values (?, ?, ?, ?, ?, ?, ?, ?)";
+        public static final String INSERT = "insert into product_detail(sku, name, product_id, product_color_id, product_option_id, price, amount) values (?, ?, ?, ?, ?, ?, ?)";
         public static final String DELETE_BY_ID = "delete from product_detail where id = ?";
-        public static final String UPDATE = "update product_detail sku = ?, name = ?, product_id = ?, product_color_id = ?, product_option_id = ?, price = ?, coefficient = ?, amount = ?, active = ? where id = ?";
-        public static final String CHECK_COLOR_AND_OPTION = "select * from product_detail where product_color_id = ? and product_option_id = ?";
+        public static final String UPDATE = "update product_detail set sku = ?, name = ?, product_id = ?, product_color_id = ?, product_option_id = ?, price = ?, amount = ?, active = ? where id = ?";
+        public static final String CHECK_COLOR_AND_OPTION = "select * from product_detail where product_id = ? and product_color_id = ? and product_option_id = ?";
     }
 
     public static final class CART {

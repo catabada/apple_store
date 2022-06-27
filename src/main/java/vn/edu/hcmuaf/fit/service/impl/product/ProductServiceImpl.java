@@ -60,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public BaseResponse deleteProductById(Long id) {
-        if (productDao.findById(id).isPresent()) {
+        if (!productDao.findById(id).isPresent()) {
             return new BaseResponse(false, 401, "Can't find by id = " + id);
         }
         productDao.removeById(id);
@@ -79,8 +79,8 @@ public class ProductServiceImpl implements ProductService {
             product.setTypeProduct(typeProduct);
             product.setPrice(update.getPrice());
             product.setUrlImage(update.getUrlImage());
-            product.setRate(update.getRate());
             product.setDiscount(update.getDiscount());
+            product.setRate(update.getRate());
             product.setViewed(update.getViewed());
             product.setActive(update.isActive());
 

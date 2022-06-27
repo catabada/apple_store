@@ -5,8 +5,7 @@ import com.google.gson.GsonBuilder;
 import vn.edu.hcmuaf.fit.constant.AppError;
 import vn.edu.hcmuaf.fit.constant.FileConstant;
 import vn.edu.hcmuaf.fit.dto.option.OptionDto;
-import vn.edu.hcmuaf.fit.dto.productcolor.ProductColorCreate;
-import vn.edu.hcmuaf.fit.dto.productcolor.ProductColorDto;
+import vn.edu.hcmuaf.fit.dto.productcolor.*;
 import vn.edu.hcmuaf.fit.response.BaseResponse;
 import vn.edu.hcmuaf.fit.response.DataResponse;
 import vn.edu.hcmuaf.fit.service.impl.productcolor.ProductColorServiceImpl;
@@ -100,6 +99,18 @@ public class ProductColorAPI extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        Long id = Long.parseLong(request.getPathInfo().substring(1));
+        Long productId = Long.parseLong(request.getParameter("updateProductId"));
+        Long colorId = Long.parseLong(request.getParameter("updateColorId"));
+        String bgImage = uploadFile(request, response, "updateBgImage");
+        String deImages = uploadFiles(request, response, "updateDeImages");
+
+        ProductColorUpdate update = new ProductColorUpdate(id, productId, colorId, bgImage, deImages);
+        BaseResponse result = productColorService.updateProductColor(update);
+        response.getWriter().println(GSON.toJson(result));
     }
 
     @Override

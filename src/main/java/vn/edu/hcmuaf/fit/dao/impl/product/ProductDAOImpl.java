@@ -133,6 +133,7 @@ public class ProductDAOImpl implements ProductDAO {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
             DbManager.connectionPool.releaseConnection(connection);
             return;
         }

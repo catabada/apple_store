@@ -137,12 +137,13 @@ public class ProductDetailDAOImpl implements ProductDetailDAO {
     }
 
     @Override
-    public boolean checkExistColorAndOption(Long productColorId, Long productOptionId) {
+    public boolean checkExistColorAndOption(Long productId, Long productColorId, Long productOptionId) {
         connection = DbManager.connectionPool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT_DETAIL.CHECK_COLOR_AND_OPTION);
-            statement.setLong(1, productColorId);
-            statement.setLong(2, productOptionId);
+            statement.setLong(1, productId);
+            statement.setLong(2, productColorId);
+            statement.setLong(3, productOptionId);
             ResultSet rs = statement.executeQuery();
             return rs.isBeforeFirst() || rs.getRow() != 0;
         } catch (Exception e) {

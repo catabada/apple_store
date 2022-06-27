@@ -212,19 +212,34 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="updateOptionId">Option</label>
-                                        <select id="updateOptionId"
-                                                name="updateOptionId"
+                                        <label for="updateProductOptionId">Option</label>
+                                        <select id="updateProductOptionId"
+                                                name="updateProductOptionId"
                                                 class="form-control custom-select">
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="updateSku">Sku</label>
-                                        <input type="text" id="updateSku" name="updateSku" class="form-control">
+                                        <label for="updateProductColorId">Color</label>
+                                        <select id="updateProductColorId"
+                                                name="updateProductColorId"
+                                                class="form-control custom-select">
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="updateName">Name</label>
-                                        <input type="text" id="updateName" name="updateName" class="form-control">
+                                        <label for="updatePrice">Price</label>
+                                        <input type="text" id="updatePrice" name="updatePrice" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="updateAmount">Amount</label>
+                                        <input type="text" id="updateAmount" name="updateAmount" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="updateActive">Active</label>
+                                        <select id="updateActive" name="updateActive"
+                                                class="form-control custom-select">
+                                            <option id="option-true" value="1">True</option>
+                                            <option id="option-false" value="0">False</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -378,44 +393,69 @@
             jQuery('#product-detail').DataTable().ajax.reload();
         }
 
-        function getData(id, productId, optionId) {
+        function getData(id) {
             jQuery.ajax({
                 url: `/api/product-detail/` + id,
                 type: 'GET',
                 success: function (data) {
                     reloadData();
                     jQuery('#updateId').val(data.data.id);
-                    jQuery('#updateSku').val(data.data.sku);
-                    jQuery('#updateName').val(data.data.name);
+                    jQuery('#updatePrice').val(data.data.price);
+                    jQuery('#updateAmount').val(data.data.amount);
+                    if (data.data.active) {
+                        jQuery('#option-true').prop('selected', true);
+                        jQuery('#option-false').prop('selected', false);
+
+                    } else {
+                        jQuery('#option-true').prop('selected', false);
+                        jQuery('#option-false').prop('selected', true);
+                    }
                 }
-            });
-            jQuery.ajax({
-                url: "/api/product",
-                type: "GET",
-                success: function (data) {
-                    jQuery("#updateProductId").empty();
-                    jQuery.map(data.data, (product, i) => {
-                        if (productId == product.id)
-                            jQuery("#updateProductId").append('<option selected value="' + product.id + '">' + product.name + '</option>');
-                        else
-                            jQuery("#updateProductId").append('<option value="' + product.id + '">' + product.name + '</option>');
-                    });
-                }
-            }).done(function () {
-                let productIdUpdate = jQuery("#updateProductId").val();
+            }).then(function (response) {
+                let productId = response.data.product.id;
+                let productColorId = response.data.productColor.id;
+                let productOptionId = response.data.productOption.id;
                 jQuery.ajax({
-                    url: "/api/option/listByTypeProductId" + productIdUpdate,
+                    url: "/api/product",
                     type: "GET",
                     success: function (data) {
-                        jQuery("#updateOptionId").empty();
-                        jQuery.map(data.data, (option, i) => {
-                            if (optionId == option.id)
-                                jQuery("#updateOptionId").append('<option selected value="' + option.id + '">' + option.name + '</option>');
+                        jQuery("#updateProductId").empty();
+                        jQuery.map(data.data, (product, i) => {
+                            if (productId == product.id)
+                                jQuery("#updateProductId").append('<option selected value="' + product.id + '">' + product.name + '</option>');
                             else
-                                jQuery("#updateOptionId").append('<option value="' + option.id + '">' + option.name + '</option>');
+                                jQuery("#updateProductId").append('<option value="' + product.id + '">' + product.name + '</option>');
                         });
                     }
-                })
+                }).done(function () {
+                    jQuery.ajax({
+                        url: "/api/product-color/listByProductId" + productId,
+                        type: "GET",
+                        success: function (data) {
+                            jQuery("#updateProductColorId").empty();
+                            jQuery.map(data.data, (productColor, i) => {
+                                if (productColorId == productColor.id)
+                                    jQuery("#updateProductColorId").append('<option selected value="' + productColor.id + '">' + productColor.color.name + '</option>');
+                                else
+                                    jQuery("#updateProductColorId").append('<option value="' + productColor.id + '">' + productColor.color.name + '</option>');
+                            });
+                        }
+                    })
+                    jQuery.ajax({
+                        url: "/api/product-option/listByProductId" + productId,
+                        type: "GET",
+                        success: function (data) {
+                            jQuery("#updateProductOptionId").empty();
+                            jQuery.map(data.data, (productOption, i) => {
+                                if (productOptionId == productOption.id)
+                                    jQuery("#updateProductOptionId").append('<option selected value="' + productOption.id + '">' + productOption.name + '</option>');
+                                else
+                                    jQuery("#updateProductOptionId").append('<option value="' + productOption.id + '">' + productOption.name + '</option>');
+                            });
+
+                        }
+                    })
+                });
             });
 
 
@@ -459,33 +499,64 @@
         function changeOptionByProductAdd() {
             let productId = jQuery("#addProductId").val();
             jQuery.ajax({
-                url: "/api/option/listByTypeProductId" + productId,
+                url: "/api/product-option/listByProductId" + productId,
                 type: "GET",
                 success: function (data) {
-                    jQuery("#addOptionId").empty();
-                    jQuery.map(data.data, (option, i) => {
+                    jQuery("#addProductOptionId").empty();
+                    jQuery.map(data.data, (productOption, i) => {
                         if (i === 0)
-                            jQuery("#addOptionId").append('<option selected value="' + option.id + '">' + option.name + '</option>');
+                            jQuery("#addProductOptionId").append('<option selected value="' + productOption.id + '">' + productOption.name + '</option>');
                         else
-                            jQuery("#addOptionId").append('<option value="' + option.id + '">' + option.name + '</option>');
+                            jQuery("#addProductOptionId").append('<option value="' + productOption.id + '">' + productOption.name + '</option>');
+                    });
+
+                }
+            });
+            jQuery.ajax({
+                url: "/api/product-color/listByProductId" + productId,
+                type: "GET",
+                success: function (data) {
+                    jQuery("#addProductColorId").empty();
+                    jQuery.map(data.data, (productColor, i) => {
+                        if (i === 0)
+                            jQuery("#addProductColorId").append('<option selected value="' + productColor.id + '">' + productColor.color.name + '</option>');
+                        else
+                            jQuery("#addProductColorId").append('<option value="' + productColor.id + '">' + productColor.color.name + '</option>');
                     });
                 }
-            })
+            });
 
         }
 
         function changeOptionByProductUpdate() {
             let productId = jQuery("#updateProductId").val();
             jQuery.ajax({
-                url: "/api/option/listByTypeProductId" + productId,
+                url: "/api/product-option/listByProductId" + productId,
                 type: "GET",
                 success: function (data) {
-                    jQuery("#updateOptionId").empty();
-                    jQuery.map(data.data, (option, i) => {
-                        jQuery("#updateOptionId").append('<option value="' + option.id + '">' + option.name + '</option>');
+                    jQuery("#updateProductOptionId").empty();
+                    jQuery.map(data.data, (productOption, i) => {
+                        if (i === 0)
+                            jQuery("#updateProductOptionId").append('<option selected value="' + productOption.id + '">' + productOption.name + '</option>');
+                        else
+                            jQuery("#updateProductOptionId").append('<option value="' + productOption.id + '">' + productOption.name + '</option>');
+                    });
+
+                }
+            });
+            jQuery.ajax({
+                url: "/api/product-color/listByProductId" + productId,
+                type: "GET",
+                success: function (data) {
+                    jQuery("#updateProductColorId").empty();
+                    jQuery.map(data.data, (productColor, i) => {
+                        if (i === 0)
+                            jQuery("#updateProductColorId").append('<option selected value="' + productColor.id + '">' + productColor.color.name + '</option>');
+                        else
+                            jQuery("#updateProductColorId").append('<option value="' + productColor.id + '">' + productColor.color.name + '</option>');
                     });
                 }
-            })
+            });
 
         }
 
@@ -534,7 +605,8 @@
             if (valid) {
                 let data = new FormData(jQuery("#modal-update")[0]);
                 let id = data.get("updateId");
-                $.ajax({
+                console.log(data.get("updateActive"))
+                jQuery.ajax({
                     type: "PUT",
                     url: `/api/product-detail/` + id,
                     processData: false,

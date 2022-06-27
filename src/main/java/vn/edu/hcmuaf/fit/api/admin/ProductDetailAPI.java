@@ -50,7 +50,6 @@ public class ProductDetailAPI extends HttpServlet {
                 DataResponse<ProductDetailDto> result = productDetailService.getProductDetailById(id);
                 response.getWriter().println(GSON.toJson(result));
             } catch (NumberFormatException e) {
-                response.sendError(AppError.Unknown.errorCode(), AppError.Unknown.errorMessage());
             }
         }
 
@@ -84,20 +83,19 @@ public class ProductDetailAPI extends HttpServlet {
         } else {
             try {
                 Long id = Long.parseLong(path.substring(1));
-                String sku = request.getParameter("sku");
-                String name = request.getParameter("name");
-                Long productId = Long.parseLong(request.getParameter("productId"));
-                Long productColorId = Long.parseLong(request.getParameter("productColorId"));
-                Long productOptionId = Long.parseLong(request.getParameter("productOptionId"));
-                Integer price = Integer.parseInt(request.getParameter("price"));
-                Integer amount = Integer.parseInt(request.getParameter("amount"));
-                boolean isActive = Boolean.parseBoolean(request.getParameter("isActive"));
+                Long productId = Long.parseLong(request.getParameter("updateProductId"));
+                Long productColorId = Long.parseLong(request.getParameter("updateProductColorId"));
+                Long productOptionId = Long.parseLong(request.getParameter("updateProductOptionId"));
+                Integer price = Integer.parseInt(request.getParameter("updatePrice"));
+                Integer amount = Integer.parseInt(request.getParameter("updateAmount"));
+                boolean isActive = Integer.parseInt(request.getParameter("updateActive")) == 1;
+                System.out.println(productId + " " + productColorId + " " + productOptionId + " " + price + " " + amount + " " + isActive);
 
-                ProductDetailUpdate update = new ProductDetailUpdate(id, sku, name, productId, productColorId, productOptionId, price, amount, isActive);
+                ProductDetailUpdate update = new ProductDetailUpdate(id, productId, productColorId, productOptionId, price, amount, isActive);
                 BaseResponse result = productDetailService.updateProductDetail(update);
                 response.getWriter().println(GSON.toJson(result));
             } catch (NumberFormatException e) {
-                response.sendError(AppError.Unknown.errorCode(), AppError.Unknown.errorMessage());
+                response.getWriter().println(GSON.toJson(new BaseResponse(false, 400, "NumberFormatException")));
             }
 
         }

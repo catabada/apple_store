@@ -395,7 +395,6 @@
         if (validate) {
             let data = new FormData(jQuery("#modal-update")[0]);
             let id = data.get("updateId");
-            console.log(data.get("updateActive"))
             jQuery.ajax({
                 url: "/api/type-product/" + id,
                 type: "PUT",
@@ -427,6 +426,7 @@
             });
         }
     })
+
 
     function setInputDefault(idName) {
         jQuery.map(jQuery("#modal-add").find("input"), (item, i) => {
