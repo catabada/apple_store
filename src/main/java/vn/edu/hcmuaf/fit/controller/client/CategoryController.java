@@ -9,7 +9,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 @WebServlet(name = "CategoryController", urlPatterns = "/apple-store/category/*")
 public class CategoryController extends HttpServlet {
@@ -24,30 +24,31 @@ public class CategoryController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
         int page = Integer.parseInt(request.getParameter("page"));
+        String sort = request.getParameter("sort") == null ? "none" : request.getParameter("sort");
+
+        Pagination<ProductDto> pagination = new Pagination<>();
+
         if (pathInfo == null) {
-            Pagination<ProductDto> pagination = productService.getListProductByPageNumber(page).getData();
-            request.setAttribute("listProduct", pagination.getDataList());
-            request.setAttribute("totalPage", pagination.getTotalPage());
-            request.getRequestDispatcher("/view/client/category.jsp").forward(request, response);
+            pagination = productService.getListProductByPageNumber(page, sort).getData();
         } else if (pathInfo.contains("/search")) {
             String[] params = pathInfo.split("/");
             String keyword = params[2];
-            Pagination<ProductDto> pagination = productService.getListProductByKeyWord(keyword, page).getData();
-            request.setAttribute("listProduct", pagination.getDataList());
-            request.setAttribute("totalPage", pagination.getTotalPage());
-            request.getRequestDispatcher("/view/client/category.jsp").forward(request, response);
+            pagination = productService.getListProductByKeyWord(keyword, page, sort).getData();
         } else if (pathInfo.contains("/id")) {
-
             Long typeProductId = Long.parseLong(pathInfo.substring(3));
-            Pagination<ProductDto> pagination = productService.getListProductByTypeProductId(typeProductId, page).getData();
-            request.setAttribute("listProduct", pagination.getDataList());
-            request.setAttribute("totalPage", pagination.getTotalPage());
-            request.getRequestDispatcher("/view/client/category.jsp").forward(request, response);
+            pagination = productService.getListProductByTypeProductId(typeProductId, page, sort).getData();
         } else {
             response.sendError(404);
         }
+        List<ProductDto> listProduct = pagination.getDataList();
+        int totalPage = pagination.getTotalPage();
+
+        request.setAttribute("listProduct", listProduct);
+        request.setAttribute("totalPage", totalPage);
+        request.getRequestDispatcher("/view/client/category.jsp").forward(request, response);
 
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

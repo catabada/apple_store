@@ -9,6 +9,9 @@ public class Pagination<T> implements Serializable {
     private int page;
     private int totalPage;
 
+    public Pagination() {
+    }
+
     public Pagination(List<T> dataList, int page, int totalPage) {
         this.dataList = dataList;
         this.page = page;

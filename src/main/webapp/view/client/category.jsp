@@ -56,19 +56,20 @@
                     </div>
                     <ul class="body-all-product__sort-list">
                         <li class="body-all-product__sort-item">
-                            <a href="" class="body-all-product__sort-item-link">Sales</a>
+                            <a onclick="sortType('new')"
+                               class="body-all-product__sort-item-link">New</a>
                         </li>
                         <li class="body-all-product__sort-item">
-                            <a href="" class="body-all-product__sort-item-link">Best Seller</a>
+                            <a onclick="sortType('old')"
+                               class="body-all-product__sort-item-link">Old</a>
                         </li>
                         <li class="body-all-product__sort-item">
-                            <a href="" class="body-all-product__sort-item-link">New</a>
+                            <a onclick="sortType('price-up')"
+                               class="body-all-product__sort-item-link">Price up</a>
                         </li>
                         <li class="body-all-product__sort-item">
-                            <a href="" class="body-all-product__sort-item-link">Price up</a>
-                        </li>
-                        <li class="body-all-product__sort-item">
-                            <a href="" class="body-all-product__sort-item-link">Price down</a>
+                            <a onclick="sortType('price-down')"
+                               class="body-all-product__sort-item-link">Price down</a>
                         </li>
                     </ul>
                 </div>
@@ -132,6 +133,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
 <script>
+    function sortType(type) {
+        let urlCurrent = window.location.href;
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if (urlParams.get('sort') === null) {
+            window.location.href = urlCurrent + "&sort=" + type;
+        } else {
+            window.location.href = urlCurrent.replace(urlParams.get('sort'), type);
+        }
+    }
 </script>
 </body>
 </html>

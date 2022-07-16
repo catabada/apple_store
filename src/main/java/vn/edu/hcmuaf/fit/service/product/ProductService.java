@@ -10,11 +10,11 @@ import java.util.List;
 public interface ProductService {
     public DataResponse<ProductDto> getProductById(final Long id);
 
-    public DataResponse<Pagination<ProductDto>> getListProductByTypeProductId(final Long id, final int pageNumber);
+    public DataResponse<Pagination<ProductDto>> getListProductByTypeProductId(final Long id, final int pageNumber, String typeSort);
 
-    public DataResponse<Pagination<ProductDto>> getListProductByKeyWord(final String keyWord, final int pageNumber);
+    public DataResponse<Pagination<ProductDto>> getListProductByKeyWord(final String keyWord, final int pageNumber, String typeSort);
 
-    public DataResponse<Pagination<ProductDto>> getListProductByPageNumber(final int pageNumber);
+    public DataResponse<Pagination<ProductDto>> getListProductByPageNumber(final int pageNumber, String typeSort);
 
     public DataResponse<ProductDto> getProductBySku(final String sku);
 

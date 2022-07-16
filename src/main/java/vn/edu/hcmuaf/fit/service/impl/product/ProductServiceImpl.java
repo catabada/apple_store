@@ -32,9 +32,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public DataResponse<Pagination<ProductDto>> getListProductByTypeProductId(Long typProductId, int pageNumber) {
+    public DataResponse<Pagination<ProductDto>> getListProductByTypeProductId(Long typProductId, int pageNumber, String typeSort) {
         List<ProductDto> list = productMapper.toListProductDto(productDao.findAllByTypeProductId(typProductId));
         List<ProductDto> listByPageNumber = new ArrayList<>();
+        allSort(typeSort, list);
         for (int i = (pageNumber - 1) * 4; i < (pageNumber - 1) * 4 + 4; i++) {
             if (i < list.size()) {
                 listByPageNumber.add(list.get(i));
@@ -51,9 +52,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public DataResponse<Pagination<ProductDto>> getListProductByKeyWord(String keyWord, int pageNumber) {
+    public DataResponse<Pagination<ProductDto>> getListProductByKeyWord(String keyWord, int pageNumber, String typeSort) {
         List<ProductDto> list = productMapper.toListProductDto(productDao.findAllByKeyWord(keyWord));
         List<ProductDto> listByPageNumber = new ArrayList<>();
+        allSort(typeSort, list);
         for (int i = (pageNumber - 1) * 4; i < (pageNumber - 1) * 4 + 4; i++) {
             if (i < list.size()) {
                 listByPageNumber.add(list.get(i));
@@ -70,9 +72,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public DataResponse<Pagination<ProductDto>> getListProductByPageNumber(int pageNumber) {
+    public DataResponse<Pagination<ProductDto>> getListProductByPageNumber(int pageNumber, String typeSort) {
         List<ProductDto> listAll = productMapper.toListProductDto(productDao.findAll());
         List<ProductDto> listByPageNumber = new ArrayList<>();
+        allSort(typeSort, listAll);
         for (int i = (pageNumber - 1) * Pagination.DEFAULT_PAGE_SIZE; i < (pageNumber - 1) * Pagination.DEFAULT_PAGE_SIZE + Pagination.DEFAULT_PAGE_SIZE; i++) {
             if (i < listAll.size()) {
                 listByPageNumber.add(listAll.get(i));
@@ -140,6 +143,49 @@ public class ProductServiceImpl implements ProductService {
 
             productDao.save(product);
             return new BaseResponse(true, 0, "Success!");
+        }
+    }
+
+    private void allSort(String type, List<ProductDto> listProduct) {
+        switch (type) {
+            case "price-up":
+                Collections.sort(listProduct, new Comparator<ProductDto>() {
+                    @Override
+                    public int compare(ProductDto o1, ProductDto o2) {
+                        int price1 = (int) (o1.getPrice() - o1.getPrice() * o1.getDiscount());
+                        int price2 = (int) (o2.getPrice() - o2.getPrice() * o2.getDiscount());
+                        return price1 - price2;
+                    }
+                });
+                break;
+            case "price-down":
+                Collections.sort(listProduct, new Comparator<ProductDto>() {
+                    @Override
+                    public int compare(ProductDto o1, ProductDto o2) {
+                        int price1 = (int) (o1.getPrice() - o1.getPrice() * o1.getDiscount());
+                        int price2 = (int) (o2.getPrice() - o2.getPrice() * o2.getDiscount());
+                        return price2 - price1;
+                    }
+                });
+                break;
+            case "new":
+                Collections.sort(listProduct, new Comparator<ProductDto>() {
+                    @Override
+                    public int compare(ProductDto o1, ProductDto o2) {
+                        return o2.getDateCreated().compareTo(o1.getDateCreated());
+                    }
+                });
+                break;
+            case "old":
+                Collections.sort(listProduct, new Comparator<ProductDto>() {
+                    @Override
+                    public int compare(ProductDto o1, ProductDto o2) {
+                        return o1.getDateCreated().compareTo(o2.getDateCreated());
+                    }
+                });
+                break;
+            case "none":
+                break;
         }
     }
 }
