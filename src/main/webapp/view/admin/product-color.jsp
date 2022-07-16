@@ -306,7 +306,7 @@
                 },
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
                 ajax: {
-                    url: `/api/product-color`,
+                    url: `/apple-store/api/product-color`,
                     dataSrc: "data"
                 },
                 columns: [
@@ -332,7 +332,7 @@
 
         jQuery("#btn-add").on("click", function (e) {
             jQuery.ajax({
-                url: "/api/product",
+                url: "/apple-store/api/product",
                 type: "GET",
                 success: function (data) {
                     jQuery("#addProductId").empty();
@@ -345,7 +345,7 @@
                 }
             })
             jQuery.ajax({
-                url: "/api/color",
+                url: "/apple-store/api/color",
                 type: "GET",
                 success: function (data) {
                     jQuery("#addColorId").empty();
@@ -365,7 +365,7 @@
 
         function getData(id) {
             jQuery.ajax({
-                url: `/api/product-color/` + id,
+                url: `/apple-store/api/product-color/` + id,
                 type: 'GET',
                 success: function (data) {
                     reloadData()
@@ -377,7 +377,7 @@
                 let productId = response.data.product.id;
                 let colorId = response.data.color.id;
                 jQuery.ajax({
-                    url: "/api/product",
+                    url: "/apple-store/api/product",
                     type: "GET",
                     success: function (data) {
                         jQuery("#updateProductId").empty();
@@ -390,7 +390,7 @@
                     }
                 })
                 jQuery.ajax({
-                    url: "/api/color",
+                    url: "/apple-store/api/color",
                     type: "GET",
                     success: function (data) {
                         jQuery("#updateColorId").empty();
@@ -419,7 +419,7 @@
             }).then((result) => {
                 if (result.value) {
                     jQuery.ajax({
-                        url: `/api/product-color/` + id,
+                        url: `/apple-store/api/product-color/` + id,
                         type: 'DELETE',
                         success: function (data) {
                             Swal.fire(
@@ -465,7 +465,7 @@
                 let data = new FormData(jQuery("#modal-add")[0]);
                 $.ajax({
                     type: "POST",
-                    url: `/api/product-color`,
+                    url: `/apple-store/api/product-color`,
                     processData: false,
                     contentType: false,
                     data: data,
@@ -505,7 +505,7 @@
                 let id = data.get("updateId");
                 $.ajax({
                     type: "PUT",
-                    url: `/api/product-color/` + id,
+                    url: `/apple-store/api/product-color/` + id,
                     processData: false,
                     contentType: false,
                     data: data,
@@ -541,7 +541,7 @@
             e.preventDefault();
             jQuery.ajax({
                 type: "PUT",
-                url: '${pageContext.request.contextPath}/api/product-color?id=' + jQuery(this).attr("pid"),
+                url: '${pageContext.request.contextPath}/apple-store/api/product-color?id=' + jQuery(this).attr("pid"),
                 success: function (data) {
                     jQuery("#modal-update").show();
                     jQuery("#updateName").val(data.name);

@@ -23,7 +23,7 @@ import java.util.List;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
         maxFileSize = 1024 * 1024 * 10,
         maxRequestSize = 1024 * 1024 * 50)
-@WebServlet(name = "ProductAPI", urlPatterns = "/api/product/*")
+@WebServlet(name = "ProductAPI", urlPatterns = "/apple-store/api/product/*")
 public class ProductAPI extends HttpServlet {
     private final Gson GSON = new GsonBuilder().create();
     private ProductService productService;

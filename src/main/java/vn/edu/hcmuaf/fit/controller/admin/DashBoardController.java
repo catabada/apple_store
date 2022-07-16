@@ -5,7 +5,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "DashBoardController", value = "/admin/dashboard")
+@WebServlet(name = "DashBoardController", value = "/apple-store/admin/dashboard")
 public class DashBoardController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

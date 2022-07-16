@@ -122,35 +122,12 @@
             <div class="header-nav__mobile__modal"></div>
 
         </div>
-        <a href="/apple-store" class="header-navbar__brand">
+        <a href="/apple-store/home" class="header-navbar__brand">
             <img src="${pageContext.request.contextPath}/assets/img/apple-brand-white.png" alt=""
                  class="header-navbar__brand-img">
         </a>
         <!-- Begin List Navigation -->
         <ul class="header-navbar__list" id="category">
-            <%--            <%--%>
-            <%--                HttpSession ss = request.getSession();--%>
-            <%--                request.setAttribute("ss", ss);--%>
-            <%--                if (ss.getAttribute("listType") == null) {--%>
-            <%--                    Helper.getListTypeProduct(request);--%>
-            <%--                }--%>
-            <%--                request.setAttribute("imageDao", ImageDAO.getInstance());--%>
-            <%--                request.setAttribute("productDao", ProductDAO.getInstance());--%>
-            <%--                request.setAttribute("colorDao", ColorDAO.getInstance());--%>
-            <%--                request.setAttribute("proOptionDao", ProductOptionDAO.getInstance());--%>
-            <%--                request.setAttribute("cartItemDao", CartItemDAO.getInstance());--%>
-            <%--                request.setAttribute("productColorDao", ProductColorDAO.getInstance());--%>
-            <%--            %>--%>
-            <%--            <jsp:useBean id="listType" scope="session" type="java.util.List"/>--%>
-            <%--            <c:forEach var="item" items="${listType}">--%>
-            <%--                <li class="header-navbar__item header-navbar__item--white">--%>
-            <%--                    <img src="../${pageContext.request.contextPath}/assets/img/light.png" alt=""--%>
-            <%--                         class="header-navbar__item-hover">--%>
-            <%--                    <a href="/category?id=${item.id}" class="header-navbar__link">--%>
-            <%--                            ${item.name}--%>
-            <%--                    </a>--%>
-            <%--                </li>--%>
-            <%--            </c:forEach>--%>
         </ul>
         <!-- End List Navigation -->
         <div class="header-navbar__search">
@@ -289,7 +266,7 @@
     jQuery(document).ready(function () {
         //List cart user
         jQuery.ajax({
-            url: "/api/cart-item",
+            url: "/apple-store/api/cart-item",
             type: "GET",
             dataType: "json",
             processData: false,
@@ -319,7 +296,7 @@
 
         //Categories
         jQuery.ajax({
-            url: "/api/type-product",
+            url: "/apple-store/api/type-product",
             type: "GET",
             dataType: "json",
             processData: false,

@@ -275,7 +275,7 @@
                 },
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
                 ajax: {
-                    url: `/api/option`,
+                    url: `/apple-store/api/option`,
                     dataSrc: "data"
                 },
                 columns: [
@@ -291,7 +291,7 @@
 
         jQuery("#btn-add").on("click", function (e) {
             jQuery.ajax({
-                url: "/api/type-product",
+                url: "/apple-store/api/type-product",
                 type: "GET",
                 success: function (data) {
                     jQuery("#addTypeProductId").empty();
@@ -311,7 +311,7 @@
 
         function getData(id, typeProductId) {
             jQuery.ajax({
-                url: `/api/option/` + id,
+                url: `/apple-store/api/option/` + id,
                 type: 'GET',
                 success: function (data) {
                     reloadData();
@@ -321,7 +321,7 @@
                 }
             });
             jQuery.ajax({
-                url: "/api/type-product",
+                url: "/apple-store/api/type-product",
                 type: "GET",
                 success: function (data) {
                     jQuery("#updateTypeProductId").empty();
@@ -348,7 +348,7 @@
             }).then((result) => {
                 if (result.value) {
                     jQuery.ajax({
-                        url: `/api/option/` + id,
+                        url: `/apple-store/api/option/` + id,
                         type: 'DELETE',
                         success: function (data) {
                             Swal.fire(
@@ -379,7 +379,7 @@
                 let data = new FormData(jQuery("#modal-add")[0]);
                 $.ajax({
                     type: "POST",
-                    url: `/api/option`,
+                    url: `/apple-store/api/option`,
                     processData: false,
                     contentType: false,
                     data: data,
@@ -420,7 +420,7 @@
                 let id = data.get("updateId");
                 $.ajax({
                     type: "PUT",
-                    url: `/api/option/` + id,
+                    url: `/apple-store/api/option/` + id,
                     processData: false,
                     contentType: false,
                     data: data,

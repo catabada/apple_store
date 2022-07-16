@@ -18,7 +18,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "UserAPI", value = "/api/user/*")
+@WebServlet(name = "UserAPI", value = "/apple-store/api/user/*")
 public class UserAPI extends HttpServlet {
     private final Gson GSON = new GsonBuilder().create();
     private UserService userService;

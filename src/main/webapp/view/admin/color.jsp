@@ -279,7 +279,7 @@
             "responsive": true, "lengthChange": false, "autoWidth": false,
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
             ajax: {
-                url: `/api/color`,
+                url: `/apple-store/api/color`,
                 dataSrc: "data"
             },
             "columnDefs": [
@@ -311,7 +311,7 @@
 
     function getData(id) {
         jQuery.ajax({
-            url: `/api/color/` + id,
+            url: `/apple-store/api/color/` + id,
             type: 'GET',
             success: function (data) {
                 reloadData();
@@ -341,7 +341,7 @@
                 );
 
                 jQuery.ajax({
-                    url: `/api/color/` + id,
+                    url: `/apple-store/api/color/` + id,
                     type: 'DELETE',
                     success: function (data) {
                         reloadData();
@@ -357,7 +357,7 @@
         if (validate) {
             let data = new FormData(jQuery("#modal-add")[0]);
             jQuery.ajax({
-                url: "/api/color",
+                url: "/apple-store/api/color",
                 type: "POST",
                 data: data,
                 processData: false,
@@ -397,7 +397,7 @@
             let data = new FormData(jQuery("#modal-update")[0]);
             let id = data.get("updateId");
             jQuery.ajax({
-                url: "/api/color/" + id,
+                url: "/apple-store/api/color/" + id,
                 type: "PUT",
                 data: data,
                 processData: false,

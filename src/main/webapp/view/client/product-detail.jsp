@@ -52,13 +52,13 @@
                             <div class="col-xxl-3 col-xl-3 body__images-list">
                                 <c:forTokens items="${productColor.deImages}" delims="_" var="nameImage">
                                     <div class="body__images-item">
-                                        <img src="${pageContext.request.contextPath}/image/${nameImage}" alt=""
+                                        <img src="${pageContext.request.contextPath}/apple-store/image/${nameImage}" alt=""
                                              class="body__images-item-img">
                                     </div>
                                 </c:forTokens>
                             </div>
                             <div class="col-xxl-9 col-xl-9 body__images-bg"
-                                 style="background-image: url('${pageContext.request.contextPath}/image/${productColor.bgImage}')">
+                                 style="background-image: url('${pageContext.request.contextPath}/apple-store/image/${productColor.bgImage}')">
                             </div>
                                 <%--                            <input hidden  type="text" name="" id="image-product" value="${imageDao.get(productColorDao.getByIdProAndIdColor(product.id, proColor.idColor).idImg).url}">--%>
                         </div>
@@ -470,7 +470,7 @@
         data.append("productOptionId", productOptionId);
         data.append("productColorId", productColorId);
         jQuery.ajax({
-            url: "/api/cart-item",
+            url: "/apple-store/api/cart-item",
             type: "POST",
             data: data,
             processData: false,
@@ -486,7 +486,7 @@
                         confirmButtonText: 'OK'
                     }).then(function () {
                         jQuery.ajax({
-                            url: "/api/cart-item",
+                            url: "/apple-store/api/cart-item",
                             type: "GET",
                             dataType: "json",
                             processData: false,
@@ -499,7 +499,7 @@
                                     for (let cartItem of listCartItem) {
                                         let html = `<div class="header__navbar__cart__item">
                                     <div class="header__navbar__cart__item__img">
-                                        <img src="${pageContext.request.contextPath}/image/` + cartItem.productDetail.productColor.bgImage + `" alt="">
+                                        <img src="${pageContext.request.contextPath}/apple-store/image/` + cartItem.productDetail.productColor.bgImage + `" alt="">
                                     </div>
                                     <div class="header__navbar__cart__item__name">
                                             ` + cartItem.productDetail.name + `
@@ -541,7 +541,7 @@
             }
         })
         jQuery.ajax({
-            url: "/api/product-option/" + productOptionId,
+            url: "/apple-store/api/product-option/" + productOptionId,
             type: "GET",
             success: function (response) {
                 if (response.success) {
@@ -553,7 +553,7 @@
 
         })
         jQuery.ajax({
-            url: "/api/product-detail/listByProductOptionId" + productOptionId,
+            url: "/apple-store/api/product-detail/listByProductOptionId" + productOptionId,
             type: "GET",
             success: function (response) {
                 if (response.success) {
@@ -593,7 +593,7 @@
         })
 
         jQuery.ajax({
-            url: "/api/product-color/" + productColorId,
+            url: "/apple-store/api/product-color/" + productColorId,
             type: "GET",
             success: function (response) {
                 if (response.success) {
@@ -605,7 +605,7 @@
 
         })
         jQuery.ajax({
-            url: "/api/product-detail/listByProductOptionId" + productOptionId,
+            url: "/apple-store/api/product-detail/listByProductOptionId" + productOptionId,
             type: "GET",
             success: function (response) {
                 if (response.success) {
@@ -624,7 +624,7 @@
 
         })
         jQuery.ajax({
-            url: "/api/product-detail/listByProductColorId" + productColorId,
+            url: "/apple-store/api/product-detail/listByProductColorId" + productColorId,
             type: "GET",
             success: function (response) {
                 jQuery("#option-choose").empty();
@@ -668,7 +668,7 @@
     jQuery(document).ready(function () {
         let productColorId = jQuery("input[name=radio-color]:checked").val();
         jQuery.ajax({
-            url: "/api/product-color/" + productColorId,
+            url: "/apple-store/api/product-color/" + productColorId,
             type: "GET",
             success: function (response) {
                 if (response.success) {
@@ -680,7 +680,7 @@
 
         })
         jQuery.ajax({
-            url: "/api/product-detail/listByProductColorId" + productColorId,
+            url: "/apple-store/api/product-detail/listByProductColorId" + productColorId,
             type: "GET",
             success: function (response) {
                 jQuery("#option-choose").empty();
@@ -722,7 +722,7 @@
         }).then(function () {
             let productOptionId = jQuery("input[name=radio-option]:checked").val();
             jQuery.ajax({
-                url: "/api/product-option/" + productOptionId,
+                url: "/apple-store/api/product-option/" + productOptionId,
                 type: "GET",
                 success: function (response) {
                     if (response.success) {
@@ -733,7 +733,7 @@
                 }
             })
             jQuery.ajax({
-                url: "/api/product-detail/listByProductOptionId" + productOptionId,
+                url: "/apple-store/api/product-detail/listByProductOptionId" + productOptionId,
                 type: "GET",
                 success: function (response) {
                     if (response.success) {

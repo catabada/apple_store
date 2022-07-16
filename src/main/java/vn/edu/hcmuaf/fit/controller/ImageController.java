@@ -12,7 +12,7 @@ import java.nio.file.Files;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
         maxFileSize = 1024 * 1024 * 10,
         maxRequestSize = 1024 * 1024 * 50)
-@WebServlet(name = "ImageController", urlPatterns = "/image/*")
+@WebServlet(name = "ImageController", urlPatterns = "/apple-store/image/*")
 public class ImageController extends HttpServlet {
     private static final int DEFAULT_BUFFER_SIZE = 10240;
 

@@ -328,7 +328,7 @@
                     },
                 ],
                 ajax: {
-                    url: `/api/product`,
+                    url: `/apple-store/api/product`,
                     dataSrc: "data"
                 },
                 columns: [
@@ -361,7 +361,7 @@
 
         jQuery("#btn-add").on("click", function (e) {
             jQuery.ajax({
-                url: "/api/type-product",
+                url: "/apple-store/api/type-product",
                 type: "GET",
                 success: function (data) {
                     jQuery("#addTypeId").empty();
@@ -381,7 +381,7 @@
 
         function getData(id, typeProductId) {
             jQuery.ajax({
-                url: `/api/product/` + id,
+                url: `/apple-store/api/product/` + id,
                 type: 'GET',
                 success: function (data) {
                     reloadData();
@@ -430,7 +430,7 @@
             }).then((result) => {
                 if (result.value) {
                     jQuery.ajax({
-                        url: `/api/product/` + id,
+                        url: `/apple-store/api/product/` + id,
                         type: 'DELETE',
                         success: function (response) {
                             let data = response;
@@ -484,7 +484,7 @@
                 let data = new FormData(jQuery("#modal-add")[0]);
                 $.ajax({
                     type: "POST",
-                    url: `/api/product`,
+                    url: `/apple-store/api/product`,
                     processData: false,
                     contentType: false,
                     data: data,
@@ -524,7 +524,7 @@
                 let id = data.get("updateId");
                 $.ajax({
                     type: "PUT",
-                    url: `/api/product/` + id,
+                    url: `/apple-store/api/product/` + id,
                     processData: false,
                     contentType: false,
                     data: data,
@@ -632,7 +632,7 @@
             e.preventDefault();
             jQuery.ajax({
                 type: "PUT",
-                url: '${pageContext.request.contextPath}/api/product?id=' + jQuery(this).attr("pid"),
+                url: '${pageContext.request.contextPath}/apple-store/api/product?id=' + jQuery(this).attr("pid"),
                 success: function (data) {
                     jQuery("#modal-update").show();
                     jQuery("#updateName").val(data.name);

@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @MultipartConfig
-@WebServlet(name = "OptionAPI", urlPatterns = "/api/option/*")
+@WebServlet(name = "OptionAPI", urlPatterns = "/apple-store/api/option/*")
 public class OptionAPI extends HttpServlet {
     private final Gson GSON = new GsonBuilder().create();
     private OptionService optionService;

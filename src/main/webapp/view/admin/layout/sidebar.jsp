@@ -57,7 +57,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/admin/user" class="nav-link">
+                    <a href="/apple-store/admin/user" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             User
@@ -65,7 +65,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/admin/type-product" class="nav-link">
+                    <a href="/apple-store/admin/type-product" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Type Product
@@ -73,7 +73,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/admin/product" class="nav-link">
+                    <a href="/apple-store/admin/product" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Product
@@ -81,7 +81,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/admin/color" class="nav-link">
+                    <a href="/apple-store/admin/color" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Color
@@ -89,7 +89,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/admin/option" class="nav-link">
+                    <a href="/apple-store/admin/option" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Option
@@ -97,7 +97,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/admin/product-color" class="nav-link">
+                    <a href="/apple-store/admin/product-color" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Product Color
@@ -105,7 +105,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/admin/product-option" class="nav-link">
+                    <a href="/apple-store/admin/product-option" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Product Option
@@ -113,7 +113,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/admin/product-detail" class="nav-link">
+                    <a href="/apple-store/admin/product-detail" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Product Detail
@@ -122,7 +122,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="/admin/orders" class="nav-link">
+                    <a href="/apple-store/admin/orders" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Orders

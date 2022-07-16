@@ -78,7 +78,7 @@
                             <a href="${pageContext.request.contextPath}/apple-store/product-detail?id=${product.id}"
                                class="body-all-product__products-item col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
                                 <div class="body-all-product__products-item__img body-all-product__products-item__img--active"
-                                     style="background-image: url(${pageContext.request.contextPath}/image/${product.urlImage})">
+                                     style="background-image: url(${pageContext.request.contextPath}/apple-store/image/${product.urlImage})">
                                 </div>
 
                                 <div class="body-all-product__products-item__detail">

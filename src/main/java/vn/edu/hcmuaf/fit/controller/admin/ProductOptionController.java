@@ -5,7 +5,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "ProductOptionController", value = "/admin/product-option")
+@WebServlet(name = "ProductOptionController", value = "/apple-store/admin/product-option")
 public class ProductOptionController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

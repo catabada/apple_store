@@ -1,11 +1,11 @@
 (checkOutSubmit = () => {
-    $(".body__cart__btn").on("click", (e) => {
+    jQuery(".body__cart__btn").on("click", (e) => {
         e.preventDefault();
-        let fullname = $("input[name = 'fullname']").val();
-        let email = $("input[name = 'email']").val();
-        let phoneNumber = $("input[name = 'phone-number']").val();
-        let address = $("input[name = 'address']").val();
-        $.ajax({
+        let fullname = jQuery("input[name = 'fullname']").val();
+        let email = jQuery("input[name = 'email']").val();
+        let phoneNumber = jQuery("input[name = 'phone-number']").val();
+        let address = jQuery("input[name = 'address']").val();
+        jQuery.ajax({
             type: "POST",
             url: "/order-success",
             data: {

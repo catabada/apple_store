@@ -326,7 +326,7 @@
                 },
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
                 ajax: {
-                    url: `/api/product-detail`,
+                    url: `/apple-store/api/product-detail`,
                     dataSrc: "data"
                 },
                 columns: [
@@ -346,7 +346,7 @@
 
         jQuery("#btn-add").on("click", function (e) {
             jQuery.ajax({
-                url: "/api/product",
+                url: "/apple-store/api/product",
                 type: "GET",
                 success: function (data) {
                     jQuery("#addProductId").empty();
@@ -360,7 +360,7 @@
             }).done(function () {
                 let productId = jQuery("#addProductId").val();
                 jQuery.ajax({
-                    url: "/api/product-color/listByProductId" + productId,
+                    url: "/apple-store/api/product-color/listByProductId" + productId,
                     type: "GET",
                     success: function (data) {
                         jQuery("#addProductColorId").empty();
@@ -373,7 +373,7 @@
                     }
                 })
                 jQuery.ajax({
-                    url: "/api/product-option/listByProductId" + productId,
+                    url: "/apple-store/api/product-option/listByProductId" + productId,
                     type: "GET",
                     success: function (data) {
                         jQuery("#addProductOptionId").empty();
@@ -395,7 +395,7 @@
 
         function getData(id) {
             jQuery.ajax({
-                url: `/api/product-detail/` + id,
+                url: `/apple-store/api/product-detail/` + id,
                 type: 'GET',
                 success: function (data) {
                     reloadData();
@@ -416,7 +416,7 @@
                 let productColorId = response.data.productColor.id;
                 let productOptionId = response.data.productOption.id;
                 jQuery.ajax({
-                    url: "/api/product",
+                    url: "/apple-store/api/product",
                     type: "GET",
                     success: function (data) {
                         jQuery("#updateProductId").empty();
@@ -429,7 +429,7 @@
                     }
                 }).done(function () {
                     jQuery.ajax({
-                        url: "/api/product-color/listByProductId" + productId,
+                        url: "/apple-store/api/product-color/listByProductId" + productId,
                         type: "GET",
                         success: function (data) {
                             jQuery("#updateProductColorId").empty();
@@ -442,7 +442,7 @@
                         }
                     })
                     jQuery.ajax({
-                        url: "/api/product-option/listByProductId" + productId,
+                        url: "/apple-store/api/product-option/listByProductId" + productId,
                         type: "GET",
                         success: function (data) {
                             jQuery("#updateProductOptionId").empty();
@@ -473,7 +473,7 @@
             }).then((result) => {
                 if (result.value) {
                     jQuery.ajax({
-                        url: `/api/product-detail/` + id,
+                        url: `/apple-store/api/product-detail/` + id,
                         type: 'DELETE',
                         success: function (data) {
                             Swal.fire(
@@ -499,7 +499,7 @@
         function changeOptionByProductAdd() {
             let productId = jQuery("#addProductId").val();
             jQuery.ajax({
-                url: "/api/product-option/listByProductId" + productId,
+                url: "/apple-store/api/product-option/listByProductId" + productId,
                 type: "GET",
                 success: function (data) {
                     jQuery("#addProductOptionId").empty();
@@ -513,7 +513,7 @@
                 }
             });
             jQuery.ajax({
-                url: "/api/product-color/listByProductId" + productId,
+                url: "/apple-store/api/product-color/listByProductId" + productId,
                 type: "GET",
                 success: function (data) {
                     jQuery("#addProductColorId").empty();
@@ -531,7 +531,7 @@
         function changeOptionByProductUpdate() {
             let productId = jQuery("#updateProductId").val();
             jQuery.ajax({
-                url: "/api/product-option/listByProductId" + productId,
+                url: "/apple-store/api/product-option/listByProductId" + productId,
                 type: "GET",
                 success: function (data) {
                     jQuery("#updateProductOptionId").empty();
@@ -545,7 +545,7 @@
                 }
             });
             jQuery.ajax({
-                url: "/api/product-color/listByProductId" + productId,
+                url: "/apple-store/api/product-color/listByProductId" + productId,
                 type: "GET",
                 success: function (data) {
                     jQuery("#updateProductColorId").empty();
@@ -568,7 +568,7 @@
                 let data = new FormData(jQuery("#modal-add")[0]);
                 $.ajax({
                     type: "POST",
-                    url: `/api/product-detail`,
+                    url: `/apple-store/api/product-detail`,
                     processData: false,
                     contentType: false,
                     data: data,
@@ -608,7 +608,7 @@
                 console.log(data.get("updateActive"))
                 jQuery.ajax({
                     type: "PUT",
-                    url: `/api/product-detail/` + id,
+                    url: `/apple-store/api/product-detail/` + id,
                     processData: false,
                     contentType: false,
                     data: data,
