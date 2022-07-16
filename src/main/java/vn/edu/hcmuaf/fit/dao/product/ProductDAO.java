@@ -7,5 +7,8 @@ import java.util.List;
 
 public interface ProductDAO extends BaseDAO<Product> {
     void findBySku(String sku);
+
     List<Product> findAllByTypeProductId(Long typeProductId);
+
+    List<Product> findAllByKeyWord(String keyWord);
 }

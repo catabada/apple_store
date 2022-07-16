@@ -176,7 +176,7 @@
                         timer: 2000
                     }).then(
                         function (){
-                            window.location.href= "${pageContext.request.contextPath}/apple-store";
+                            window.location.href = document.referrer;
                         }
                     )
                 } else {

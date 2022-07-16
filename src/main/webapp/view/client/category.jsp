@@ -13,7 +13,9 @@
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/components/category.css">
-    <link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/assets/img/apple-brand-white.png">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/components/pagination.css">
+    <link rel="shortcut icon" type="image/png"
+          href="${pageContext.request.contextPath}/assets/img/apple-brand-white.png">
     <title>Title</title>
 </head>
 <body>
@@ -28,23 +30,23 @@
                         Reset
                     </div>
                 </h1>
-<%--                <c:forEach var="proFilter" items="${listProFilter}">--%>
-<%--                    <div class="body-filter__option">--%>
-<%--                        <div class="body-filter__option-heading">--%>
-<%--                                ${filterDao.get(proFilter.idFilter).type}--%>
-<%--                        </div>--%>
-<%--                        <ul class="body-filter__option-list">--%>
-<%--                            <c:forEach var="detail" items="${filterDetailDao.getListFilterByIdProFilter(proFilter.id)}">--%>
-<%--                                <li class="body-filter__option-item">--%>
-<%--                                    <a href=""--%>
-<%--                                       class="body-filter__option-item-link body-filter__option-version-item-link">--%>
-<%--                                            ${detail.name}--%>
-<%--                                    </a>--%>
-<%--                                </li>--%>
-<%--                            </c:forEach>--%>
-<%--                        </ul>--%>
-<%--                    </div>--%>
-<%--                </c:forEach>--%>
+                <%--                <c:forEach var="proFilter" items="${listProFilter}">--%>
+                <%--                    <div class="body-filter__option">--%>
+                <%--                        <div class="body-filter__option-heading">--%>
+                <%--                                ${filterDao.get(proFilter.idFilter).type}--%>
+                <%--                        </div>--%>
+                <%--                        <ul class="body-filter__option-list">--%>
+                <%--                            <c:forEach var="detail" items="${filterDetailDao.getListFilterByIdProFilter(proFilter.id)}">--%>
+                <%--                                <li class="body-filter__option-item">--%>
+                <%--                                    <a href=""--%>
+                <%--                                       class="body-filter__option-item-link body-filter__option-version-item-link">--%>
+                <%--                                            ${detail.name}--%>
+                <%--                                    </a>--%>
+                <%--                                </li>--%>
+                <%--                            </c:forEach>--%>
+                <%--                        </ul>--%>
+                <%--                    </div>--%>
+                <%--                </c:forEach>--%>
 
             </div>
             <div class="body-all-product">
@@ -76,7 +78,7 @@
                             <a href="${pageContext.request.contextPath}/apple-store/product-detail?id=${product.id}"
                                class="body-all-product__products-item col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
                                 <div class="body-all-product__products-item__img body-all-product__products-item__img--active"
-                                     style="background-image: url(${pageContext.request.contextPath}/image/${product.urlImage})">
+                                     style="background-image: url(${pageContext.request.contextPath}/apple-store/image/${product.urlImage})">
                                 </div>
 
                                 <div class="body-all-product__products-item__detail">
@@ -101,7 +103,7 @@
                                     </div>
                                     <div class="body-all-product__products-item__price body-all-product__products-item__price--active">
                                         <c:set var="newPrice"
-                                               value="${product.sales()}"/>
+                                               value="${product.price - product.price * product.discount}"/>
                                         <div class="body-all-product__products-item__price--old">$${product.price}</div>
                                         <div class="body-all-product__products-item__price--new">$${newPrice}</div>
                                     </div>
@@ -112,9 +114,12 @@
                     </div>
                 </div>
             </div>
+
+            <div id="pagination" data-total-page="${totalPage}">
+            </div>
         </div>
     </div>
-<%--    <jsp:include page="layout/footer.jsp"/>--%>
+    <jsp:include page="layout/footer.jsp"/>
     <a href="#on-top" class="button-on-top">
         <i class="fas fa-chevron-up"></i>
     </a>
@@ -122,8 +127,11 @@
 
 <script src="${pageContext.request.contextPath}/assets/js/navigation.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/scroll.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/pagination.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/filter.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
+<script>
+</script>
 </body>
 </html>

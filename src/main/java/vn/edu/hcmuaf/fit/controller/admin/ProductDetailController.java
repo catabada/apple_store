@@ -11,7 +11,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "ProductDetailController", urlPatterns = "/admin/product-detail")
+@WebServlet(name = "ProductDetailController", urlPatterns = "/apple-store/admin/product-detail")
 public class ProductDetailController extends HttpServlet {
 
 

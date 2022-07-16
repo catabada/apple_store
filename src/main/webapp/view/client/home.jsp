@@ -10,7 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link rel="shortcut icon" type="image/png"
-          href="./${pageContext.request.contextPath}/assets/img/apple-brand-white.png">
+          href="${pageContext.request.contextPath}/assets/img/apple-brand-white.png">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home/styles.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home/responsive.css">
@@ -19,7 +19,7 @@
 <body>
 <div class="main" id="on-top">
     <!-- Begin header -->
-    <%--    <c:import url="layout/header.jsp" />--%>
+    <c:import url="layout/header.jsp"/>
     <!-- End  Header -->
 
     <!-- Begin Slider -->
@@ -38,28 +38,28 @@
             <div class="slides">
                 <div class="slide slide__first">
                     <img class="slide__img "
-                         src="./${pageContext.request.contextPath}/assets/img/banner_slider/iphone_banner.png" alt="">
+                         src="${pageContext.request.contextPath}/assets/img/banner_slider/iphone_banner.png" alt="">
                 </div>
                 <div class="slide">
                     <img class="slide__img"
-                         src="./${pageContext.request.contextPath}/assets/img/banner_slider/imac_banner.png" alt="">
+                         src="${pageContext.request.contextPath}/assets/img/banner_slider/imac_banner.png" alt="">
                 </div>
                 <div class="slide">
                     <img class="slide__img"
-                         src="./${pageContext.request.contextPath}/assets/img/banner_slider/ipad_banner.png" alt="">
+                         src="${pageContext.request.contextPath}/assets/img/banner_slider/ipad_banner.png" alt="">
                 </div>
                 <div class="slide">
                     <img class="slide__img"
-                         src="./${pageContext.request.contextPath}/assets/img/banner_slider/airtag_banner.png" alt="">
+                         src="${pageContext.request.contextPath}/assets/img/banner_slider/airtag_banner.png" alt="">
                 </div>
                 <div class="slide">
                     <img class="slide__img"
-                         src="./${pageContext.request.contextPath}/assets/img/banner_slider/apple_watch_banner.png"
+                         src="${pageContext.request.contextPath}/assets/img/banner_slider/apple_watch_banner.png"
                          alt="">
                 </div>
                 <div class="slide">
                     <img class="slide__img"
-                         src="./${pageContext.request.contextPath}/assets/img/banner_slider/airpod_banner.png" alt="">
+                         src="${pageContext.request.contextPath}/assets/img/banner_slider/airpod_banner.png" alt="">
                 </div>
             </div>
         </div>
@@ -335,7 +335,7 @@
                         <a href="" class="body-hot-collection__item-btn">
                             View All
                         </a>
-                        <img src="./${pageContext.request.contextPath}/assets/img/home/airpot.png" alt=""
+                        <img src="${pageContext.request.contextPath}/assets/img/home/airpot.png" alt=""
                              class="body-hot-collection__item-img">
                     </div>
                     <div class="body-hot-collection__item">
@@ -704,7 +704,7 @@
     </div>
 
     <!-- Footer -->
-    <%--    <jsp:include page="layout/footer.jsp"/>--%>
+    <jsp:include page="layout/footer.jsp"/>
     <a href="#on-top" class="button-on-top">
         <i class="fas fa-chevron-up"></i>
     </a>

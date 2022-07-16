@@ -122,35 +122,12 @@
             <div class="header-nav__mobile__modal"></div>
 
         </div>
-        <a href="/apple-store" class="header-navbar__brand">
+        <a href="/apple-store/home" class="header-navbar__brand">
             <img src="${pageContext.request.contextPath}/assets/img/apple-brand-white.png" alt=""
                  class="header-navbar__brand-img">
         </a>
         <!-- Begin List Navigation -->
         <ul class="header-navbar__list" id="category">
-            <%--            <%--%>
-            <%--                HttpSession ss = request.getSession();--%>
-            <%--                request.setAttribute("ss", ss);--%>
-            <%--                if (ss.getAttribute("listType") == null) {--%>
-            <%--                    Helper.getListTypeProduct(request);--%>
-            <%--                }--%>
-            <%--                request.setAttribute("imageDao", ImageDAO.getInstance());--%>
-            <%--                request.setAttribute("productDao", ProductDAO.getInstance());--%>
-            <%--                request.setAttribute("colorDao", ColorDAO.getInstance());--%>
-            <%--                request.setAttribute("proOptionDao", ProductOptionDAO.getInstance());--%>
-            <%--                request.setAttribute("cartItemDao", CartItemDAO.getInstance());--%>
-            <%--                request.setAttribute("productColorDao", ProductColorDAO.getInstance());--%>
-            <%--            %>--%>
-            <%--            <jsp:useBean id="listType" scope="session" type="java.util.List"/>--%>
-            <%--            <c:forEach var="item" items="${listType}">--%>
-            <%--                <li class="header-navbar__item header-navbar__item--white">--%>
-            <%--                    <img src="../${pageContext.request.contextPath}/assets/img/light.png" alt=""--%>
-            <%--                         class="header-navbar__item-hover">--%>
-            <%--                    <a href="/category?id=${item.id}" class="header-navbar__link">--%>
-            <%--                            ${item.name}--%>
-            <%--                    </a>--%>
-            <%--                </li>--%>
-            <%--            </c:forEach>--%>
         </ul>
         <!-- End List Navigation -->
         <div class="header-navbar__search">
@@ -158,7 +135,7 @@
                 <i class="fa fa-search"></i>
             </div>
             <input spellcheck="false" type="text" class="header-navbar__search-input"
-                   placeholder="Search apple.com" autofocus>
+                   placeholder="Search apple.com" id="search" autofocus="autofocus">
             <div class="header-navbar__search-icon header-navbar__search-icon--close">
                 <i class="fa fa-times"></i>
             </div>
@@ -214,7 +191,8 @@
                     <div class="header__navbar__cart__list--wrapper">
                         <div class="header__navbar__cart__list" id="list-cart-item">
                         </div>
-                        <a href="${pageContext.request.contextPath}/apple-store/cart" class="header__navbar__cart__btn-check">
+                        <a href="${pageContext.request.contextPath}/apple-store/cart"
+                           class="header__navbar__cart__btn-check">
                             Check out
                         </a>
                     </div>
@@ -269,26 +247,26 @@
     <%
         HttpSession ss = request.getSession();
         if(ss.getAttribute("userId") == null) { %>
-    $(".header__navbar__cart__none").show();
-    $(".header__navbar__cart--amount").hide();
-    $(".header__navbar__cart__list--wrapper").hide();
+    jQuery(".header__navbar__cart__none").show();
+    jQuery(".header__navbar__cart--amount").hide();
+    jQuery(".header__navbar__cart__list--wrapper").hide();
 
     <% } else { %>
     if (parseInt(jQuery("#quantity").text() == 0)) {
-        $(".header__navbar__cart--amount").hide();
-        $(".header__navbar__cart__none").show();
-        $(".header__navbar__cart__list--wrapper").hide();
+        jQuery(".header__navbar__cart--amount").hide();
+        jQuery(".header__navbar__cart__none").show();
+        jQuery(".header__navbar__cart__list--wrapper").hide();
     } else {
-        $(".header__navbar__cart--amount").show();
-        $(".header__navbar__cart__none").hide();
-        $(".header__navbar__cart__list--wrapper").show();
+        jQuery(".header__navbar__cart--amount").show();
+        jQuery(".header__navbar__cart__none").hide();
+        jQuery(".header__navbar__cart__list--wrapper").show();
     }
     <% } %>
 
     jQuery(document).ready(function () {
         //List cart user
         jQuery.ajax({
-            url: "/api/cart-item",
+            url: "/apple-store/api/cart-item",
             type: "GET",
             dataType: "json",
             processData: false,
@@ -318,7 +296,7 @@
 
         //Categories
         jQuery.ajax({
-            url: "/api/type-product",
+            url: "/apple-store/api/type-product",
             type: "GET",
             dataType: "json",
             processData: false,
@@ -331,9 +309,21 @@
                     let name = category[i].name;
                     let html = '<li class="header-navbar__item header-navbar__item--white">' +
                         '<img src="${pageContext.request.contextPath}/assets/img/light.png" alt="" class="header-navbar__item-hover"> ' +
-                        '<a href="${pageContext.request.contextPath}/apple-store/category?id=' + id + '" class="header-navbar__link">' + name + '</a>' +
+                        '<a href="${pageContext.request.contextPath}/apple-store/category/id' + id + "?page=1" + '" class="header-navbar__link">' + name + '</a>' +
                         '</li>';
                     jQuery("#category").append(html);
+                }
+            }
+        });
+
+        //Search
+        jQuery("#search").keyup(function (e) {
+            if (e.keyCode == 13) {
+                let keyword = jQuery("#search").val();
+                if (keyword.length === 0) {
+                    window.location.href = "${pageContext.request.contextPath}/apple-store/category?page=1";
+                } else {
+                    window.location.href = "${pageContext.request.contextPath}/apple-store/category/search/" + keyword + "?page=1";
                 }
             }
         });

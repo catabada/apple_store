@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @MultipartConfig
-@WebServlet(name = "ColorAPI", urlPatterns = "/api/color/*")
+@WebServlet(name = "ColorAPI", urlPatterns = "/apple-store/api/color/*")
 public class ColorAPI extends HttpServlet {
     private final Gson GSON = new GsonBuilder().create();
     private ColorService colorService;

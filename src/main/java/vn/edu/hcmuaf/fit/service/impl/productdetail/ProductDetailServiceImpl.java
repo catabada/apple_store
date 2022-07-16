@@ -52,7 +52,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 
     @Override
     public DataResponse<ProductDetailDto> createProductDetail(ProductDetailCreate create) {
-        if (!productDetailDao.checkExistColorAndOption(create.getProductColorId(), create.getProductOptionId())) {
+        if (!productDetailDao.checkExistColorAndOption(create.getProductId(), create.getProductColorId(), create.getProductOptionId())) {
             Product product = ProductDAOImpl.getInstance().findById(create.getProductId()).orElse(null);
             ProductColor productColor = ProductColorDAOImpl.getInstance().findById(create.getProductColorId()).orElse(null);
             ProductOption productOption = ProductOptionDAOImpl.getInstance().findById(create.getProductOptionId()).orElse(null);
@@ -98,8 +98,10 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         Product product = ProductDAOImpl.getInstance().findById(update.getProductId()).get();
         ProductColor productColor = ProductColorDAOImpl.getInstance().findById(update.getProductColorId()).get();
         ProductOption productOption = ProductOptionDAOImpl.getInstance().findById(update.getProductOptionId()).get();
-        productDetail.setSku(update.getSku());
-        productDetail.setName(update.getName());
+        String sku = product.getSku() + productColor.getColor().getSku() + productOption.getSku();
+        String name = product.getName() + " " + productColor.getColor().getName() + " " + productOption.getName();
+        productDetail.setSku(sku);
+        productDetail.setName(name);
         productDetail.setPrice(update.getPrice());
         productDetail.setProduct(product);
         productDetail.setProductColor(productColor);

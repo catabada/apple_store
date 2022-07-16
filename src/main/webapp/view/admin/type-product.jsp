@@ -274,7 +274,7 @@
                 table.buttons().container().appendTo('.col-md-6:eq(0)', table.table().container());
             },
             ajax: {
-                url: `/api/type-product`,
+                url: `/apple-store/api/type-product`,
                 dataSrc: "data"
             },
             "columnDefs": [
@@ -303,7 +303,7 @@
 
     function getData(id) {
         jQuery.ajax({
-            url: `/api/type-product/` + id,
+            url: `/apple-store/api/type-product/` + id,
             type: 'GET',
             success: function (data) {
                 reloadData();
@@ -340,7 +340,7 @@
                 );
 
                 jQuery.ajax({
-                    url: `/api/type-product/` + id,
+                    url: `/apple-store/api/type-product/` + id,
                     type: 'DELETE',
                     success: function (data) {
                         reloadData();
@@ -356,7 +356,7 @@
         if (validate) {
             let data = new FormData(jQuery("#modal-add")[0]);
             jQuery.ajax({
-                url: "/api/type-product",
+                url: "/apple-store/api/type-product",
                 type: "POST",
                 data: data,
                 processData: false,
@@ -395,9 +395,8 @@
         if (validate) {
             let data = new FormData(jQuery("#modal-update")[0]);
             let id = data.get("updateId");
-            console.log(data.get("updateActive"))
             jQuery.ajax({
-                url: "/api/type-product/" + id,
+                url: "/apple-store/api/type-product/" + id,
                 type: "PUT",
                 data: data,
                 processData: false,
@@ -427,6 +426,7 @@
             });
         }
     })
+
 
     function setInputDefault(idName) {
         jQuery.map(jQuery("#modal-add").find("input"), (item, i) => {

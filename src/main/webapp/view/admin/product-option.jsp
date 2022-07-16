@@ -298,7 +298,7 @@
                 },
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
                 ajax: {
-                    url: `/api/product-option`,
+                    url: `/apple-store/api/product-option`,
                     dataSrc: "data"
                 },
                 columns: [
@@ -315,7 +315,7 @@
 
         jQuery("#btn-add").on("click", function (e) {
             jQuery.ajax({
-                url: "/api/product",
+                url: "/apple-store/api/product",
                 type: "GET",
                 success: function (data) {
                     jQuery("#addProductId").empty();
@@ -329,7 +329,7 @@
             }).done(function () {
                 let productId = jQuery("#addProductId").val();
                 jQuery.ajax({
-                    url: "/api/option/listByTypeProductId" + productId,
+                    url: "/apple-store/api/option/listByTypeProductId" + productId,
                     type: "GET",
                     success: function (data) {
                         jQuery("#addOptionId").empty();
@@ -350,7 +350,7 @@
 
         function getData(id, productId, optionId) {
             jQuery.ajax({
-                url: `/api/product-option/` + id,
+                url: `/apple-store/api/product-option/` + id,
                 type: 'GET',
                 success: function (data) {
                     reloadData();
@@ -360,7 +360,7 @@
                 }
             });
             jQuery.ajax({
-                url: "/api/product",
+                url: "/apple-store/api/product",
                 type: "GET",
                 success: function (data) {
                     jQuery("#updateProductId").empty();
@@ -374,7 +374,7 @@
             }).done(function () {
                 let productIdUpdate = jQuery("#updateProductId").val();
                 jQuery.ajax({
-                    url: "/api/option/listByTypeProductId" + productIdUpdate,
+                    url: "/apple-store/api/option/listByTypeProductId" + productIdUpdate,
                     type: "GET",
                     success: function (data) {
                         jQuery("#updateOptionId").empty();
@@ -403,7 +403,7 @@
             }).then((result) => {
                 if (result.value) {
                     jQuery.ajax({
-                        url: `/api/product-option/` + id,
+                        url: `/apple-store/api/product-option/` + id,
                         type: 'DELETE',
                         success: function (data) {
                             Swal.fire(
@@ -429,7 +429,7 @@
         function changeOptionByProductAdd() {
             let productId = jQuery("#addProductId").val();
             jQuery.ajax({
-                url: "/api/option/listByTypeProductId" + productId,
+                url: "/apple-store/api/option/listByTypeProductId" + productId,
                 type: "GET",
                 success: function (data) {
                     jQuery("#addOptionId").empty();
@@ -447,7 +447,7 @@
         function changeOptionByProductUpdate() {
             let productId = jQuery("#updateProductId").val();
             jQuery.ajax({
-                url: "/api/option/listByTypeProductId" + productId,
+                url: "/apple-store/api/option/listByTypeProductId" + productId,
                 type: "GET",
                 success: function (data) {
                     jQuery("#updateOptionId").empty();
@@ -467,7 +467,7 @@
                 let data = new FormData(jQuery("#modal-add")[0]);
                 $.ajax({
                     type: "POST",
-                    url: `/api/product-option`,
+                    url: `/apple-store/api/product-option`,
                     processData: false,
                     contentType: false,
                     data: data,
@@ -508,7 +508,7 @@
                 let id = data.get("updateId");
                 $.ajax({
                     type: "PUT",
-                    url: `/api/product-option/` + id,
+                    url: `/apple-store/api/product-option/` + id,
                     processData: false,
                     contentType: false,
                     data: data,

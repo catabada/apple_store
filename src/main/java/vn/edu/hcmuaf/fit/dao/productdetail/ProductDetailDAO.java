@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductDetailDAO extends BaseDAO<ProductDetail> {
-    public boolean checkExistColorAndOption(final Long productColorId, final Long productOptionId);
+    public boolean checkExistColorAndOption(final Long productId, final Long productColorId, final Long productOptionId);
 
     public List<ProductDetail> findAllByProductId(Long productId);
 

@@ -155,7 +155,7 @@
             "responsive": true, "lengthChange": false, "autoWidth": false,
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
             ajax: {
-                url: `/api/user`,
+                url: `/apple-store/api/user`,
                 dataSrc: "data"
             },
             "columnDefs": [

@@ -186,6 +186,13 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
+                                        <label hidden for="updateId"></label>
+                                        <input hidden type="text" id="updateId"
+                                               name="updateId"
+                                               class="form-control"
+                                               placeholder="Ex: PH, PA,..">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="updateProductId">Product</label>
                                         <select id="updateProductId" name="updateProductId"
                                                 class="form-control custom-select">
@@ -203,7 +210,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="updateDeImages">Detail Images</label>
-                                        <input type="file" id="updateDeImages" name="updateDeImages"
+                                        <input multiple type="file" id="updateDeImages" name="updateDeImages"
                                                class="form-control">
                                     </div>
                                 </div>
@@ -299,7 +306,7 @@
                 },
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
                 ajax: {
-                    url: `/api/product-color`,
+                    url: `/apple-store/api/product-color`,
                     dataSrc: "data"
                 },
                 columns: [
@@ -325,7 +332,7 @@
 
         jQuery("#btn-add").on("click", function (e) {
             jQuery.ajax({
-                url: "/api/product",
+                url: "/apple-store/api/product",
                 type: "GET",
                 success: function (data) {
                     jQuery("#addProductId").empty();
@@ -338,7 +345,7 @@
                 }
             })
             jQuery.ajax({
-                url: "/api/color",
+                url: "/apple-store/api/color",
                 type: "GET",
                 success: function (data) {
                     jQuery("#addColorId").empty();
@@ -358,40 +365,45 @@
 
         function getData(id) {
             jQuery.ajax({
-                url: `/api/product-color/` + id,
+                url: `/apple-store/api/product-color/` + id,
                 type: 'GET',
                 success: function (data) {
-                    reloadData();
+                    reloadData()
+                    jQuery("#updateId").val(data.data.id);
                     jQuery('#updateBgImage').val(data.data.bgImage);
                     jQuery('#updateDeImages').val(data.data.deImages);
                 }
+            }).then(function (response) {
+                let productId = response.data.product.id;
+                let colorId = response.data.color.id;
+                jQuery.ajax({
+                    url: "/apple-store/api/product",
+                    type: "GET",
+                    success: function (data) {
+                        jQuery("#updateProductId").empty();
+                        jQuery.map(data.data, (product, i) => {
+                            if (productId == product.id)
+                                jQuery("#updateProductId").append('<option selected value="' + product.id + '">' + product.name + '</option>');
+                            else
+                                jQuery("#updateProductId").append('<option value="' + product.id + '">' + product.name + '</option>');
+                        });
+                    }
+                })
+                jQuery.ajax({
+                    url: "/apple-store/api/color",
+                    type: "GET",
+                    success: function (data) {
+                        jQuery("#updateColorId").empty();
+                        jQuery.map(data.data, (color, i) => {
+                            if (colorId == color.id)
+                                jQuery("#updateColorId").append('<option selected value="' + color.id + '">' + color.name + '</option>');
+                            else
+                                jQuery("#updateColorId").append('<option value="' + color.id + '">' + color.name + '</option>');
+                        });
+                    }
+                })
+
             });
-            jQuery.ajax({
-                url: "/api/product",
-                type: "GET",
-                success: function (data) {
-                    jQuery("#updateProductId").empty();
-                    jQuery.map(data.data, (type, i) => {
-                        if (id === type.id)
-                            jQuery("#updateProductId").append('<option selected value="' + type.id + '">' + type.name + '</option>');
-                        else
-                            jQuery("#updateProductId").append('<option value="' + type.id + '">' + type.name + '</option>');
-                    });
-                }
-            })
-            jQuery.ajax({
-                url: "/api/color",
-                type: "GET",
-                success: function (data) {
-                    jQuery("#updateColorId").empty();
-                    jQuery.map(data.data, (type, i) => {
-                        if (id === type.id)
-                            jQuery("#updateColorId").append('<option selected value="' + type.id + '">' + type.name + '</option>');
-                        else
-                            jQuery("#updateColorId").append('<option value="' + type.id + '">' + type.name + '</option>');
-                    });
-                }
-            })
 
         }
 
@@ -407,7 +419,7 @@
             }).then((result) => {
                 if (result.value) {
                     jQuery.ajax({
-                        url: `/api/product-color/` + id,
+                        url: `/apple-store/api/product-color/` + id,
                         type: 'DELETE',
                         success: function (data) {
                             Swal.fire(
@@ -453,7 +465,7 @@
                 let data = new FormData(jQuery("#modal-add")[0]);
                 $.ajax({
                     type: "POST",
-                    url: `/api/product-color`,
+                    url: `/apple-store/api/product-color`,
                     processData: false,
                     contentType: false,
                     data: data,
@@ -493,26 +505,29 @@
                 let id = data.get("updateId");
                 $.ajax({
                     type: "PUT",
-                    url: `/api/product-color/` + id,
+                    url: `/apple-store/api/product-color/` + id,
                     processData: false,
                     contentType: false,
                     data: data,
-                    success: function () {
-                        reloadData();
-                        if (data.success) {
-                            reloadData();
+                    success: function (response) {
+                        if (response.success) {
+                            jQuery("#product-color").trigger("reset");
+                            jQuery('#modal-update').modal('hide');
                             Swal.fire({
                                 icon: 'success',
                                 title: 'SUCCESS',
-                                text: data.message,
+                                text: response.message,
                                 showConfirmButton: false,
                                 timer: 2000
+                            }).then(function () {
+                                reloadData();
+
                             })
                         } else {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'ERROR',
-                                text: data.message,
+                                text: response.message,
                                 showConfirmButton: false,
                                 timer: 2000
                             })
@@ -526,7 +541,7 @@
             e.preventDefault();
             jQuery.ajax({
                 type: "PUT",
-                url: '${pageContext.request.contextPath}/api/product-color?id=' + jQuery(this).attr("pid"),
+                url: '${pageContext.request.contextPath}/apple-store/api/product-color?id=' + jQuery(this).attr("pid"),
                 success: function (data) {
                     jQuery("#modal-update").show();
                     jQuery("#updateName").val(data.name);

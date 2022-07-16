@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.List;
 
 @MultipartConfig
-@WebServlet(name = "CartUserAPI", urlPatterns = "/api/cart-item/*")
+@WebServlet(name = "CartUserAPI", urlPatterns = "/apple-store/api/cart-item/*")
 public class CartUserAPI extends HttpServlet {
     private final Gson GSON = new GsonBuilder().create();
     private CartItemService cartItemService;
