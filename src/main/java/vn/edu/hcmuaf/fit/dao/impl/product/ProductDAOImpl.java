@@ -179,4 +179,40 @@ public class ProductDAOImpl implements ProductDAO {
         return products;
     }
 
+    @Override
+    public List<Product> findAllByKeyWord(String keyWord) {
+        List<Product> products = new ArrayList<Product>();
+        connection = DbManager.connectionPool.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement(QUERY.PRODUCT.GET_LIST_BY_KEY_WORD);
+            statement.setString(1, "%" + keyWord + "%");
+            System.out.println("%" + keyWord + "%");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                String sku = rs.getString("sku");
+                String name = rs.getString("name");
+                Long typeProductId = rs.getLong("type_id");
+                String urlImage = rs.getString("url_image");
+                Integer price = rs.getInt("price");
+                Double discount = rs.getDouble("discount");
+                Integer rate = rs.getInt("rate");
+                Integer viewed = rs.getInt("viewed");
+                Date dateUpdated = rs.getDate("date_created");
+                Date lastUpdated = rs.getDate("last_updated");
+                boolean active = rs.getBoolean("active");
+
+                TypeProduct typeProduct = TypeProductDAOImpl.getInstance().findById(typeProductId).orElseGet(null);
+                Product product = new Product(id, sku, name, typeProduct, price, urlImage, rate, discount, viewed, dateUpdated, lastUpdated, active);
+                products.add(product);
+            }
+
+        } catch (SQLException e) {
+            DbManager.connectionPool.releaseConnection(connection);
+            return products;
+        }
+        DbManager.connectionPool.releaseConnection(connection);
+        return products;
+    }
+
 }

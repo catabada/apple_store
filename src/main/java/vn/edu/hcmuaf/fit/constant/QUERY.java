@@ -15,6 +15,7 @@ public final class QUERY {
     public static final class PRODUCT {
         public static final String GET_LIST = "select * from product";
         public static final String GET_LIST_BY_TYPE_PRODUCT_ID = "select * from product where type_id = ?";
+        public static final String GET_LIST_BY_KEY_WORD = "select * from product where name like ?";
         public static final String GET_BY_ID = "select * from product where id = ?";
         public static final String GET_BY_SKU = "select * from product where sku = ?";
         public static final String INSERT = "insert into product(sku, name, type_id, price, url_image, discount) values (?, ?, ?, ?, ?, ?)";

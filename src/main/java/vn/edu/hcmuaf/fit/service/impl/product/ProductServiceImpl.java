@@ -5,14 +5,14 @@ import vn.edu.hcmuaf.fit.dao.impl.typeproduct.TypeProductDAOImpl;
 import vn.edu.hcmuaf.fit.dao.product.ProductDAO;
 import vn.edu.hcmuaf.fit.dto.product.*;
 import vn.edu.hcmuaf.fit.mapper.product.ProductMapper;
+import vn.edu.hcmuaf.fit.constant.Pagination;
 import vn.edu.hcmuaf.fit.model.product.Product;
 import vn.edu.hcmuaf.fit.model.typeproduct.TypeProduct;
 import vn.edu.hcmuaf.fit.response.BaseResponse;
 import vn.edu.hcmuaf.fit.response.DataResponse;
 import vn.edu.hcmuaf.fit.service.product.ProductService;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class ProductServiceImpl implements ProductService {
     private ProductDAO productDao;
@@ -29,6 +29,63 @@ public class ProductServiceImpl implements ProductService {
         return optional.map(
                         product -> new DataResponse<>(true, 200, "Success", productMapper.toProductDto(product)))
                 .orElseGet(() -> new DataResponse<>(false, 401, "Can't find by id = " + id, null));
+    }
+
+    @Override
+    public DataResponse<Pagination<ProductDto>> getListProductByTypeProductId(Long typProductId, int pageNumber) {
+        List<ProductDto> list = productMapper.toListProductDto(productDao.findAllByTypeProductId(typProductId));
+        List<ProductDto> listByPageNumber = new ArrayList<>();
+        for (int i = (pageNumber - 1) * 4; i < (pageNumber - 1) * 4 + 4; i++) {
+            if (i < list.size()) {
+                listByPageNumber.add(list.get(i));
+            }
+        }
+        int totalPage;
+        if (list.size() % Pagination.DEFAULT_PAGE_SIZE == 0) {
+            totalPage = list.size() / Pagination.DEFAULT_PAGE_SIZE;
+        } else {
+            totalPage = list.size() / Pagination.DEFAULT_PAGE_SIZE + 1;
+        }
+        Pagination<ProductDto> pagination = new Pagination<>(listByPageNumber, pageNumber, totalPage);
+        return new DataResponse<Pagination<ProductDto>>(true, 200, "Success!", pagination);
+    }
+
+    @Override
+    public DataResponse<Pagination<ProductDto>> getListProductByKeyWord(String keyWord, int pageNumber) {
+        List<ProductDto> list = productMapper.toListProductDto(productDao.findAllByKeyWord(keyWord));
+        List<ProductDto> listByPageNumber = new ArrayList<>();
+        for (int i = (pageNumber - 1) * 4; i < (pageNumber - 1) * 4 + 4; i++) {
+            if (i < list.size()) {
+                listByPageNumber.add(list.get(i));
+            }
+        }
+        int totalPage;
+        if (list.size() % Pagination.DEFAULT_PAGE_SIZE == 0) {
+            totalPage = list.size() / Pagination.DEFAULT_PAGE_SIZE;
+        } else {
+            totalPage = list.size() / Pagination.DEFAULT_PAGE_SIZE + 1;
+        }
+        Pagination<ProductDto> pagination = new Pagination<>(listByPageNumber, pageNumber, totalPage);
+        return new DataResponse<Pagination<ProductDto>>(true, 200, "Success!", pagination);
+    }
+
+    @Override
+    public DataResponse<Pagination<ProductDto>> getListProductByPageNumber(int pageNumber) {
+        List<ProductDto> listAll = productMapper.toListProductDto(productDao.findAll());
+        List<ProductDto> listByPageNumber = new ArrayList<>();
+        for (int i = (pageNumber - 1) * Pagination.DEFAULT_PAGE_SIZE; i < (pageNumber - 1) * Pagination.DEFAULT_PAGE_SIZE + Pagination.DEFAULT_PAGE_SIZE; i++) {
+            if (i < listAll.size()) {
+                listByPageNumber.add(listAll.get(i));
+            }
+        }
+        int totalPage;
+        if (listAll.size() % Pagination.DEFAULT_PAGE_SIZE == 0) {
+            totalPage = listAll.size() / Pagination.DEFAULT_PAGE_SIZE;
+        } else {
+            totalPage = listAll.size() / Pagination.DEFAULT_PAGE_SIZE + 1;
+        }
+        Pagination<ProductDto> pagination = new Pagination<>(listByPageNumber, pageNumber, totalPage);
+        return new DataResponse<Pagination<ProductDto>>(true, 200, "Success!", pagination);
     }
 
     @Override
@@ -52,9 +109,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public DataResponse<List<ProductDto>> getListProduct() {
         List<ProductDto> list = productMapper.toListProductDto(productDao.findAll());
-//        if (list.isEmpty()) {
-//            return new DataResponse<List<ProductDto>>(false, 401, "No data", list);
-//        }
         return new DataResponse<List<ProductDto>>(true, 200, "Success!", list);
     }
 
